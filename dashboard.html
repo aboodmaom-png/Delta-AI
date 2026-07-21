@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Delta AI | لوحة التحكم</title>
+    <meta name="description" content="منصة تعليمية ذكية بتصميم حديث ومشهد رقمي للمستقبل" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header
+        class="topbar"
+        data-topbar
+        data-active="dashboard"
+        data-eyebrow="منصة تعليمية ذكية"
+        data-title="Delta AI"
+      ></header>
+
+      <main class="dashboard">
+        <!-- AI Daily Challenge -->
+        <section class="hero-card">
+          <div class="hero-copy">
+            <p class="dashboard-greeting" id="dashboardGreeting">أهلاً بعودتك 👋</p>
+            <p class="dashboard-subgreeting">جاهز تكمل تحدياتك وترفع مستواك اليوم؟</p>
+            <p class="section-tag">🤖 تحدي اليوم</p>
+            <h2>تحدي جديد بانتظارك اليوم!</h2>
+            <p class="hero-tagline">تحدٍ واقعي مبني على مفاهيم الرياضيات والعلوم، جاهز يختبر تفكيرك.</p>
+            <p class="hero-description">
+              فكر بذكاء، اكتب فكرة عملية، ثم شاركها مع معلمك أو مساعدك الذكي.
+            </p>
+            <a href="subjects.html" class="primary-btn" id="heroStartChallengeBtn">ابدأ التحدي</a>
+          </div>
+
+          <div class="hero-visual">
+            <div class="orb orb-one"></div>
+            <div class="orb orb-two"></div>
+            <div class="hero-mascot" data-mascot></div>
+            <div class="hero-badge">
+              <i data-lucide="brain-circuit"></i>
+              <span>مساعد ذكي</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Subjects -->
+        <section class="section-block">
+          <div class="section-heading">
+            <h3>المواد</h3>
+            <a href="subjects.html">عرض الكل</a>
+          </div>
+          <div class="subjects-grid" data-subjects></div>
+        </section>
+
+        <!-- AI Coach -->
+        <section class="coach-card">
+          <div>
+            <p class="section-tag">🤖 AI Coach</p>
+            <h3>اسأل مساعدك الذكي عن أي درس</h3>
+            <p class="coach-description">
+              اكتب سؤالاً، وسيقدم لك شرحاً مبسطاً وأمثلة عملية في ثوانٍ.
+            </p>
+          </div>
+          <a href="learnquest-ai.html" class="secondary-btn">ابدأ المحادثة</a>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script type="module">
+      import { auth, db } from './js/firebase.js';
+      import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+      import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+      let isLoggedIn = false;
+
+      // "ابدأ التحدي" is a real destination (subjects.html) for signed-in
+      // students, but a guest clicking it has nothing to save progress to —
+      // send them to create an account first instead of letting them wander
+      // into a flow that can't work for them yet.
+      const startChallengeBtn = document.getElementById('heroStartChallengeBtn');
+      startChallengeBtn?.addEventListener('click', (event) => {
+        if (!isLoggedIn) {
+          event.preventDefault();
+          window.location.href = 'signup.html';
+        }
+      });
+
+      onAuthStateChanged(auth, async (user) => {
+        isLoggedIn = Boolean(user);
+
+        const greetingEl = document.getElementById('dashboardGreeting');
+        if (!greetingEl || !user) return;
+
+        let name = user.displayName || (user.email ? user.email.split('@')[0] : 'طالب');
+
+        try {
+          const snap = await getDoc(doc(db, 'users', user.uid));
+          if (snap.exists() && snap.data().name) {
+            name = snap.data().name;
+          }
+        } catch (error) {
+          console.error('Failed to load user name for dashboard greeting:', error);
+        }
+
+        greetingEl.textContent = `أهلاً بعودتك، ${name} 👋`;
+      });
+    </script>
+    <script>
+      window.addEventListener('load', () => {
+        const mascot = document.querySelector('.hero-mascot');
+        if (!mascot) return;
+
+        mascot.classList.add('intro');
+
+        setTimeout(() => {
+          mascot.classList.remove('intro');
+          mascot.classList.add('walking');
+
+          setTimeout(() => {
+            mascot.classList.remove('walking');
+            mascot.classList.add('arrived');
+
+            setInterval(() => {
+              mascot.classList.remove('arrived');
+              mascot.classList.add('intro');
+
+              setTimeout(() => {
+                mascot.classList.remove('intro');
+                mascot.classList.add('arrived');
+              }, 3000);
+            }, 8000);
+          }, 1400);
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>

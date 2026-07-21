@@ -1,0 +1,874 @@
+/* ==========================================================================
+   DELTA AI — Dashboard (Light Premium Edition)
+   ========================================================================== */
+
+.dashboard {
+  display: grid;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.hero-card,
+.section-block,
+.stat-card,
+.coach-card,
+.leaderboard-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(74, 92, 106, 0.04);
+}
+
+.hero-card {
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(74, 92, 106, 0.03), transparent);
+  pointer-events: none;
+}
+
+.hero-copy h2 {
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.hero-description,
+.coach-description,
+.subject-card p,
+.stat-label,
+.leaderboard-item span {
+  color: var(--muted);
+}
+
+.hero-copy .primary-btn {
+  margin-top: 16px;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 220px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(16px);
+  opacity: 0.15; /* تقليل الشفافية ليتناسب مع الخلفية البيضاء */
+}
+
+.orb-one {
+  width: 120px;
+  height: 120px;
+  background: #4A5C6A;
+  top: 20px;
+  right: 24px;
+}
+
+.orb-two {
+  width: 90px;
+  height: 90px;
+  background: #9BA8AB;
+  bottom: 24px;
+  left: 24px;
+}
+
+.section-block,
+.leaderboard-card {
+  padding: 22px;
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.subject-card {
+  padding: 28px;
+  border-radius: 20px;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.subject-card:hover,
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(74, 92, 106, 0.2);
+  box-shadow: 0 8px 24px rgba(74, 92, 106, 0.05);
+}
+
+.subject-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--btn-gradient);
+  color: white;
+  margin-bottom: 16px;
+  font-size: 1.7rem;
+}
+
+.empty-message {
+  grid-column: 1 / -1;
+  padding: 32px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.subject-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.subject-card p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.subject-start-btn {
+  padding: 10px 20px;
+  font-size: 0.92rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(74, 92, 106, 0.08);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--btn-gradient);
+  border-radius: inherit;
+  transition: width 0.8s ease;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+
+.coach-card {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: rgba(74, 92, 106, 0.04);
+}
+
+/* Profile Page Enhancements */
+.profile-page {
+  padding-bottom: 40px;
+}
+
+.profile-layout {
+  display: grid;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.profile-hero {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+}
+
+/* --- Full-page loading overlay (visible by default, no JS wait needed) --- */
+.page-load-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  background: rgba(15, 15, 15, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.page-load-overlay.hidden {
+  display: none;
+}
+
+.page-load-mascot {
+  width: 160px;
+}
+
+.page-load-mascot .lq-mascot-svg {
+  max-width: 160px;
+}
+
+.page-load-text {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+
+.avatar-ring {
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--btn-gradient);
+  flex-shrink: 0;
+}
+
+.avatar-large {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.profile-info h2 {
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.profile-grade,
+.profile-bio {
+  color: var(--muted);
+}
+
+.xp-card {
+  padding: 22px;
+}
+
+.xp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.xp-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(74, 92, 106, 0.08);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(74, 92, 106, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--btn-gradient);
+  border-radius: inherit;
+}
+
+.xp-caption {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.profile-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.challenges-card {
+  padding: 22px;
+}
+
+#recentChallengesList {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.challenge-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--card-2);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.challenge-item-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--btn-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.challenge-item-info h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.score-badge.good { background: rgba(22, 163, 74, 0.1); color: var(--success); }
+.score-badge.mid { background: rgba(74, 92, 106, 0.1); color: var(--primary); }
+.score-badge.low { background: rgba(220, 38, 38, 0.1); color: #dc2626; }
+
+.dashboard-greeting {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.subject-progress {
+  margin: 12px 0;
+}
+
+.subject-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(74, 92, 106, 0.08);
+  overflow: hidden;
+}
+
+.subject-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: var(--btn-gradient);
+  transition: width 1s ease;
+}
+
+.subject-progress-text {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.subject-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==== الروبوت بدون صندوق: يطفو مباشرة فوق خلفية القسم ==== */
+
+.hero-visual {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+}
+
+.hero-card {
+  align-items: center;
+}
+
+.hero-visual .orb {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.hero-visual .hero-mascot {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  transition: transform 1.4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.hero-visual .hero-mascot .lq-mascot-svg {
+  max-width: 640px;
+  animation: none;
+}
+
+.hero-visual .hero-mascot.intro .lq-mascot-svg {
+  animation: heroMascotPlay 3s cubic-bezier(.45, 0, .4, 1) 1;
+}
+
+.hero-visual .hero-mascot.walking {
+  transform: translateX(160px);
+}
+
+.hero-visual .hero-mascot.walking .lq-mascot-svg {
+  animation: heroWalkBounce 0.45s ease-in-out infinite;
+}
+
+.hero-visual .hero-mascot.arrived .lq-mascot-svg {
+  animation: lqMascotFloat 3.2s ease-in-out infinite;
+}
+
+@keyframes heroMascotPlay {
+  0%, 100% { transform: translateY(0) scaleX(1) scaleY(1); }
+  8%  { transform: translateY(-50px) scaleX(1.05) scaleY(1.08); }
+  16% { transform: translateY(0) scaleX(0.95) scaleY(0.92); }
+  24% { transform: translateY(-18px) scaleX(1.02) scaleY(1.03); }
+  32% { transform: translateY(0) scaleX(1) scaleY(1); }
+  44% { transform: translateY(-10px) scaleX(1.1) scaleY(0.9); }
+  48% { transform: translateY(0) scaleX(0.06) scaleY(1.15); }
+  52% { transform: translateY(0) scaleX(-0.06) scaleY(1.15); }
+  56% { transform: translateY(0) scaleX(-1.1) scaleY(0.9); }
+  60% { transform: translateY(-10px) scaleX(-1) scaleY(1); }
+  70% { transform: translateY(0) scaleX(-1) scaleY(1); }
+  78% { transform: translateY(0) scaleX(0.06) scaleY(1.15); }
+  82% { transform: translateY(0) scaleX(1.06) scaleY(1.15); }
+  86% { transform: translateY(-35px) scaleX(1.1) scaleY(0.95); }
+  92% { transform: translateY(0) scaleX(1) scaleY(1); }
+}
+
+@keyframes heroWalkBounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-14px) rotate(3deg); }
+}
+
+.hero-visual .hero-badge {
+  display: none;
+}
+
+/* ==== ترحيب شخصي فوق نص التحدي + مسافة إضافية لتنزيل المحتوى ==== */
+
+.hero-copy {
+  padding-top: 28px;
+}
+
+.dashboard-greeting {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+}
+
+.dashboard-subgreeting {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+/* ==== تقدّم المادة + زر تابع مع المساعد ==== */
+
+.subject-progress {
+  margin: 12px 0;
+}
+
+.subject-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.subject-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  transition: width 1s ease;
+}
+
+.subject-progress-text {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.subject-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==== انفجار XP: أرقام تتطاير عبر الشاشة عند ظهور النتيجة ==== */
+
+#xpParticlesContainer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9998;
+}
+
+.xp-particle {
+  position: absolute;
+  bottom: -40px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #5dd62c, #337418);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  animation: xpFloatUp 2.2s ease-out forwards;
+  white-space: nowrap;
+}
+
+@keyframes xpFloatUp {
+  0% {
+    transform: translateY(0) scale(0.6) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-10vh) scale(1.05) rotate(var(--rot, 0deg));
+  }
+  100% {
+    transform: translateY(-95vh) scale(0.9) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+}
+
+/* ==== مسار الدروس المتعرّج (Skill Path) ==== */
+
+.lesson-path-wrap {
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.lesson-path-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.lesson-node {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  outline: none;
+}
+
+/* The browser's default focus rectangle renders as a stark white/black box
+   around the whole node — jarring against the dark theme. This keeps focus
+   visible (important for keyboard users) without the ugly default box. */
+.lesson-node:focus-visible {
+  filter: drop-shadow(0 0 5px rgba(93, 214, 44, 0.85));
+}
+
+.lesson-node:hover {
+  transform: scale(1.06);
+}
+
+.lesson-node-locked {
+  cursor: not-allowed;
+}
+
+.lesson-node-locked:hover {
+  transform: none;
+}
+
+.lesson-node-shake {
+  animation: lessonNodeShake 0.4s ease;
+}
+
+@keyframes lessonNodeShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.lesson-node-pulse {
+  animation: lessonNodePulse 0.32s ease-out;
+}
+
+@keyframes lessonNodePulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(20, 184, 166, 0.7)); }
+  50% { transform: scale(1.18); filter: drop-shadow(0 0 16px rgba(20, 184, 166, 0.9)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(20, 184, 166, 0)); }
+}
+
+.lesson-mascot {
+  animation: lessonMascotFloat 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes lessonMascotFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.lesson-popup {
+  position: absolute !important;
+  top: var(--popup-top) !important;
+  left: var(--popup-left) !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 250px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  background: linear-gradient(135deg, rgba(23, 37, 84, 0.98), rgba(15, 23, 42, 0.98)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  padding: 12px 14px !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3) !important;
+  z-index: 500 !important;
+  transform: translate(-50%, 18px) !important;
+}
+
+.lesson-popup::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: rgba(23, 37, 84, 0.98);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.lesson-popup-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 8px !important;
+  text-align: center;
+}
+
+.lesson-popup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lesson-popup-actions .primary-btn,
+.lesson-popup-actions .secondary-btn {
+  font-size: 0.78rem;
+  padding: 10px 8px;
+  line-height: 1.3;
+}
+
+/* ==== صفحة التحدي: تصميم محادثة (روبوت على كل جهة) ==== */
+
+.challenge-chat-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 24px 0;
+  position: relative;
+}
+
+.chat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-direction: row-reverse;
+}
+
+.chat-row-question {
+  justify-content: flex-start;
+}
+
+.chat-row-answer {
+  justify-content: flex-end;
+}
+
+.chat-mascot-slot {
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.chat-mascot-slot .lq-mascot-svg {
+  max-width: 150px;
+  animation: lqMascotFloat 3.2s ease-in-out infinite;
+}
+
+.speech-bubble {
+  position: relative;
+  max-width: 560px;
+  background: linear-gradient(135deg, rgba(23, 37, 84, 0.95), rgba(15, 23, 42, 0.95));
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+}
+
+.bubble-left {
+  border-radius: 24px;
+}
+
+.bubble-left::after {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 30px;
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  border-radius: 0 0 0 16px;
+  transform: rotate(45deg);
+}
+
+.bubble-right {
+  border-radius: 24px;
+  max-width: 620px;
+}
+
+.bubble-right::after {
+  content: '';
+  position: absolute;
+  right: -14px;
+  top: 30px;
+  width: 24px;
+  height: 24px;
+  background: var(--secondary);
+  border-radius: 0 0 16px 0;
+  transform: rotate(-45deg);
+}
+
+.answer-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hint-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.hint-icon-btn:hover {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.speech-bubble textarea {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  width: 100%;
+  min-height: 140px;
+  max-height: 320px;
+  resize: none;
+  overflow-y: auto;
+  transition: height 0.15s ease;
+}
+
+.speech-bubble textarea::placeholder {
+  color: var(--muted);
+}
+
+.speech-bubble textarea:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+@media (max-width: 720px) {
+  .chat-row {
+    flex-wrap: wrap;
+  }
+
+  .speech-bubble {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-card {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .hero-visual {
+    min-height: 160px;
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .subjects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==== شاشة Blur وقت الإرسال ==== */
+
+.submit-blur-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  background: rgba(11, 17, 32, 0.55);
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.submit-blur-overlay.hidden {
+  display: none;
+}
+
+.submit-blur-mascot {
+  width: 220px;
+}
+
+.submit-blur-mascot .lq-mascot-svg {
+  max-width: 220px;
+  animation: lqMascotFloat 1.2s ease-in-out infinite;
+}
+
+.submit-blur-text {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+}

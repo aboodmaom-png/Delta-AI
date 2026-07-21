@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>AI Challenge | Delta AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/challenge.css" />
+  </head>
+  <body>
+    <div class="page-shell challenge-page">
+      <header
+        class="topbar"
+        data-topbar
+        data-active="subjects"
+        data-eyebrow="منصة تعليمية ذكية"
+        data-title="Delta AI"
+      ></header>
+
+      <main class="challenge-layout">
+        <section class="main-column">
+          <article class="glass-card loading-card" id="challengeLoadingCard" aria-live="polite">
+            <div class="loading-content">
+              <div class="loader"></div>
+              <p>🤖 جاري تحميل التحدي...</p>
+            </div>
+          </article>
+
+          <article class="glass-card loading-card hidden" id="challengeErrorCard" aria-live="polite">
+            <div class="loading-content">
+              <p id="challengeErrorText">تعذّر تحميل التحدي، حاول لاحقًا.</p>
+            </div>
+            <div class="answer-actions">
+              <a href="lessons.html" class="secondary-btn">العودة للدروس</a>
+            </div>
+          </article>
+
+          <article class="glass-card challenge-header-card hidden" id="challengeHeaderCard">
+            <div class="challenge-icon">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="challenge-meta">
+              <p class="section-tag">🚀 تحدي اليوم</p>
+              <h2 id="challengeTitle">—</h2>
+              <div class="meta-row">
+                <span class="meta-pill" id="metaSubject">—</span>
+                <span class="meta-pill" id="metaDifficulty">المستوى: —</span>
+                <span class="meta-pill accent">حتى 100 XP</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="challenge-chat-layout hidden" id="chatLayout">
+            <div class="previous-attempt-banner hidden" id="previousAttemptBanner">
+              <span id="previousAttemptText">✅ حليت هذا التحدي من قبل</span>
+              <button type="button" class="secondary-btn" id="viewPreviousResultBtn">شوف نتيجتك السابقة 📖</button>
+            </div>
+
+            <div class="chat-row chat-row-question">
+              <div class="chat-mascot-slot" data-mascot></div>
+              <div class="speech-bubble bubble-left" id="problemCard">
+                <svg class="bubble-tail-svg tail-left" viewBox="0 0 26 50" aria-hidden="true">
+                  <path d="M24 46 C12 46, 2 30, 2 4 C8 16, 16 26, 24 22 Z" fill="#8b5cf6" />
+                </svg>
+                <div class="card-heading">
+                  <h3>التحدي</h3>
+                </div>
+                <p class="problem-text" id="problemText"></p>
+              </div>
+            </div>
+
+            <div class="chat-row chat-row-answer">
+              <div class="speech-bubble bubble-right" id="answerCard">
+                <svg class="bubble-tail-svg tail-right" viewBox="0 0 26 50" aria-hidden="true">
+                  <path d="M2 46 C14 46, 24 30, 24 4 C18 16, 10 26, 2 22 Z" fill="#06b6d4" />
+                </svg>
+                <div class="card-heading">
+                  <h3>إجابتك</h3>
+                  <div class="answer-heading-actions">
+                    <button type="button" class="hint-icon-btn" id="requestHint" title="اطلب تلميح" aria-label="اطلب تلميح">💡</button>
+                    <span class="char-counter" id="charCounter">0 / 500</span>
+                  </div>
+                </div>
+                <label class="sr-only" for="studentAnswer">إجابتك</label>
+                <textarea
+                  id="studentAnswer"
+                  maxlength="500"
+                  rows="1"
+                  placeholder="اكتب طريقة تفكيرك والحل بالتفصيل..."
+                ></textarea>
+                <div class="answer-actions">
+                  <button class="primary-btn full-width" id="submitAnswer">إرسال الحل</button>
+                </div>
+              </div>
+              <div class="chat-mascot-slot" data-mascot></div>
+            </div>
+          </div>
+
+          <article class="glass-card loading-card hidden" id="loadingCard" aria-live="polite">
+            <div class="loading-content">
+              <div class="loader"></div>
+              <p>🤖 جاري تحليل إجابتك...</p>
+            </div>
+          </article>
+        </section>
+
+        <aside class="side-column">
+          <article class="glass-card coach-card">
+            <div class="coach-icon">
+              <i data-lucide="bot"></i>
+            </div>
+            <h3>🤖 AI Coach</h3>
+            <p>
+              هل تحتاج مساعدة؟ يمكنني توجيهك دون إعطائك الحل مباشرة.
+            </p>
+            <button class="secondary-btn full-width" id="coachHint">اطلب تلميح</button>
+          </article>
+
+          <article class="glass-card tips-card">
+            <h3>نصائح للتفكير</h3>
+            <ul>
+              <li>ابدأ من المعطيات ثم افصل الخطوات.</li>
+              <li>اكتب لماذا اختارت هذا الحل.</li>
+              <li>راجع النتيجة منطقياً.</li>
+            </ul>
+          </article>
+        </aside>
+      </main>
+    </div>
+
+    <div class="submit-blur-overlay" id="submitBlurOverlay">
+      <div class="submit-blur-mascot" data-mascot></div>
+      <p class="submit-blur-text" id="submitBlurText">🤖 جاري تحضير التحدي...</p>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/challenge.js"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>تسجيل الدخول | Delta AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/auth.css" />
+  </head>
+  <body class="auth-page">
+    <div class="page-shell">
+      <header
+        class="topbar"
+        data-topbar
+        data-variant="auth"
+        data-eyebrow="منصة تعليمية ذكية"
+        data-title="Delta AI"
+      ></header>
+
+      <main class="auth-layout">
+        <div class="glass-card auth-card">
+          <h1>مرحبا بك من جديد</h1>
+          <p>سجل دخولك إلى حسابك المتقدم.</p>
+
+          <form id="loginForm" class="auth-form" novalidate>
+            <label>
+              البريد الإلكتروني
+              <input type="email" id="email" placeholder="example@email.com" required />
+            </label>
+            <label>
+              كلمة المرور
+              <input type="password" id="password" placeholder="********" required />
+            </label>
+            <button type="submit" class="primary-btn full-width">تسجيل الدخول</button>
+          </form>
+
+          <div class="auth-divider"><span>أو</span></div>
+
+          <button type="button" id="googleSignInBtn" class="secondary-btn full-width google-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.85 2.09-1.81 2.73v2.27h2.92c1.71-1.57 2.69-3.88 2.69-6.64z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.27c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33C2.44 15.98 5.48 18 9 18z"/>
+              <path fill="#FBBC05" d="M3.97 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.29-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l3.01-2.33z"/>
+              <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.97l3.01 2.33C4.68 5.17 6.66 3.58 9 3.58z"/>
+            </svg>
+            <span>المتابعة عبر جوجل</span>
+          </button>
+
+          <p class="auth-link">
+            ليس لديك حساب؟ <a href="signup.html">إنشاء حساب</a>
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/auth.js"></script>
+  </body>
+</html>

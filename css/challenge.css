@@ -1,0 +1,450 @@
+/* ==========================================================================
+   DELTA AI — Challenge Page (Light Premium Edition)
+   ========================================================================== */
+
+.challenge-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr;
+  gap: 20px;
+  margin-top: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(74, 92, 106, 0.04);
+  overflow: visible;
+}
+
+#challengeLoadingCard {
+  display: none;
+}
+
+.main-column,
+.side-column {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.challenge-header-card,
+.loading-card,
+.coach-card,
+.tips-card {
+  padding: 22px;
+}
+
+.challenge-layout .challenge-header-card,
+.challenge-layout .coach-card,
+.challenge-layout .tips-card {
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: none;
+}
+
+.side-column {
+  gap: 12px;
+}
+
+.challenge-layout .coach-card,
+.challenge-layout .tips-card {
+  padding: 14px;
+}
+
+.challenge-layout .coach-card .coach-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 8px;
+}
+
+.challenge-layout .coach-card h3,
+.challenge-layout .tips-card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.challenge-layout .coach-card p,
+.challenge-layout .tips-card li {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.challenge-header-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.challenge-icon,
+.coach-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--btn-gradient);
+  color: white;
+}
+
+.challenge-meta h2 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meta-pill {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(74, 92, 106, 0.06);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.meta-pill.accent {
+  background: rgba(74, 92, 106, 0.12);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.problem-text {
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.char-counter {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.answer-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.answer-actions .primary-btn {
+  flex: 2;
+}
+
+.speech-bubble .answer-actions .primary-btn.full-width {
+  width: auto;
+  flex: none;
+  padding: 12px 40px;
+}
+
+.answer-actions .secondary-btn {
+  flex: 1;
+  white-space: nowrap;
+  padding-inline: 14px;
+}
+
+.answer-error {
+  margin-top: 12px;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.06);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.loading-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  animation: spin 0.9s linear infinite;
+}
+
+.coach-card {
+  text-align: center;
+}
+
+.tips-card ul {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+@media (max-width: 920px) {
+  .challenge-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .challenge-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==== صفحة التحدي: تصميم محادثة ==== */
+
+.previous-attempt-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: rgba(22, 163, 74, 0.06);
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: var(--success);
+  font-weight: 600;
+}
+
+.previous-attempt-banner.hidden {
+  display: none;
+}
+
+.challenge-chat-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 24px 0;
+  position: relative;
+}
+
+.chat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-direction: row-reverse;
+  overflow: visible;
+}
+
+.chat-row-question {
+  justify-content: flex-start;
+}
+
+.chat-row-answer {
+  justify-content: flex-end;
+}
+
+.chat-mascot-slot {
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.chat-mascot-slot .lq-mascot-svg {
+  max-width: 190px;
+  animation: lqMascotFloat 3.2s ease-in-out infinite;
+}
+
+.chat-mascot-slot .lq-mascot-arm-right {
+  transform-origin: 440px 195px;
+  animation: chatMascotWave 3.5s ease-in-out infinite;
+}
+
+@keyframes chatMascotWave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  68% { transform: rotate(-16deg); }
+  76% { transform: rotate(8deg); }
+  84% { transform: rotate(-16deg); }
+  92% { transform: rotate(0deg); }
+}
+
+.speech-bubble {
+  position: relative;
+  max-width: 560px;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+  overflow: visible;
+}
+
+.bubble-left {
+  border-radius: 24px;
+}
+
+.chat-row-answer .speech-bubble {
+  flex: 1;
+}
+
+.bubble-right {
+  border-radius: 24px;
+  max-width: 100%;
+  padding: 30px 34px;
+}
+
+.bubble-tail-svg {
+  position: absolute;
+  width: 26px;
+  height: 50px;
+  z-index: 50;
+  overflow: visible;
+}
+
+.tail-left {
+  left: -25px;
+  top: 80px;
+}
+
+.tail-right {
+  right: -25px;
+  top: 80px;
+}
+
+.answer-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hint-icon-btn {
+  background: rgba(74, 92, 106, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.hint-icon-btn:hover {
+  transform: scale(1.08);
+  background: rgba(74, 92, 106, 0.12);
+}
+
+.speech-bubble textarea {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  width: 100%;
+  min-height: 170px;
+  max-height: 340px;
+  resize: none;
+  overflow-y: auto;
+  transition: height 0.15s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) rgba(74, 92, 106, 0.04);
+}
+
+.speech-bubble textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.speech-bubble textarea::-webkit-scrollbar-track {
+  background: rgba(74, 92, 106, 0.04);
+  border-radius: 8px;
+}
+
+.speech-bubble textarea::-webkit-scrollbar-thumb {
+  background: var(--btn-gradient);
+  border-radius: 8px;
+}
+
+.speech-bubble textarea::placeholder {
+  color: var(--muted);
+}
+
+.speech-bubble textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+@media (max-width: 720px) {
+  .chat-row {
+    flex-wrap: wrap;
+  }
+
+  .speech-bubble {
+    max-width: 100%;
+  }
+}
+
+/* ==== شاشة Blur وقت الإرسال ==== */
+
+.submit-blur-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.submit-blur-overlay.hidden {
+  display: none;
+}
+
+.submit-blur-mascot {
+  width: 220px;
+}
+
+.submit-blur-mascot .lq-mascot-svg {
+  max-width: 220px;
+  animation: lqMascotFloat 1.2s ease-in-out infinite;
+}
+
+.submit-blur-text {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* إزالة اللون الأبيض من شاشة تحميل التحدي */
+#challengeLoadingCard,
+#loadingCard,
+#challengeErrorCard {
+  background: var(--card) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+}
+
+/* شاشة التحميل التي تغطي الصفحة */
+.submit-blur-overlay {
+  background: rgba(15, 15, 15, 0.92) !important;
+  backdrop-filter: blur(10px);
+}
+
+.loading-card,
+.loading-content {
+  color: var(--text) !important;
+}
+
+.loading-content p,
+.submit-blur-text {
+  color: var(--text) !important;
+}

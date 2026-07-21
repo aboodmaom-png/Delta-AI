@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>المواد | Delta</title>
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <div class="page-load-overlay" id="subjectsLoadOverlay">
+      <div class="page-load-mascot" data-mascot></div>
+      <p class="page-load-text">🤖 جاري تحميل المواد...</p>
+    </div>
+    <div class="page-shell">
+      <header
+        class="topbar"
+        data-topbar
+        data-active="subjects"
+        data-eyebrow="منصة تعليمية ذكية"
+        data-title="Delta AI"
+      ></header>
+
+      <main class="dashboard">
+        <section class="section-block">
+          <div class="section-heading">
+            <h3>اختر المادة</h3>
+          </div>
+          <div class="subjects-grid" id="subjectsGrid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/subjects.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

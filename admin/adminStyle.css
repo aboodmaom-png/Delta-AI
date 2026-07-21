@@ -1,0 +1,3258 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+}
+
+
+body{
+    background:
+    radial-gradient(circle at top right,#1e3a8a30,transparent 30%),
+    #070b18;
+
+    color:white;
+    min-height:100vh;
+}
+
+
+/* Layout */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+
+
+/* Sidebar */
+
+.sidebar{
+
+    width:270px;
+    background:rgba(15,23,42,.85);
+    backdrop-filter:blur(20px);
+
+    border-left:1px solid rgba(255,255,255,.08);
+
+    padding:30px 20px;
+
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+
+}
+
+
+
+.sidebar h2{
+
+    font-size:24px;
+    margin-bottom:45px;
+
+    background:linear-gradient(
+        90deg,
+        #60a5fa,
+        #a78bfa
+    );
+
+-webkit-background-clip:text;    
+
+    color:transparent;
+
+}
+
+
+
+.sidebar nav a{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 18px;
+
+    margin-bottom:12px;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+
+
+.sidebar nav a:hover,
+.sidebar .active{
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    transform:translateX(-5px);
+
+}
+
+
+
+
+
+/* Main */
+
+
+main{
+
+    flex:1;
+
+    margin-right:270px;
+
+    padding:40px;
+
+}
+
+
+
+/* Header */
+
+
+header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+header h1{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+
+header p{
+
+    color:#94a3b8;
+
+}
+
+
+
+.profile{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #9333ea
+    );
+
+
+    font-size:25px;
+
+    font-weight:800;
+
+    box-shadow:
+    0 0 30px #2563eb70;
+
+}
+
+
+
+/* Stats */
+
+
+.stats{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+
+
+.card,
+.panel{
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.10),
+        rgba(255,255,255,.03)
+    );
+
+
+    border:
+
+    1px solid rgba(255,255,255,.1);
+
+
+    border-radius:28px;
+
+    padding:25px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    box-shadow:
+
+    0 20px 40px rgba(0,0,0,.25);
+
+
+}
+
+
+
+.card{
+
+    transition:.3s;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#60a5fa;
+
+}
+
+
+
+.card h3{
+
+    color:#cbd5e1;
+
+    font-size:16px;
+
+}
+
+
+
+.card strong{
+
+    display:block;
+
+    font-size:42px;
+
+    margin:20px 0;
+
+}
+
+
+
+.card span{
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Panels */
+
+
+.panel{
+
+    margin-top:30px;
+
+}
+
+
+
+.panel h2{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+/* AI GRID */
+
+
+.ai-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.ai-grid div{
+
+    background:
+
+    rgba(255,255,255,.06);
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+
+
+.ai-grid h2{
+
+    font-size:32px;
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Buttons */
+
+
+.actions{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+button{
+
+
+    border:none;
+
+    padding:15px 25px;
+
+    border-radius:16px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    color:white;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 10px 30px #2563eb60;
+
+}
+
+
+
+
+
+/* Table */
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    color:#60a5fa;
+
+}
+
+
+
+td,th{
+
+    padding:18px;
+
+    text-align:center;
+
+    border-bottom:
+
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+tr:hover{
+
+    background:
+
+    rgba(255,255,255,.05);
+
+}
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:1100px){
+
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:800px){
+
+
+.sidebar{
+
+display:none;
+
+}
+
+
+main{
+
+margin-right:0;
+
+padding:20px;
+
+}
+
+
+.stats,
+.ai-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+/* ==== إدارة الدروس ==== */
+
+.admin-section.hidden {
+  display: none;
+}
+
+.subject-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.subject-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.subject-tab {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.subject-tab.active,
+.subject-tab:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  border-color: transparent;
+}
+
+.add-lesson-btn {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.add-lesson-btn:hover {
+  transform: scale(1.03);
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: grab;
+  transition: 0.15s;
+}
+
+.lesson-row.dragging {
+  opacity: 0.4;
+}
+
+.lesson-row.drag-over {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.drag-handle {
+  color: #64748b;
+  font-size: 18px;
+  user-select: none;
+}
+
+.lesson-order {
+  color: #60a5fa;
+  font-weight: 700;
+  font-size: 13px;
+  min-width: 28px;
+}
+
+.lesson-row-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lesson-row-info span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.lesson-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+/* ==== نافذة إضافة/تعديل درس ==== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 20, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 30px;
+  width: min(480px, 92vw);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-box h2 {
+  margin-bottom: 20px;
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-box label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.modal-box textarea {
+  resize: vertical;
+}
+
+.modal-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.save-btn {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+}
+
+
+body{
+    background:
+    radial-gradient(circle at top right,#1e3a8a30,transparent 30%),
+    #070b18;
+
+    color:white;
+    min-height:100vh;
+}
+
+
+/* Layout */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+
+
+/* Sidebar */
+
+.sidebar{
+
+    width:270px;
+    background:rgba(15,23,42,.85);
+    backdrop-filter:blur(20px);
+
+    border-left:1px solid rgba(255,255,255,.08);
+
+    padding:30px 20px;
+
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+
+}
+
+
+
+.sidebar h2{
+
+    font-size:24px;
+    margin-bottom:45px;
+
+    background:linear-gradient(
+        90deg,
+        #60a5fa,
+        #a78bfa
+    );
+
+-webkit-background-clip:text;    
+
+    color:transparent;
+
+}
+
+
+
+.sidebar nav a{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 18px;
+
+    margin-bottom:12px;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+
+
+.sidebar nav a:hover,
+.sidebar .active{
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    transform:translateX(-5px);
+
+}
+
+
+
+
+
+/* Main */
+
+
+main{
+
+    flex:1;
+
+    margin-right:270px;
+
+    padding:40px;
+
+}
+
+
+
+/* Header */
+
+
+header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+header h1{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+
+header p{
+
+    color:#94a3b8;
+
+}
+
+
+
+.profile{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #9333ea
+    );
+
+
+    font-size:25px;
+
+    font-weight:800;
+
+    box-shadow:
+    0 0 30px #2563eb70;
+
+}
+
+
+
+/* Stats */
+
+
+.stats{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+
+
+.card,
+.panel{
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.10),
+        rgba(255,255,255,.03)
+    );
+
+
+    border:
+
+    1px solid rgba(255,255,255,.1);
+
+
+    border-radius:28px;
+
+    padding:25px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    box-shadow:
+
+    0 20px 40px rgba(0,0,0,.25);
+
+
+}
+
+
+
+.card{
+
+    transition:.3s;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#60a5fa;
+
+}
+
+
+
+.card h3{
+
+    color:#cbd5e1;
+
+    font-size:16px;
+
+}
+
+
+
+.card strong{
+
+    display:block;
+
+    font-size:42px;
+
+    margin:20px 0;
+
+}
+
+
+
+.card span{
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Panels */
+
+
+.panel{
+
+    margin-top:30px;
+
+}
+
+
+
+.panel h2{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+/* AI GRID */
+
+
+.ai-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.ai-grid div{
+
+    background:
+
+    rgba(255,255,255,.06);
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+
+
+.ai-grid h2{
+
+    font-size:32px;
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Buttons */
+
+
+.actions{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+button{
+
+
+    border:none;
+
+    padding:15px 25px;
+
+    border-radius:16px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    color:white;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 10px 30px #2563eb60;
+
+}
+
+
+
+
+
+/* Table */
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    color:#60a5fa;
+
+}
+
+
+
+td,th{
+
+    padding:18px;
+
+    text-align:center;
+
+    border-bottom:
+
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+tr:hover{
+
+    background:
+
+    rgba(255,255,255,.05);
+
+}
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:1100px){
+
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:800px){
+
+
+.sidebar{
+
+display:none;
+
+}
+
+
+main{
+
+margin-right:0;
+
+padding:20px;
+
+}
+
+
+.stats,
+.ai-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+/* ==== إدارة الدروس ==== */
+
+.admin-section.hidden {
+  display: none;
+}
+
+.subject-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.lessons-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ai-generate-btn {
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: rgba(167, 139, 250, 0.12);
+  color: #c4b5fd;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.ai-generate-btn:hover {
+  background: rgba(167, 139, 250, 0.2);
+  transform: scale(1.03);
+}
+
+.ai-lesson-preview.hidden,
+.ai-lesson-step.hidden {
+  display: none;
+}
+
+.ai-preview-hint {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.ai-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.ai-preview-item {
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.ai-preview-item .lesson-row-info span {
+  display: block;
+  margin-top: 2px;
+}
+
+.ai-preview-difficulty {
+  color: #a78bfa !important;
+  font-size: 12px !important;
+  margin-top: 4px !important;
+}
+
+.subject-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.subject-tab {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.subject-tab.active,
+.subject-tab:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  border-color: transparent;
+}
+
+.add-lesson-btn {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.add-lesson-btn:hover {
+  transform: scale(1.03);
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: grab;
+  transition: 0.15s;
+}
+
+.lesson-row.dragging {
+  opacity: 0.4;
+}
+
+.lesson-row.drag-over {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.drag-handle {
+  color: #64748b;
+  font-size: 18px;
+  user-select: none;
+}
+
+.lesson-order {
+  color: #60a5fa;
+  font-weight: 700;
+  font-size: 13px;
+  min-width: 28px;
+}
+
+.lesson-row-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lesson-row-info span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.lesson-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+/* ==== نافذة إضافة/تعديل درس ==== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 20, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 30px;
+  width: min(480px, 92vw);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-box h2 {
+  margin-bottom: 20px;
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-box label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.modal-box textarea {
+  resize: vertical;
+}
+
+.modal-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.save-btn {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+
+.cancel-btn {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+}
+
+
+body{
+    background:
+    radial-gradient(circle at top right,#1e3a8a30,transparent 30%),
+    #070b18;
+
+    color:white;
+    min-height:100vh;
+}
+
+
+/* Layout */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+
+
+/* Sidebar */
+
+.sidebar{
+
+    width:270px;
+    background:rgba(15,23,42,.85);
+    backdrop-filter:blur(20px);
+
+    border-left:1px solid rgba(255,255,255,.08);
+
+    padding:30px 20px;
+
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+
+}
+
+
+
+.sidebar h2{
+
+    font-size:24px;
+    margin-bottom:45px;
+
+    background:linear-gradient(
+        90deg,
+        #60a5fa,
+        #a78bfa
+    );
+
+-webkit-background-clip:text;    
+
+    color:transparent;
+
+}
+
+
+
+.sidebar nav a{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 18px;
+
+    margin-bottom:12px;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+
+
+.sidebar nav a:hover,
+.sidebar .active{
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    transform:translateX(-5px);
+
+}
+
+
+
+
+
+/* Main */
+
+
+main{
+
+    flex:1;
+
+    margin-right:270px;
+
+    padding:40px;
+
+}
+
+
+
+/* Header */
+
+
+header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+header h1{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+
+header p{
+
+    color:#94a3b8;
+
+}
+
+
+
+.profile{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #9333ea
+    );
+
+
+    font-size:25px;
+
+    font-weight:800;
+
+    box-shadow:
+    0 0 30px #2563eb70;
+
+}
+
+
+
+/* Stats */
+
+
+.stats{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+
+
+.card,
+.panel{
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.10),
+        rgba(255,255,255,.03)
+    );
+
+
+    border:
+
+    1px solid rgba(255,255,255,.1);
+
+
+    border-radius:28px;
+
+    padding:25px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    box-shadow:
+
+    0 20px 40px rgba(0,0,0,.25);
+
+
+}
+
+
+
+.card{
+
+    transition:.3s;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#60a5fa;
+
+}
+
+
+
+.card h3{
+
+    color:#cbd5e1;
+
+    font-size:16px;
+
+}
+
+
+
+.card strong{
+
+    display:block;
+
+    font-size:42px;
+
+    margin:20px 0;
+
+}
+
+
+
+.card span{
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Panels */
+
+
+.panel{
+
+    margin-top:30px;
+
+}
+
+
+
+.panel h2{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+/* AI GRID */
+
+
+.ai-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.ai-grid div{
+
+    background:
+
+    rgba(255,255,255,.06);
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+
+
+.ai-grid h2{
+
+    font-size:32px;
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Buttons */
+
+
+.actions{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+button{
+
+
+    border:none;
+
+    padding:15px 25px;
+
+    border-radius:16px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    color:white;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 10px 30px #2563eb60;
+
+}
+
+
+
+
+
+/* Table */
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    color:#60a5fa;
+
+}
+
+
+
+td,th{
+
+    padding:18px;
+
+    text-align:center;
+
+    border-bottom:
+
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+tr:hover{
+
+    background:
+
+    rgba(255,255,255,.05);
+
+}
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:1100px){
+
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:800px){
+
+
+.sidebar{
+
+display:none;
+
+}
+
+
+main{
+
+margin-right:0;
+
+padding:20px;
+
+}
+
+
+.stats,
+.ai-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+/* ==== إدارة الدروس ==== */
+
+.admin-section.hidden {
+  display: none;
+}
+
+.subject-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.lessons-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ai-generate-btn {
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: rgba(167, 139, 250, 0.12);
+  color: #c4b5fd;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.ai-generate-btn:hover {
+  background: rgba(167, 139, 250, 0.2);
+  transform: scale(1.03);
+}
+
+.ai-lesson-preview.hidden,
+.ai-lesson-step.hidden {
+  display: none;
+}
+
+.ai-preview-hint {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.ai-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.ai-preview-item {
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.ai-preview-item .lesson-row-info span {
+  display: block;
+  margin-top: 2px;
+}
+
+.ai-preview-difficulty {
+  color: #a78bfa !important;
+  font-size: 12px !important;
+  margin-top: 4px !important;
+}
+
+.subject-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.subject-tab {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.subject-tab.active,
+.subject-tab:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  border-color: transparent;
+}
+
+.add-lesson-btn {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.add-lesson-btn:hover {
+  transform: scale(1.03);
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: grab;
+  transition: 0.15s;
+}
+
+.lesson-row.dragging {
+  opacity: 0.4;
+}
+
+.lesson-row.drag-over {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.drag-handle {
+  color: #64748b;
+  font-size: 18px;
+  user-select: none;
+}
+
+.lesson-order {
+  color: #60a5fa;
+  font-weight: 700;
+  font-size: 13px;
+  min-width: 28px;
+}
+
+.lesson-row-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lesson-row-info span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.lesson-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+/* ==== نافذة إضافة/تعديل درس ==== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 20, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 30px;
+  width: min(480px, 92vw);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-box h2 {
+  margin-bottom: 20px;
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-box label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.modal-box select option {
+  background: #0f172a;
+  color: white;
+}
+
+.modal-box textarea {
+  resize: vertical;
+}
+
+.modal-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.save-btn {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+}
+
+
+body{
+    background:
+    radial-gradient(circle at top right,#1e3a8a30,transparent 30%),
+    #070b18;
+
+    color:white;
+    min-height:100vh;
+}
+
+
+/* Layout */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+
+
+/* Sidebar */
+
+.sidebar{
+
+    width:270px;
+    background:rgba(15,23,42,.85);
+    backdrop-filter:blur(20px);
+
+    border-left:1px solid rgba(255,255,255,.08);
+
+    padding:30px 20px;
+
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+
+}
+
+
+
+.sidebar h2{
+
+    font-size:24px;
+    margin-bottom:45px;
+
+    background:linear-gradient(
+        90deg,
+        #60a5fa,
+        #a78bfa
+    );
+
+-webkit-background-clip:text;    
+
+    color:transparent;
+
+}
+
+
+
+.sidebar nav a{
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 18px;
+
+    margin-bottom:12px;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+
+
+.sidebar nav a:hover,
+.sidebar .active{
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    transform:translateX(-5px);
+
+}
+
+
+
+
+
+/* Main */
+
+
+main{
+
+    flex:1;
+
+    margin-right:270px;
+
+    padding:40px;
+
+}
+
+
+
+/* Header */
+
+
+header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+header h1{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+
+header p{
+
+    color:#94a3b8;
+
+}
+
+
+
+.profile{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #9333ea
+    );
+
+
+    font-size:25px;
+
+    font-weight:800;
+
+    box-shadow:
+    0 0 30px #2563eb70;
+
+}
+
+
+
+/* Stats */
+
+
+.stats{
+
+    margin-top:40px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+
+
+.card,
+.panel{
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.10),
+        rgba(255,255,255,.03)
+    );
+
+
+    border:
+
+    1px solid rgba(255,255,255,.1);
+
+
+    border-radius:28px;
+
+    padding:25px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    box-shadow:
+
+    0 20px 40px rgba(0,0,0,.25);
+
+
+}
+
+
+
+.card{
+
+    transition:.3s;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#60a5fa;
+
+}
+
+
+
+.card h3{
+
+    color:#cbd5e1;
+
+    font-size:16px;
+
+}
+
+
+
+.card strong{
+
+    display:block;
+
+    font-size:42px;
+
+    margin:20px 0;
+
+}
+
+
+
+.card span{
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Panels */
+
+
+.panel{
+
+    margin-top:30px;
+
+}
+
+
+
+.panel h2{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+
+/* AI GRID */
+
+
+.ai-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.ai-grid div{
+
+    background:
+
+    rgba(255,255,255,.06);
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+
+
+.ai-grid h2{
+
+    font-size:32px;
+
+    color:#60a5fa;
+
+}
+
+
+
+
+
+/* Buttons */
+
+
+.actions{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+button{
+
+
+    border:none;
+
+    padding:15px 25px;
+
+    border-radius:16px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    color:white;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+button:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 10px 30px #2563eb60;
+
+}
+
+
+
+
+
+/* Table */
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    color:#60a5fa;
+
+}
+
+
+
+td,th{
+
+    padding:18px;
+
+    text-align:center;
+
+    border-bottom:
+
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+tr:hover{
+
+    background:
+
+    rgba(255,255,255,.05);
+
+}
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:1100px){
+
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:800px){
+
+
+.sidebar{
+
+display:none;
+
+}
+
+
+main{
+
+margin-right:0;
+
+padding:20px;
+
+}
+
+
+.stats,
+.ai-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+/* ==== إدارة الدروس ==== */
+
+.admin-section.hidden {
+  display: none;
+}
+
+.subject-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.grade-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.grade-tab {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.grade-tab.active,
+.grade-tab:hover {
+  background: rgba(96, 165, 250, 0.15);
+  color: #93c5fd;
+  border-color: #60a5fa;
+}
+
+.lessons-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ai-generate-btn {
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: rgba(167, 139, 250, 0.12);
+  color: #c4b5fd;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.ai-generate-btn:hover {
+  background: rgba(167, 139, 250, 0.2);
+  transform: scale(1.03);
+}
+
+.ai-lesson-preview.hidden,
+.ai-lesson-step.hidden {
+  display: none;
+}
+
+.ai-preview-hint {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.ai-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.ai-preview-item {
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.ai-preview-item .lesson-row-info span {
+  display: block;
+  margin-top: 2px;
+}
+
+.ai-preview-difficulty {
+  color: #a78bfa !important;
+  font-size: 12px !important;
+  margin-top: 4px !important;
+}
+
+.subject-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.subject-tab {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.subject-tab.active,
+.subject-tab:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  border-color: transparent;
+}
+
+.add-lesson-btn {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.add-lesson-btn:hover {
+  transform: scale(1.03);
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: grab;
+  transition: 0.15s;
+}
+
+.lesson-row.dragging {
+  opacity: 0.4;
+}
+
+.lesson-row.drag-over {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.drag-handle {
+  color: #64748b;
+  font-size: 18px;
+  user-select: none;
+}
+
+.lesson-order {
+  color: #60a5fa;
+  font-weight: 700;
+  font-size: 13px;
+  min-width: 28px;
+}
+
+.lesson-row-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lesson-row-info span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.lesson-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+/* ==== نافذة إضافة/تعديل درس ==== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 20, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.98), rgba(15, 23, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 30px;
+  width: min(480px, 92vw);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-box h2 {
+  margin-bottom: 20px;
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-box label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.modal-box select option {
+  background: #0f172a;
+  color: white;
+}
+
+.modal-box textarea {
+  resize: vertical;
+}
+
+.modal-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.save-btn {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   DELTA AI — Lessons Skill Path (Dark Platinum Theme Fix)
+   ========================================================================== */
+
+.lesson-path-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.lesson-path-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.lesson-node {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+.lesson-node:hover {
+  transform: scale(1.05);
+}
+
+.lesson-node-locked {
+  cursor: not-allowed;
+}
+
+.lesson-node-shake {
+  animation: nodeShake 0.4s ease;
+}
+
+@keyframes nodeShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.lesson-mascot {
+  animation: mascotFloat 3s ease-in-out infinite;
+}
+
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* نافذة البوب أب الحالية المنسقة بلون الموقع الداكن */
+.lesson-popup {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 18px 22px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  width: calc(100% - 40px);
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  text-align: right;
+  transition: all 0.3s ease;
+}
+
+.lesson-popup-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+/* نافذة الدروس المكتملة المتناسقة مع الثيم */
+#completedLessonPopup {
+  position: absolute;
+  transform: translate(-50%, -115%);
+  z-index: 1000;
+  width: 280px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lesson-popup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lesson-popup.hidden,
+#completedLessonPopup.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}

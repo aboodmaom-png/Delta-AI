@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>الملف الشخصي | Delta AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <div class="page-load-overlay" id="profileLoadOverlay">
+      <div class="page-load-mascot" data-mascot></div>
+      <p class="page-load-text">🤖 جاري تحميل ملفك الشخصي...</p>
+    </div>
+    <div class="page-shell profile-page">
+      <header
+        class="topbar"
+        data-topbar
+        data-active="profile"
+        data-eyebrow="ملف الطالب"
+        data-title="Delta AI"
+      ></header>
+
+      <main class="profile-layout">
+        <section class="profile-hero glass-card">
+          <div class="avatar-ring">
+            <div class="avatar-large" id="profileAvatar">ع</div>
+          </div>
+          <div class="profile-info">
+            <p class="section-tag">الملف الذكي للطالب</p>
+            <h2 id="profileName">—</h2>
+            <p class="profile-grade" id="profileGrade">—</p>
+            <p class="profile-bio" id="profileEmail">—</p>
+          </div>
+        </section>
+
+        <section class="xp-card glass-card">
+          <div class="xp-top">
+            <div>
+              <p class="section-tag">نظام المستوى</p>
+              <h3 id="profileLevel">المستوى —</h3>
+              <p class="total-xp-tag" id="profileTotalXp">— XP إجمالي</p>
+            </div>
+            <div class="xp-pill" id="profileXpPill">— / 1000 نقطة</div>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="profileProgressFill"></div>
+          </div>
+          <p class="xp-caption">أكمل تحديات إضافية للوصول إلى المستوى التالي</p>
+        </section>
+
+        <section class="stats-grid profile-stats" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+          <article class="stat-card glass-card">
+            <p class="stat-label">التحديات المكتملة</p>
+            <h4 id="profileChallenges">—</h4>
+          </article>
+          <article class="stat-card glass-card">
+            <p class="stat-label">متوسط تقييم الذكاء الاصطناعي</p>
+            <h4 id="profileAvgScore">—</h4>
+          </article>
+        </section>
+
+        <section class="glass-card challenges-card">
+          <div class="section-heading">
+            <h3>التحديات الأخيرة</h3>
+          </div>
+          <div class="challenge-list" id="recentChallengesList">
+            <p style="color: var(--muted);">جاري التحميل...</p>
+          </div>
+        </section>
+
+        <button type="button" class="secondary-btn full-width" id="profileLogoutBtn" style="margin-top: 4px;">
+          تسجيل الخروج
+        </button>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/profile.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

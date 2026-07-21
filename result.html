@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>AI Evaluation | Delta AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/result.css" />
+  </head>
+  <body>
+    <div id="xpParticlesContainer" aria-hidden="true"></div>
+    <div class="page-shell result-page">
+      <header
+        class="topbar"
+        data-topbar
+        data-active="subjects"
+        data-eyebrow="منصة تعليمية ذكية"
+        data-title="Delta AI"
+      ></header>
+
+      <main class="result-layout">
+        <section class="main-column">
+
+          <div class="result-row">
+            <article class="glass-card score-card score-card-compact">
+              <div class="score-top">
+                <div class="mascot-wrapper" id="mascotWrapper">
+                  <svg viewBox="0 0 680 420" class="mascot-svg" id="mascotSvg">
+                    <defs>
+                      <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#8ef05a" />
+                        <stop offset="40%" stop-color="#5dd62c" />
+                        <stop offset="80%" stop-color="#337418" />
+                        <stop offset="100%" stop-color="#245011" />
+                      </linearGradient>
+                      <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#0f172a" />
+                        <stop offset="100%" stop-color="#070a12" />
+                      </linearGradient>
+                      <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                        <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.15" />
+                      </filter>
+                    </defs>
+
+                    <ellipse cx="340" cy="385" rx="110" ry="12" fill="#000000" opacity="0.12" />
+
+                    <g id="mascotArmLeft" filter="url(#shadow)">
+                      <path d="M 240,200 Q 180,230 200,300 Q 220,330 240,290 Q 230,240 250,210 Z" fill="url(#bodyGrad)" />
+                      <circle cx="204" cy="298" r="16" fill="url(#bodyGrad)" />
+                    </g>
+
+                    <g id="mascotArmRight" filter="url(#shadow)">
+                      <path d="M 440,190 Q 510,160 520,110 Q 545,120 505,170 Q 465,220 435,200 Z" fill="url(#bodyGrad)" />
+                      <circle cx="516" cy="116" r="16" fill="url(#bodyGrad)" />
+                    </g>
+
+                    <g id="mascotLegs">
+                      <rect x="290" y="310" width="45" height="50" rx="22" fill="url(#bodyGrad)" filter="url(#shadow)" />
+                      <circle cx="312" cy="362" r="16" fill="url(#bodyGrad)"></circle>
+                      <rect x="365" y="310" width="45" height="50" rx="22" fill="url(#bodyGrad)" filter="url(#shadow)" />
+                      <circle cx="388" cy="362" r="16" fill="url(#bodyGrad)"></circle>
+                    </g>
+
+                    <rect x="220" y="70" width="260" height="250" rx="75" fill="url(#bodyGrad)" filter="url(#shadow)" />
+
+                    <rect x="250" y="100" width="200" height="155" rx="48" fill="url(#screenGrad)" />
+                    <rect x="252" y="102" width="196" height="151" rx="46" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.15" />
+
+                    <g id="mascotEyes">
+                      <ellipse cx="305" cy="160" rx="24" ry="26" fill="#ffffff" />
+                      <ellipse cx="308" cy="162" rx="13" ry="14" fill="#0f172a" />
+                      <circle cx="302" cy="154" r="5" fill="#ffffff" />
+                      <circle cx="314" cy="166" r="2.5" fill="#ffffff" />
+                      <ellipse cx="395" cy="160" rx="24" ry="26" fill="#ffffff" />
+                      <ellipse cx="392" cy="162" rx="13" ry="14" fill="#0f172a" />
+                      <circle cx="386" cy="154" r="5" fill="#ffffff" />
+                      <circle cx="398" cy="166" r="2.5" fill="#ffffff" />
+                    </g>
+
+                    <path id="mascotMouth" d="M 335,188 Q 350,202 365,188" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" />
+                  </svg>
+<div class="mascot-bubble" id="mascotBubble">جاري تحليل نتيجتك...</div>
+                </div>
+                <div class="score-copy">
+                  <p class="section-tag">تقييم الذكاء الاصطناعي</p>
+                  <h2 id="scorePercentHeading">0%</h2>
+                  <p class="rating" id="ratingText">—</p>
+                  <p class="score-message" id="scoreMessage">
+                    جاري تحميل نتيجتك...
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="glass-card summary-card">
+              <div class="section-heading">
+                <h3>ملخص التحدي</h3>
+              </div>
+              <div class="summary-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px 20px;">
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <p class="label" style="color:var(--muted); font-size:0.82rem; margin:0;">المادة</p>
+                  <p class="value" style="font-weight:700; font-size:1rem; margin:0;" id="summarySubject">—</p>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <p class="label" style="color:var(--muted); font-size:0.82rem; margin:0;">التحدي</p>
+                  <p class="value" style="font-weight:700; font-size:1rem; margin:0;" id="summaryChallenge">—</p>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <p class="label" style="color:var(--muted); font-size:0.82rem; margin:0;">الصعوبة</p>
+                  <p class="value" style="font-weight:700; font-size:1rem; margin:0;" id="summaryDifficulty">—</p>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <p class="label" style="color:var(--muted); font-size:0.82rem; margin:0;">تاريخ الإكمال</p>
+                  <p class="value" style="font-weight:700; font-size:1rem; margin:0;" id="summaryDate">—</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="result-row">
+            <article class="glass-card summary-card">
+              <div class="section-heading">
+                <h3>إجابتك</h3>
+              </div>
+              <p class="score-message" id="resultAnswerText">—</p>
+            </article>
+
+            <article class="glass-card ai-feedback-card">
+              <div class="ai-header">
+                <div class="coach-icon">
+                  <i data-lucide="bot"></i>
+                </div>
+                <div>
+                  <p class="section-tag">🤖 AI Coach</p>
+                  <h3>تغذية راجعة ذكية</h3>
+                </div>
+              </div>
+              <p id="feedbackText">
+                بانتظار تقييم الذكاء الاصطناعي
+              </p>
+              <button class="secondary-btn" id="discussResultBtn" style="margin-top:16px;">
+                ناقش نتيجتك مع AI Coach 💬
+              </button>
+            </article>
+          </div>
+
+          <article class="glass-card reward-card reward-card-compact">
+            <div class="card-heading">
+              <h3>🏆 المكافأة</h3>
+            </div>
+            <div class="reward-grid">
+              <div>
+                <p class="label">XP المكتسبة</p>
+                <p class="value success" id="xpValue">—</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card actions-card">
+            <button class="primary-btn" id="nextChallengeBtn">التحدي التالي 🚀</button>
+            <a href="dashboard.html" class="secondary-btn">العودة للرئيسية</a>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="revisit-nudge hidden" id="revisitNudge">
+      <div class="revisit-mascot" data-mascot></div>
+      <div class="speech-bubble bubble-right revisit-bubble">
+        <svg class="bubble-tail-svg tail-right" viewBox="0 0 26 50" aria-hidden="true">
+          <path d="M2 46 C14 46, 24 30, 24 4 C18 16, 10 26, 2 22 Z" fill="#5dd62c" />
+        </svg>
+        <button type="button" class="revisit-close" id="revisitClose" aria-label="إغلاق">×</button>
+        <p class="revisit-text">لسا هون؟ 👋 جاهز لتحدي جديد؟</p>
+        <div class="revisit-actions">
+          <button class="primary-btn" id="revisitNextBtn">التحدي التالي 🚀</button>
+          <button class="secondary-btn" id="revisitDiscussBtn">ناقش النتيجة 💬</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/result.js"></script>
+  </body>
+</html>

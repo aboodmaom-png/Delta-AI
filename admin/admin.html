@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Delta AI - Admin</title>
+
+<link rel="stylesheet" href="adminStyle.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<div class="layout">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<h2>
+🤖 Delta AI
+</h2>
+
+
+<nav>
+
+<a class="active" data-section="dashboard">📊 لوحة التحكم</a>
+<a data-section="soon">👨‍🎓 الطلاب</a>
+<a data-section="soon">📚 المواد</a>
+<a data-section="lessons">📖 الدروس</a>
+<a data-section="soon">🎯 التحديات</a>
+<a data-section="soon">🤖 تقييمات AI</a>
+<a data-section="soon">⚙ الإعدادات</a>
+
+</nav>
+
+
+</aside>
+
+
+
+<!-- Main -->
+
+<main>
+
+<section id="section-dashboard" class="admin-section">
+
+<header>
+
+<div>
+<h1>مرحباً Admin 👋</h1>
+<p>لوحة إدارة منصة Delta AI</p>
+</div>
+
+
+<div class="profile">
+A
+</div>
+
+</header>
+
+
+
+<!-- Stats -->
+
+
+<section class="stats">
+
+
+<div class="card">
+<h3>👨‍🎓 الطلاب</h3>
+<strong>—</strong>
+<span>إجمالي الحسابات</span>
+</div>
+
+
+<div class="card">
+<h3>🎯 التحديات</h3>
+<strong>—</strong>
+<span>تحديات تم توليدها</span>
+</div>
+
+
+
+<div class="card">
+<h3>🤖 تقييمات AI</h3>
+<strong>—</strong>
+<span>حلول تم تقييمها</span>
+</div>
+
+
+
+<div class="card">
+<h3>⭐ متوسط الدرجات</h3>
+<strong>—</strong>
+<span>عبر كل الحلول</span>
+</div>
+
+
+</section>
+
+
+
+<!-- AI Monitor -->
+
+<section class="panel">
+
+
+<h2>🤖 AI Evaluation Monitor</h2>
+
+
+<div class="ai-grid">
+
+
+<div>
+<p>طلبات AI</p>
+<h2>—</h2>
+</div>
+
+
+<div>
+<p>متوسط زمن الاستجابة</p>
+<h2>—</h2>
+</div>
+
+
+<div>
+<p>دقة AI</p>
+<h2>—</h2>
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- Students -->
+
+
+<section class="panel">
+
+
+<h2>آخر الطلاب</h2>
+
+
+<table id="studentsTable">
+
+<tr>
+<th>الاسم</th>
+<th>المستوى</th>
+<th>XP</th>
+<th>الدرجة</th>
+</tr>
+
+</table>
+
+
+</section>
+
+</section>
+
+
+<!-- Lessons management -->
+
+<section id="section-lessons" class="admin-section hidden">
+
+  <header>
+    <div>
+      <h1>📖 إدارة الدروس</h1>
+      <p>أضيفي، عدّلي، احذفي، ورتّبي الدروس بالسحب والإفلات — الترتيب هون هو نفسه ترتيب مسار الدروس عند الطالب.</p>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="subject-tabs-row">
+      <div class="subject-tabs" id="subjectTabs"></div>
+      <div class="lessons-header-actions">
+        <button type="button" id="aiGenerateBtn" class="ai-generate-btn">✨ توليد دروس بالذكاء الاصطناعي</button>
+        <button type="button" id="addLessonBtn" class="add-lesson-btn">+ إضافة درس</button>
+      </div>
+    </div>
+
+    <div class="grade-tabs" id="gradeTabs"></div>
+
+    <div class="lessons-list" id="lessonsList">
+      <p style="color:#94a3b8;">جاري التحميل...</p>
+    </div>
+  </section>
+
+</section>
+
+
+<!-- Placeholder for not-yet-built sections -->
+
+<section id="section-soon" class="admin-section hidden">
+  <header>
+    <div>
+      <h1>قريبًا 🚧</h1>
+      <p>هاد القسم لسا قيد التطوير.</p>
+    </div>
+  </header>
+</section>
+
+
+</main>
+
+
+</div>
+
+
+<!-- Lesson add/edit modal -->
+
+<div class="modal-overlay hidden" id="lessonModal">
+  <div class="modal-box">
+    <h2 id="lessonModalTitle">إضافة درس جديد</h2>
+
+    <form id="lessonForm">
+      <label>
+        عنوان الدرس
+        <input type="text" id="lessonTitle" required />
+      </label>
+
+      <label>
+        ملخص الدرس (يقرأه الذكاء الاصطناعي لتوليد التحدي)
+        <textarea id="lessonSummary" rows="3" required></textarea>
+      </label>
+
+      <div class="modal-form-row">
+        <label>
+          مستوى الصعوبة
+          <select id="lessonDifficulty"></select>
+        </label>
+
+        <label>
+          الصف الدراسي
+          <select id="lessonGrade"></select>
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="save-btn">حفظ</button>
+        <button type="button" id="lessonCancelBtn" class="cancel-btn">إلغاء</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- AI lesson generation modal -->
+
+<div class="modal-overlay hidden" id="aiLessonModal">
+  <div class="modal-box">
+    <h2>✨ توليد دروس بالذكاء الاصطناعي</h2>
+
+    <form id="aiLessonForm" class="ai-lesson-step">
+      <label>
+        الصف الدراسي
+        <select id="aiLessonGrade"></select>
+      </label>
+
+      <label>
+        عدد الدروس
+        <input type="number" id="aiLessonCount" min="1" max="10" value="5" />
+      </label>
+
+      <label>
+        تركيز خاص (اختياري)
+        <input type="text" id="aiLessonTopic" placeholder="مثلاً: التركيز على الكسور والنسب" />
+      </label>
+
+      <div class="modal-actions">
+        <button type="submit" class="save-btn" id="aiGenerateSubmitBtn">توليد ✨</button>
+        <button type="button" id="aiLessonCancelBtn" class="cancel-btn">إلغاء</button>
+      </div>
+    </form>
+
+    <div id="aiLessonPreview" class="ai-lesson-preview hidden">
+      <p class="ai-preview-hint">راجعي الدروس المقترحة، ثم أضيفيها كلها بضغطة وحدة:</p>
+      <div class="ai-preview-list" id="aiPreviewList"></div>
+      <div class="modal-actions">
+        <button type="button" class="save-btn" id="aiConfirmAddBtn">إضافة الكل ✅</button>
+        <button type="button" id="aiPreviewBackBtn" class="cancel-btn">رجوع</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="module" src="admin.js"></script></body>
+</html>

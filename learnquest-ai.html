@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Delta AI | المساعد الذكي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/shared.css" />
+  <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#0f0f0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delta AI" />
+    <meta name="msapplication-TileColor" content="#0f0f0f" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+  <link rel="stylesheet" href="css/learnquest-ai.css" />
+</head>
+<body>
+  <div class="page-shell learnquest-page">
+    <header
+      class="topbar"
+      data-topbar
+      data-variant="minimal"
+      data-eyebrow="المساعد الذكي"
+      data-title="Delta AI"
+    ></header>
+
+    <main class="learnquest-layout">
+      <section class="content-column">
+        <article class="glass-card chat-card initial-state" id="chatCard">
+          <div class="chat-header">
+            <button class="secondary-btn small" id="clearChatBtn">مسح المحادثة</button>
+          </div>
+
+          <div class="chat-stage">
+            <div class="chat-window" id="chatWindow" aria-live="polite"></div>
+
+            <div class="composer-zone">
+              <div class="initial-greeting" id="initialGreeting">
+                <div class="coach-mascot" data-mascot style="max-width:160px;margin:0 auto 12px;"></div>
+                <h2>كيف أقدر أساعدك اليوم؟</h2>
+                <p>اسألني عن أي درس أو اطلب تحديًا تعليميًا.</p>
+              </div>
+
+              <div class="input-area">
+                <div class="chat-input-wrapper">
+                  <input
+                    id="chatInput"
+                    type="text"
+                    placeholder="اكتب سؤالك هنا..."
+                    autocomplete="off"
+                  />
+                  <span class="enter-hint">Enter للإرسال</span>
+                </div>
+              </div>
+
+              <div class="suggestions-row" id="suggestionsRow">
+                <button class="suggestion-pill">اشرح قوانين نيوتن</button>
+                <button class="suggestion-pill">أنشئ تحدي رياضيات</button>
+                <button class="suggestion-pill">راجع إجابتي الأخيرة</button>
+                <button class="suggestion-pill">ساعدني أفهم الكسور</button>
+                <button class="suggestion-pill">أنشئ اختبارًا علميًا</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <aside class="side-panel">
+        <article class="glass-card panel-card">
+          <button class="secondary-btn small" id="newConversationBtn">+ جديدة</button>
+          <p class="panel-title">المحادثات</p>
+          <ul class="panel-list" id="conversationsList">
+            <li style="color:var(--muted);">جاري التحميل...</li>
+          </ul>
+        </article>
+      </aside>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="js/components.js"></script>
+  <script type="module" src="js/learnquest-ai.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const subjectName = sessionStorage.getItem('aiCoachSubjectName');
+      if (!subjectName) return;
+
+      sessionStorage.removeItem('aiCoachSubjectId');
+      sessionStorage.removeItem('aiCoachSubjectName');
+
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.value = `بدي مساعدة في مادة ${subjectName}`;
+        chatInput.dispatchEvent(new Event('input'));
+        chatInput.focus();
+      }
+    });
+  </script>
+</body>
+</html>

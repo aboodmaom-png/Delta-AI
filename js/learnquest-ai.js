@@ -12,8 +12,8 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const CHAT_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com';
-
+const CHAT_ENDPOINT =
+  'https://delta-ai-backend-aq3d.onrender.com/api/chat';
 let currentUser = null;
 let currentConversationId = null;
 

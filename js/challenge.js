@@ -15,8 +15,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Backend endpoints (backend/server.js). Adjust if deployed elsewhere.
-const EVALUATE_ENDPOINT = 'http://localhost:3000/api/evaluate';
-const GENERATE_ENDPOINT = 'http://localhost:3000/api/generate-challenge';
+const EVALUATE_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com';
+const GENERATE_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com';
 
 const GRADE_MAP = {
   'الأول': 1,
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const HINT_ENDPOINT = 'http://localhost:3000/api/hint';
+  const HINT_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com';
 
   async function requestHint(button) {
     if (!currentChallengeQuestion) return;

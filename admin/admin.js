@@ -175,7 +175,7 @@ function initNav() {
 // Lessons management (add / edit / delete / drag-reorder)
 // ============================
 
-const GENERATE_LESSONS_ENDPOINT = 'http://localhost:3000/api/generate-lessons';
+const GENERATE_LESSONS_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com';
 let generatedLessonsPreview = [];
 
 async function initLessonsSection() {

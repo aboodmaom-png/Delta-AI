@@ -61,9 +61,6 @@
                   <div class="custom-select-option" data-value="السابع">الصف السابع</div>
                   <div class="custom-select-option" data-value="الثامن">الصف الثامن</div>
                   <div class="custom-select-option" data-value="التاسع">الصف التاسع</div>
-                  <div class="custom-select-option" data-value="العاشر">الصف العاشر</div>
-                  <div class="custom-select-option" data-value="الحادي عشر">الصف الحادي عشر</div>
-                  <div class="custom-select-option" data-value="الثاني عشر">الصف الثاني عشر</div>
                 </div>
                 <select id="grade" required style="display:none;">
                   <option value="" disabled selected>اختر صفك الدراسي</option>
@@ -76,9 +73,6 @@
                   <option value="السابع">الصف السابع</option>
                   <option value="الثامن">الصف الثامن</option>
                   <option value="التاسع">الصف التاسع</option>
-                  <option value="العاشر">الصف العاشر</option>
-                  <option value="الحادي عشر">الصف الحادي عشر</option>
-                  <option value="الثاني عشر">الصف الثاني عشر</option>
                 </select>
               </div>
             </label>
@@ -114,6 +108,13 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="js/components.js"></script>
+    <script type="module">
+      import { auth } from './js/firebase.js';
+      import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+      onAuthStateChanged(auth, (user) => {
+        if (user) window.location.replace('dashboard.html');
+      });
+    </script>
     <script type="module" src="js/auth.js"></script>
     <script>
       (function () {

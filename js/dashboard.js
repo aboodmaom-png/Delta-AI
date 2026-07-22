@@ -37,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ربط كل زر بالنقر → يودي لصفحة الدروس الخاصة بالمادة
     subjectContainer.querySelectorAll('.subject-start-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
-        sessionStorage.setItem('selectedSubject', btn.dataset.subjectId);
-        window.location.href = 'lessons.html';
+sessionStorage.setItem('selectedSubjectId', btn.dataset.subjectId);        window.location.href = 'lessons.html';
       });
     });
   }

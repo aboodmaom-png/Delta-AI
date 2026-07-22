@@ -146,13 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
         typeof existing.challengesCompleted === 'number' ? existing.challengesCompleted : 0;
 
       const newXp = currentXp + earnedXp;
-      const newLevel = Math.floor(newXp / XP_PER_LEVEL) + 1;
 
+      // المستوى بيتحدد من تقدّم الدروس (syncProfileLevel بـ lessons.js)
+      // مش من الـXP — عشان ما يتضاربوا ويدهسوا بعض
       await setDoc(
         userRef,
         {
           xp: newXp,
-          level: newLevel,
           challengesCompleted: currentChallengesCompleted + 1
         },
         { merge: true }

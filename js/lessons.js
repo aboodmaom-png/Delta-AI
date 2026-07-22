@@ -1,7 +1,6 @@
 import { auth, db } from './firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+import { collection, query, where, getDocs, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 // Platform is scoped to Mathematics and Science only. Arabic/English subject
 // documents may still exist in Firestore, but they are filtered out here
 // rather than deleted from the database.
@@ -39,6 +38,49 @@ const GRADE_MAP = {
 
 // Pilot phase: content only exists for these grades.
 const ALLOWED_GRADES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+/* ===== نظام مستويات الدروس =====
+   المسار المتعرّج = مستوى واحد. إكمال كل عقده ينقل الطالب للمستوى التالي.
+   المستويات محسوبة من ترتيب الدروس (order) — بدون تعديل قاعدة البيانات. */
+const TARGET_LESSONS_PER_LEVEL = 5;
+const MIN_LESSONS_PER_LEVEL = 3;
+
+function lessonsPerLevel(totalLessons) {
+  if (totalLessons <= TARGET_LESSONS_PER_LEVEL + 1) return totalLessons;
+  const levelCount = Math.round(totalLessons / TARGET_LESSONS_PER_LEVEL);
+  const perLevel = Math.ceil(totalLessons / Math.max(1, levelCount));
+  return Math.max(MIN_LESSONS_PER_LEVEL, perLevel);
+}
+
+function splitIntoLevels(allLessons) {
+  const size = lessonsPerLevel(allLessons.length);
+  const levels = [];
+  for (let i = 0; i < allLessons.length; i += size) {
+    levels.push(allLessons.slice(i, i + size));
+  }
+  return levels;
+}
+
+function findCurrentLevelIndex(levels, completedLessonIds) {
+  for (let i = 0; i < levels.length; i++) {
+    const allDone = levels[i].every((lesson) => completedLessonIds.has(lesson.id));
+    if (!allDone) return i;
+  }
+  return levels.length - 1;
+}
+
+async function syncProfileLevel(newLevel) {
+  if (!currentUser || !newLevel) return;
+  try {
+    const userRef = doc(db, 'users', currentUser.uid);
+    const snap = await getDoc(userRef);
+    const stored = snap.exists() && typeof snap.data().level === 'number' ? snap.data().level : 1;
+    if (newLevel > stored) {
+      await updateDoc(userRef, { level: newLevel });
+    }
+  } catch (error) {
+    console.error('Failed to sync profile level:', error);
+  }
+}
 
 const NODE_GAP_Y = 130;
 const CENTER_X = 160;
@@ -225,8 +267,18 @@ const states = lessons.map((lesson) => {
   const nodeLeftPercent = (currentNodePoint.x / 320) * 100;
   const nodeTopPercent = (currentNodePoint.y / svgHeight) * 100;
 
-  container.innerHTML = `
+container.innerHTML = `
     <div class="lesson-path-wrap">
+      <div class="level-banner">
+        <span class="level-banner-title">🎯 المستوى ${currentLevelNumber}</span>
+        <span class="level-banner-meta">${
+          everythingComplete
+            ? 'أنهيت كل المستويات المتاحة 🎉'
+            : `${completedInLevel} / ${lessons.length} دروس${
+                totalLevels > 1 ? ` • من أصل ${totalLevels} مستويات` : ''
+              }`
+        }</span>
+      </div>
       <svg viewBox="0 0 320 ${svgHeight}" class="lesson-path-svg" id="lessonPathSvg">
         <defs>
           <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">

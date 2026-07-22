@@ -20,6 +20,8 @@ const EVALUATE_ENDPOINT =
 
 const GENERATE_ENDPOINT =
   'https://delta-ai-backend-aq3d.onrender.com/api/generate-challenge';
+const HINT_ENDPOINT =
+  'https://delta-ai-backend-aq3d.onrender.com/api/hint';
 
 const GRADE_MAP = {
   'الأول': 1,

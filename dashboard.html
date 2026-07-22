@@ -39,8 +39,8 @@
         <!-- AI Daily Challenge -->
         <section class="hero-card">
           <div class="hero-copy">
-            <p class="dashboard-greeting" id="dashboardGreeting">أهلاً بعودتك 👋</p>
-            <p class="dashboard-subgreeting">جاهز تكمل تحدياتك وترفع مستواك اليوم؟</p>
+            <p class="dashboard-greeting" id="dashboardGreeting">أهلاً فيك 👋</p>
+            <p class="dashboard-subgreeting" id="dashboardSubgreeting">جاهز تكمل تحدياتك وترفع مستواك اليوم؟</p>
             <p class="section-tag">🤖 تحدي اليوم</p>
             <h2>تحدي جديد بانتظارك اليوم!</h2>
             <p class="hero-tagline">تحدٍ واقعي مبني على مفاهيم الرياضيات والعلوم، جاهز يختبر تفكيرك.</p>
@@ -94,6 +94,12 @@
 
       let isLoggedIn = false;
 
+      // Anyone whose account was created within this window counts as
+      // "أول تسجيل دخول" — long enough to cover signup → dashboard in one
+      // flow, short enough that opening the app again later reads as a
+      // returning visit rather than a new one.
+      const FIRST_LOGIN_WINDOW_MS = 2 * 60 * 1000;
+
       // "ابدأ التحدي" is a real destination (subjects.html) for signed-in
       // students, but a guest clicking it has nothing to save progress to —
       // send them to create an account first instead of letting them wander
@@ -110,20 +116,39 @@
         isLoggedIn = Boolean(user);
 
         const greetingEl = document.getElementById('dashboardGreeting');
-        if (!greetingEl || !user) return;
+        const subgreetingEl = document.getElementById('dashboardSubgreeting');
+        if (!greetingEl) return;
+
+        if (!user) {
+          greetingEl.textContent = 'منصة تعليمية ذكية بانتظارك 🚀';
+          if (subgreetingEl) subgreetingEl.textContent = 'أنشئ حساب مجاني وابدأ أول تحدي بدقيقتين.';
+          return;
+        }
 
         let name = user.displayName || (user.email ? user.email.split('@')[0] : 'طالب');
+        let createdAt = null;
 
         try {
           const snap = await getDoc(doc(db, 'users', user.uid));
-          if (snap.exists() && snap.data().name) {
-            name = snap.data().name;
+          if (snap.exists()) {
+            if (snap.data().name) name = snap.data().name;
+            createdAt = snap.data().createdAt || null;
           }
         } catch (error) {
-          console.error('Failed to load user name for dashboard greeting:', error);
+          console.error('Failed to load user data for dashboard greeting:', error);
         }
 
-        greetingEl.textContent = `أهلاً بعودتك، ${name} 👋`;
+        const isFirstLogin = typeof createdAt?.toMillis === 'function'
+          ? (Date.now() - createdAt.toMillis()) < FIRST_LOGIN_WINDOW_MS
+          : false;
+
+        if (subgreetingEl) {
+          subgreetingEl.textContent = 'جاهز تكمل تحدياتك وترفع مستواك اليوم؟';
+        }
+
+        greetingEl.textContent = isFirstLogin
+          ? `أهلاً فيك، ${name} 🎉`
+          : `أهلاً بعودتك، ${name} 👋`;
       });
     </script>
     <script>

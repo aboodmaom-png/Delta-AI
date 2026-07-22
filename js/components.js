@@ -264,12 +264,12 @@ function renderBottomNav() {
         <nav class="nav-links">${navHtml}</nav>
       </div>
       <div class="user-pill">
-          <div class="user-pill-info">
-          <p class="hello-text" id="navHelloText">مرحباً، زائر</p>
-          </div>
-        <a href="login.html" class="logout-btn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
-          <i data-lucide="log-out"></i>
+        <a href="login.html" class="logout-btn" id="navAuthAction" aria-label="تسجيل الدخول" title="تسجيل الدخول">
+          <i data-lucide="log-in"></i>
         </a>
+          <div class="user-pill-info" id="navUserInfo">
+          <p class="hello-text" id="navHelloText">أهلاً، زائر</p>
+          </div>
       </div>
     `;
 
@@ -278,8 +278,29 @@ function renderBottomNav() {
 
   async function loadCurrentUser(root) {
     const helloEl = root.querySelector('#navHelloText');
-    const levelEl = root.querySelector('#navLevelPill');
-    const xpEl = root.querySelector('#navXpPill');
+    const authActionEl = root.querySelector('#navAuthAction');
+
+    function setGuestState() {
+      if (helloEl) helloEl.textContent = 'أهلاً، زائر';
+      if (authActionEl) {
+        authActionEl.href = 'login.html';
+        authActionEl.setAttribute('aria-label', 'تسجيل الدخول');
+        authActionEl.title = 'تسجيل الدخول';
+        authActionEl.innerHTML = '<i data-lucide="log-in"></i>';
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }
+
+    function setLoggedInState(name) {
+      if (helloEl) helloEl.textContent = `أهلاً، ${name}`;
+      if (authActionEl) {
+        authActionEl.href = 'login.html';
+        authActionEl.setAttribute('aria-label', 'تسجيل الخروج');
+        authActionEl.title = 'تسجيل الخروج';
+        authActionEl.innerHTML = '<i data-lucide="log-out"></i>';
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }
 
     try {
       const [{ auth, db }, { onAuthStateChanged }, { doc, getDoc }] = await Promise.all([
@@ -290,23 +311,17 @@ function renderBottomNav() {
 
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
-          if (helloEl) helloEl.textContent = 'مرحباً، زائر';
-          if (levelEl) levelEl.textContent = 'Level 1';
-          if (xpEl) xpEl.textContent = '0 XP';
+          setGuestState();
           return;
         }
 
         let name = user.displayName || (user.email ? user.email.split('@')[0] : 'طالب');
-        let xp = 0;
-        let level = 1;
 
         try {
           const snapshot = await getDoc(doc(db, 'users', user.uid));
           if (snapshot.exists()) {
             const data = snapshot.data();
             name = data.name || name;
-            xp = typeof data.xp === 'number' ? data.xp : xp;
-            level = typeof data.level === 'number' ? data.level : level;
 
             if (!data.grade) {
               showGradeGateModal(user.uid);
@@ -318,9 +333,7 @@ function renderBottomNav() {
           console.error('Failed to load user data for navbar:', error);
         }
 
-        if (helloEl) helloEl.textContent = `مرحباً، ${name}`;
-        if (levelEl) levelEl.textContent = `Level ${level}`;
-        if (xpEl) xpEl.textContent = `${xp} XP`;
+        setLoggedInState(name);
       });
     } catch (error) {
       console.error('Failed to initialize Firebase for navbar:', error);

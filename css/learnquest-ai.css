@@ -152,6 +152,28 @@
   border-top-left-radius: 4px;
 }
 
+.message-bubble p {
+  margin: 0;
+}
+
+.message-bubble p + p,
+.message-bubble .message-list + p,
+.message-bubble p + .message-list {
+  margin-top: 8px;
+}
+
+.message-list {
+  margin: 0;
+  padding-inline-start: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.message-list li {
+  line-height: 1.7;
+}
+
 .typing-dot {
   width: 8px;
   height: 8px;

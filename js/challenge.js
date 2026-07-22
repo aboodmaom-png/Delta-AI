@@ -258,7 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-const HINT_ENDPOINT =
+
+
   'https://delta-ai-backend-aq3d.onrender.com/api/hint';
   async function requestHint(button) {
     if (!currentChallengeQuestion) return;

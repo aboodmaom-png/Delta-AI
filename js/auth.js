@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const credential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(credential.user, { displayName: name });
         await createUserDocument(credential.user, name, grade);
-        window.location.href = 'dashboard.html';
+        window.location.href = 'subjects.html';
       } catch (error) {
         showError(signupForm, mapAuthError(error));
         submitButton.disabled = false;
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             challengesCompleted: 0,
             createdAt: serverTimestamp()
           });
-          window.location.href = 'dashboard.html';
+          window.location.href = 'subjects.html';
           return;
         }
 

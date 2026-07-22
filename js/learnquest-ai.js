@@ -64,14 +64,59 @@ document.addEventListener('DOMContentLoaded', () => {
     const bubble = document.createElement('div');
     bubble.className = `message-bubble ${role}`;
 
-    String(text ?? '').split('\n').forEach((line) => {
-      const paragraph = document.createElement('p');
-      paragraph.textContent = line || ' ';
-      bubble.appendChild(paragraph);
-    });
+    renderFormattedContent(bubble, text);
 
     row.appendChild(bubble);
     return row;
+  }
+
+  // The AI is asked (in server.js) to answer in short numbered/bulleted
+  // points instead of one long paragraph, since students lose interest in
+  // walls of text. This turns lines like "1. ..." or "- ..." into a real
+  // <ol>/<ul> so they actually render as a list, and treats anything else
+  // as its own short paragraph.
+  function renderFormattedContent(container, text) {
+    const lines = String(text ?? '')
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    if (!lines.length) {
+      container.appendChild(document.createElement('p'));
+      return;
+    }
+
+    let currentList = null;
+    let currentListType = null;
+
+    function closeList() {
+      currentList = null;
+      currentListType = null;
+    }
+
+    lines.forEach((line) => {
+      const numberedMatch = line.match(/^(\d+)[.\-)]\s+(.*)/);
+      const bulletMatch = !numberedMatch && line.match(/^[-•*]\s+(.*)/);
+
+      if (numberedMatch || bulletMatch) {
+        const listType = numberedMatch ? 'ol' : 'ul';
+        if (currentListType !== listType) {
+          closeList();
+          currentList = document.createElement(listType);
+          currentList.className = 'message-list';
+          container.appendChild(currentList);
+          currentListType = listType;
+        }
+        const li = document.createElement('li');
+        li.textContent = numberedMatch ? numberedMatch[2] : bulletMatch[1];
+        currentList.appendChild(li);
+      } else {
+        closeList();
+        const paragraph = document.createElement('p');
+        paragraph.textContent = line;
+        container.appendChild(paragraph);
+      }
+    });
   }
 
   function showMessages(messages) {

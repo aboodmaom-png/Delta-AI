@@ -233,6 +233,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error('Failed to load completed lessons:', error);
     }
   }
+
+// تقسيم الدروس لمستويات وعرض المستوى الحالي فقط
+  const allLessons = lessons;
+  const levels = splitIntoLevels(allLessons);
+  const currentLevelIndex = findCurrentLevelIndex(levels, completedLessonIds);
+  const currentLevelNumber = currentLevelIndex + 1;
+  const totalLevels = levels.length;
+
+  await syncProfileLevel(currentLevelNumber);
+
+  lessons = levels[currentLevelIndex] || [];
+
+  const everythingComplete = allLessons.every((l) => completedLessonIds.has(l.id));
+  const completedInLevel = lessons.filter((l) => completedLessonIds.has(l.id)).length;
+
 let pathIsOpen = true;
 
 const states = lessons.map((lesson) => {

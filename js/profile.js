@@ -86,8 +86,11 @@ onAuthStateChanged(auth, async (user) => {
 
     if (nameEl) nameEl.textContent = name;
     if (emailEl) emailEl.textContent = email;
-    if (gradeEl) gradeEl.textContent = `الصف: ${grade}`;
-    if (avatarEl) avatarEl.textContent = name.trim().charAt(0) || 'ط';
+if (gradeEl) {
+  const editBtn = gradeEl.querySelector('#editGradeBtn');
+  gradeEl.textContent = `الصف: ${grade} `;
+  if (editBtn) gradeEl.appendChild(editBtn);
+}    if (avatarEl) avatarEl.textContent = name.trim().charAt(0) || 'ط';
     if (levelEl) levelEl.textContent = `المستوى ${level}`;
     if (challengesEl) challengesEl.textContent = challengesCompleted;
     if (totalXpEl) totalXpEl.textContent = `${xp.toLocaleString('en-US')} XP إجمالي`;

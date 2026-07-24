@@ -995,3 +995,44 @@ body.page-transition-out {
   font-size: 0.82rem;
   color: var(--muted);
 }
+
+/* ==== زر تعديل الصف بالبروفايل ==== */
+.edit-grade-btn {
+  margin-inline-start: 10px;
+  padding: 3px 12px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(93, 214, 44, 0.12);
+  border: 1px solid rgba(93, 214, 44, 0.3);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.edit-grade-btn:hover {
+  background: rgba(93, 214, 44, 0.22);
+}
+
+/* زر الإغلاق لنافذة تعديل الصف */
+.grade-edit-close {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 16px;
+  width: 34px;
+  height: 34px;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.grade-edit-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}

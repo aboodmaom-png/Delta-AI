@@ -158,7 +158,7 @@ function renderMascots() {
 
 const GRADE_OPTIONS = [
   'الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس',
-  'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'
+  'السابع', 'الثامن', 'التاسع'
 ];
 
 // Every page's content (subjects, lessons, challenges) is filtered by grade.
@@ -194,11 +194,12 @@ function showGradeGateModal(uid) {
       btn.classList.add('selected');
 
       try {
-        // setDoc with merge (rather than updateDoc) because this modal also
-        // fires for users whose Firestore document doesn't exist yet — most
-        // often a Google sign-in that never went through the signup form.
-        // updateDoc throws on a missing document, which is what produced the
-        // "صار خطأ أثناء الحفظ" message; merge creates or updates either way.
+        // setDoc with merge (not updateDoc): updateDoc throws if the user
+        // document doesn't exist yet — which is exactly the Google-sign-in
+        // case this modal serves — producing the "صار خطأ أثناء الحفظ" error.
+        // merge writes the grade whether the doc is new or already there, and
+        // when a student picks a different grade here it overwrites the old
+        // one, so lessons/subjects immediately reflect the new grade on reload.
         const [{ db }, { doc, setDoc }] = await Promise.all([
           import('./firebase.js'),
           import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')

@@ -3,6 +3,7 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import {
   doc,
   getDoc,
+  setDoc,
   collection,
   query,
   where,
@@ -188,3 +189,73 @@ onAuthStateChanged(auth, async (user) => {
     }
   }
 });
+/* ==========================================================================
+   Edit grade from the profile
+   Lets a student change the grade they picked at sign-up (or via the Google
+   grade-gate). Opens a small picker with the same options; saving writes the
+   new grade with setDoc+merge — overwriting the old value — then reloads so
+   subjects/lessons re-filter for the new grade. Grades match the pilot range
+   (1–9); no 10/11/12.
+   ========================================================================== */
+(function setupGradeEditor() {
+  const GRADE_OPTIONS = [
+    'الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس',
+    'السادس', 'السابع', 'الثامن', 'التاسع'
+  ];
+
+  const editBtn = document.getElementById('editGradeBtn');
+  if (!editBtn) return;
+
+  editBtn.addEventListener('click', () => {
+    if (!auth.currentUser) return;
+    if (document.getElementById('gradeEditModal')) return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'gradeEditModal';
+    overlay.className = 'grade-gate-overlay';
+    overlay.innerHTML = `
+      <div class="grade-gate-card">
+        <button type="button" class="grade-edit-close" id="gradeEditClose" aria-label="إغلاق">×</button>
+        <h2>غيّر صفك الدراسي</h2>
+        <p>سيتغيّر محتوى المواد والدروس حسب صفك الجديد.</p>
+        <div class="grade-gate-options">
+          ${GRADE_OPTIONS.map((g) => `<button type="button" class="grade-gate-option" data-grade="${g}">${g}</button>`).join('')}
+        </div>
+        <p class="grade-gate-error hidden" id="gradeEditError">صار خطأ أثناء الحفظ، حاول مرة أخرى.</p>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    function closeModal() {
+      overlay.remove();
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('gradeEditClose')?.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+
+    overlay.querySelectorAll('.grade-gate-option').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        overlay.querySelectorAll('.grade-gate-option').forEach((b) => { b.disabled = true; });
+        btn.classList.add('selected');
+        try {
+          await setDoc(
+            doc(db, 'users', auth.currentUser.uid),
+            { grade: btn.dataset.grade },
+            { merge: true }
+          );
+          document.body.style.overflow = '';
+          window.location.reload();
+        } catch (error) {
+          console.error('Failed to update grade:', error);
+          document.getElementById('gradeEditError')?.classList.remove('hidden');
+          overlay.querySelectorAll('.grade-gate-option').forEach((b) => { b.disabled = false; });
+          btn.classList.remove('selected');
+        }
+      });
+    });
+  });
+})();

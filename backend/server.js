@@ -134,7 +134,7 @@ app.post('/api/evaluate', async (req, res) => {
 
   try {
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'openai/gpt-oss-120b',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: `Question: ${question}\n\nStudent Answer: ${answer}` }
@@ -215,7 +215,7 @@ app.post('/api/chat', async (req, res) => {
     messages.push({ role: 'user', content: message });
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'openai/gpt-oss-120b',
       messages,
       temperature: 0.7
     });
@@ -276,7 +276,7 @@ app.post('/api/generate-challenge', async (req, res) => {
 أنشئ تحديًا واحداً بناءً على هذه المعلومات، مع الالتزام الصارم بأن يكون التحدي في مادة "${subject}" فقط ولا شيء غيرها.`;
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'openai/gpt-oss-120b',
       messages: [
         { role: 'system', content: CHALLENGE_GENERATION_PROMPT },
         { role: 'user', content: userPrompt }
@@ -322,7 +322,7 @@ app.post('/api/hint', async (req, res) => {
     const userPrompt = `التحدي: ${question}\n\nمحاولة الطالب الحالية (قد تكون فارغة): ${currentAnswer || 'لم يكتب شيئًا بعد'}\n\nأعطني تلميحًا مناسبًا.`;
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'openai/gpt-oss-120b',
       messages: [
         { role: 'system', content: HINT_PROMPT },
         { role: 'user', content: userPrompt }
@@ -375,7 +375,7 @@ ${topic ? `تركيز خاص مطلوب (اختياري): ${topic}` : ''}
 أنشئ قائمة الدروس المطلوبة بالعدد المحدد بالضبط.`;
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'openai/gpt-oss-120b',
       messages: [
         { role: 'system', content: LESSON_GENERATION_PROMPT },
         { role: 'user', content: userPrompt }
@@ -389,12 +389,12 @@ ${topic ? `تركيز خاص مطلوب (اختياري): ${topic}` : ''}
 
     const lessons = Array.isArray(parsed.lessons)
       ? parsed.lessons
-          .map((l) => ({
-            title: stripStrayForeignScript(String(l.title || '')),
-            summary: stripStrayForeignScript(String(l.summary || '')),
-            difficulty: ['easy', 'medium', 'hard'].includes(l.difficulty) ? l.difficulty : 'medium'
-          }))
-          .filter((l) => l.title && l.summary)
+        .map((l) => ({
+          title: stripStrayForeignScript(String(l.title || '')),
+          summary: stripStrayForeignScript(String(l.summary || '')),
+          difficulty: ['easy', 'medium', 'hard'].includes(l.difficulty) ? l.difficulty : 'medium'
+        }))
+        .filter((l) => l.title && l.summary)
       : [];
 
     if (!lessons.length) throw new Error('Empty lesson generation response');

@@ -10,6 +10,10 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+));
+
 const XP_PER_LEVEL = 1000;
 
 const ARABIC_MONTHS_SHORT = [
@@ -77,7 +81,7 @@ onAuthStateChanged(auth, async (user) => {
     const snapshot = await getDoc(doc(db, 'users', user.uid));
     const data = snapshot.exists() ? snapshot.data() : {};
 
-    const name = data.name || user.displayName || 'طالب Delta AI';
+    const name = data.name || user.displayName || 'طالب دلتا';
     const email = data.email || user.email || '';
     const grade = data.grade || 'غير محدد';
     const xp = typeof data.xp === 'number' ? data.xp : 0;
@@ -93,12 +97,12 @@ if (gradeEl) {
 }    if (avatarEl) avatarEl.textContent = name.trim().charAt(0) || 'ط';
     if (levelEl) levelEl.textContent = `المستوى ${level}`;
     if (challengesEl) challengesEl.textContent = challengesCompleted;
-    if (totalXpEl) totalXpEl.textContent = `${xp.toLocaleString('en-US')} XP إجمالي`;
+    if (totalXpEl) totalXpEl.textContent = `${xp.toLocaleString('en-US')} XP`;
 
     const xpInLevel = xp % XP_PER_LEVEL;
     const percent = Math.min((xpInLevel / XP_PER_LEVEL) * 100, 100);
 
-    if (xpPillEl) xpPillEl.textContent = `${xpInLevel} / ${XP_PER_LEVEL} نقطة`;
+    if (xpPillEl) xpPillEl.textContent = `${xpInLevel} من ${XP_PER_LEVEL}`;
     if (progressFillEl) {
       progressFillEl.style.animation = 'none';
       void progressFillEl.offsetWidth;
@@ -119,7 +123,7 @@ if (gradeEl) {
     if (solutionsSnap.empty) {
       if (avgScoreEl) avgScoreEl.textContent = '—';
       if (recentChallengesList) {
-        recentChallengesList.innerHTML = '<p style="color: var(--muted);">لا توجد تحديات مكتملة بعد.</p>';
+        recentChallengesList.innerHTML = '<p class="empty-message">ما حليت تحديات لسا. يلا نبدأ!</p>';
       }
       return;
     }
@@ -172,8 +176,8 @@ if (gradeEl) {
             <i data-lucide="${icon}"></i>
           </div>
           <div class="challenge-item-info">
-            <h4>${title}</h4>
-            <p>${subjectLabel} • ${formatDate(solution.createdAt)}</p>
+            <h4>${escapeHtml(title)}</h4>
+            <p>${escapeHtml(subjectLabel)} · ${formatDate(solution.createdAt)}</p>
           </div>
           <span class="${scoreBadgeClass(score)}">${score}%</span>
         `;
@@ -188,7 +192,7 @@ if (gradeEl) {
     console.error('Failed to load solutions for profile:', error);
     if (avgScoreEl) avgScoreEl.textContent = '—';
     if (recentChallengesList) {
-      recentChallengesList.innerHTML = '<p style="color: var(--muted);">تعذّر تحميل التحديات.</p>';
+      recentChallengesList.innerHTML = '<p class="empty-message">تعذّر تحميل التحديات.</p>';
     }
   }
 });

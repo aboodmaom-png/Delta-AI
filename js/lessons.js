@@ -102,23 +102,44 @@ function buildPathD(points) {
   return d;
 }
 
+// Path colours (match css/shared.css tokens)
+const PATH_COLORS = {
+  green: '#3CC46B', greenLip: '#23A356',
+  locked: '#E8E1D3', lockedLip: '#D3C9B6', lockedInk: '#A69C8A',
+  track: '#EDE6D8', done: '#3CC46B'
+};
+
 function nodeMarkup(lesson, index, state, cx, cy) {
   const stateClass = `lesson-node lesson-node-${state}`;
+  const C = PATH_COLORS;
+  const label = `${lesson.title || 'درس'}${state === 'locked' ? ' (مقفل)' : ''}`.replace(/"/g, '&quot;');
 
   let inner = '';
   if (state === 'completed') {
-    inner = `<circle cx="${cx}" cy="${cy}" r="34" fill="url(#nodeGrad)"/>
-      <path d="M ${cx - 13} ${cy} L ${cx - 3} ${cy + 10} L ${cx + 15} ${cy - 12}" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    inner = `<circle cx="${cx}" cy="${cy + 6}" r="33" fill="${C.greenLip}"/>
+      <circle cx="${cx}" cy="${cy}" r="33" fill="${C.green}"/>
+      <ellipse cx="${cx - 11}" cy="${cy - 15}" rx="9" ry="5" fill="#fff" opacity=".28" transform="rotate(-30 ${cx - 11} ${cy - 15})"/>
+      <path d="M ${cx - 13} ${cy + 1} L ${cx - 3} ${cy + 11} L ${cx + 15} ${cy - 11}" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`;
   } else if (state === 'current') {
-    inner = `<circle cx="${cx}" cy="${cy}" r="38" fill="url(#nodeGrad)"/>
-      <circle cx="${cx}" cy="${cy}" r="38" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.4"/>
-      <text x="${cx}" y="${cy + 6}" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">ابدأ</text>`;
+    inner = `<circle class="lesson-node-ring" cx="${cx}" cy="${cy + 3}" r="46" fill="none" stroke="${C.green}" stroke-width="5" opacity=".35"/>
+      <circle cx="${cx}" cy="${cy + 7}" r="37" fill="${C.greenLip}"/>
+      <circle cx="${cx}" cy="${cy}" r="37" fill="${C.green}"/>
+      <ellipse cx="${cx - 12}" cy="${cy - 17}" rx="10" ry="5.5" fill="#fff" opacity=".28" transform="rotate(-30 ${cx - 12} ${cy - 17})"/>
+      <path d="M ${cx} ${cy - 17} l 5.3 10.8 11.9 1.7 -8.6 8.4 2 11.8 -10.6 -5.6 -10.6 5.6 2 -11.8 -8.6 -8.4 11.9 -1.7 z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+      <g class="lesson-start-tag">
+        <rect x="${cx - 32}" y="${cy - 86}" width="64" height="32" rx="11" fill="#ffffff" stroke="#EDE6D8" stroke-width="2.5"/>
+        <path d="M ${cx - 7} ${cy - 55.5} L ${cx} ${cy - 47} L ${cx + 7} ${cy - 55.5} Z" fill="#ffffff" stroke="#EDE6D8" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="${cx - 9}" y="${cy - 58}" width="18" height="4" fill="#ffffff"/>
+        <text x="${cx}" y="${cy - 64}" text-anchor="middle" font-size="16" font-weight="800" fill="#158246">ابدأ</text>
+      </g>`;
   } else {
-    inner = `<circle cx="${cx}" cy="${cy}" r="32" fill="#22304f"/>
-      <path d="M ${cx - 10} ${cy + 2} h20 v9 h-20 z M ${cx - 7} ${cy + 2} v-7 a7 7 0 0 1 14 0 v7" fill="none" stroke="#66738f" stroke-width="3"/>`;
+    inner = `<circle cx="${cx}" cy="${cy + 6}" r="31" fill="${C.lockedLip}"/>
+      <circle cx="${cx}" cy="${cy}" r="31" fill="${C.locked}"/>
+      <rect x="${cx - 11}" y="${cy - 2}" width="22" height="16" rx="4" fill="${C.lockedInk}"/>
+      <path d="M ${cx - 7} ${cy - 2} v -5 a 7 7 0 0 1 14 0 v 5" fill="none" stroke="${C.lockedInk}" stroke-width="3.5"/>`;
   }
 
-  return `<g class="${stateClass}" data-lesson-index="${index}" tabindex="0">${inner}</g>`;
+  return `<g class="${stateClass}" data-lesson-index="${index}" tabindex="0" role="button" aria-label="${label}">${inner}</g>`;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -169,6 +190,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       hideLoadOverlay();
       return;
     }
+
+    const subjectNameEl = document.getElementById('lessonsSubjectName');
+    if (subjectNameEl) subjectNameEl.textContent = subjectSnap.data().name || 'مسار الدروس';
 
     const lessonsQuery = query(collection(db, 'lessons'), where('subject', '==', subjectId));
     const snapshot = await getDocs(lessonsQuery);
@@ -278,56 +302,77 @@ const states = lessons.map((lesson) => {
 
   const nodesHtml = lessons.map((lesson, i) => nodeMarkup(lesson, i, states[i], points[i].x, points[i].y)).join('');
 
-  const currentNodePoint = currentIndex >= 0 ? points[currentIndex] : points[points.length - 1];
-  const nodeLeftPercent = (currentNodePoint.x / 320) * 100;
-  const nodeTopPercent = (currentNodePoint.y / svgHeight) * 100;
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+  ));
+
+  // Green part of the track: from the first lesson up to where Delta stands.
+  const doneUntil = currentIndex >= 0 ? currentIndex : points.length - 1;
+  const donePathD = buildPathD(points.slice(0, doneUntil + 1));
+
+  // Delta stands on the empty side of the path, level with his lesson.
+  const deltaX = 320 - mascotPoint.x;
+  const deltaMood = everythingComplete ? { mood: 'happy', arms: 'cheer' } : { mood: 'happy', arms: 'wave' };
+  const deltaSvg = window.DeltaChar
+    ? window.DeltaChar.svg({ ...deltaMood, animate: !window.matchMedia('(prefers-reduced-motion: reduce)').matches })
+    : '';
+  const levelPercent = lessons.length ? Math.round((completedInLevel / lessons.length) * 100) : 0;
 
 container.innerHTML = `
-    <div class="lesson-path-wrap">
-      <div class="level-banner">
-        <span class="level-banner-title">🎯 المستوى ${currentLevelNumber}</span>
+    <div class="level-banner">
+      <div class="level-banner-badge" aria-hidden="true">${currentLevelNumber}</div>
+      <div class="level-banner-info">
+        <span class="level-banner-title">المستوى ${currentLevelNumber}${totalLevels > 1 ? ` <small>من ${totalLevels}</small>` : ''}</span>
         <span class="level-banner-meta">${
           everythingComplete
-            ? 'أنهيت كل المستويات المتاحة 🎉'
-            : `${completedInLevel} / ${lessons.length} دروس${
-                totalLevels > 1 ? ` • من أصل ${totalLevels} مستويات` : ''
-              }`
+            ? 'أنهيت كل المستويات المتاحة، عاش!'
+            : `أنجزت ${completedInLevel} من ${lessons.length} دروس`
         }</span>
+        <div class="level-banner-track"><span style="width:${everythingComplete ? 100 : levelPercent}%"></span></div>
       </div>
+    </div>
+    <div class="lesson-path-wrap" id="lessonPathWrap">
       <svg viewBox="0 0 320 ${svgHeight}" class="lesson-path-svg" id="lessonPathSvg">
-        <defs>
-          <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#5dd62c"/>
-            <stop offset="100%" stop-color="#337418"/>
-          </linearGradient>
-        </defs>
-        <path d="${buildPathD(points)}" fill="none" stroke="#22304f" stroke-width="10" stroke-linecap="round"/>
+        <path d="${buildPathD(points)}" fill="none" stroke="${PATH_COLORS.track}" stroke-width="14" stroke-linecap="round"/>
+        ${donePathD ? `<path d="${donePathD}" fill="none" stroke="${PATH_COLORS.done}" stroke-width="14" stroke-linecap="round" opacity=".55"/>` : ''}
         ${nodesHtml}
-        <g transform="translate(${mascotPoint.x - 30}, ${mascotPoint.y - 100})">
-          <g class="lesson-mascot">
-            <rect x="0" y="0" width="60" height="55" rx="18" fill="url(#nodeGrad)"/>
-            <rect x="10" y="14" width="40" height="28" rx="9" fill="#0d1326"/>
-            <circle cx="22" cy="28" r="4.5" fill="#ffffff"/>
-            <circle cx="38" cy="28" r="4.5" fill="#ffffff"/>
-            <path d="M22 35 Q30 40 38 35" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          </g>
-        </g>
       </svg>
+      ${deltaSvg ? `<div class="path-delta lq-mascot" aria-hidden="true" style="--x:${(deltaX / 320) * 100}%; --yf:${(mascotPoint.y / svgHeight).toFixed(4)};">${deltaSvg}</div>` : ''}
       ${currentLesson ? `
-        <div class="lesson-popup hidden" id="lessonPopup" style="--popup-top: ${nodeTopPercent}%; --popup-left: ${nodeLeftPercent}%;">
-          <p class="lesson-popup-title" id="lessonPopupTitle">${currentLesson.title || 'درس بدون عنوان'}</p>
-          <button type="button" class="primary-btn full-width" id="lessonPopupStart">ابدأ</button>
+        <div class="lesson-popup hidden" id="lessonPopup">
+          <p class="lesson-popup-kicker">الدرس التالي</p>
+          <p class="lesson-popup-title" id="lessonPopupTitle">${escapeHtml(currentLesson.title || 'درس بدون عنوان')}</p>
+          <button type="button" class="primary-btn full-width" id="lessonPopupStart">ابدأ التحدي</button>
         </div>
       ` : ''}
       <div class="lesson-popup hidden" id="completedLessonPopup">
-        <p class="lesson-popup-title" id="completedPopupTitle">✅ لقد أكملت هذا التحدي</p>
+        <p class="lesson-popup-kicker">أكملت هذا الدرس</p>
+        <p class="lesson-popup-title" id="completedPopupTitle">—</p>
         <div class="lesson-popup-actions">
-          <button type="button" class="secondary-btn full-width" id="redoOriginalBtn">🔄 إعادة التحدي الأصلي</button>
-          <button type="button" class="primary-btn full-width" id="expertChallengeBtn">🤖 تحدي الخبير (XP بونص)</button>
+          <button type="button" class="primary-btn full-width" id="expertChallengeBtn">تحدي الخبير · XP بونص</button>
+          <button type="button" class="secondary-btn full-width" id="redoOriginalBtn">أعد التحدي الأصلي</button>
         </div>
       </div>
     </div>
   `;
+
+  // Places a popup under its lesson node, kept inside the path area, with
+  // the little arrow still pointing at the node.
+  const pathWrap = document.getElementById('lessonPathWrap');
+  function placePopup(popupEl, index) {
+    if (!popupEl || !pathWrap) return;
+    const wrapWidth = pathWrap.clientWidth;
+    const scale = wrapWidth / 320;
+    const svgTop = document.getElementById('lessonPathSvg')?.offsetTop || 0;
+    const nodeX = points[index].x * scale;
+    const nodeY = svgTop + points[index].y * scale;
+    const popupWidth = popupEl.offsetWidth || Math.min(260, wrapWidth - 8);
+    const half = popupWidth / 2;
+    const left = Math.min(Math.max(nodeX, half + 4), wrapWidth - half - 4);
+    popupEl.style.left = `${left}px`;
+    popupEl.style.top = `${nodeY + 50 * scale + 8}px`;
+    popupEl.style.setProperty('--arrow-x', `${nodeX - left + half}px`);
+  }
 
   const popup = document.getElementById('lessonPopup');
   const popupStart = document.getElementById('lessonPopupStart');
@@ -359,14 +404,10 @@ container.innerHTML = `
         event.stopPropagation();
         if (popup) popup.classList.add('hidden');
 
-        const nodeLeft = (points[index].x / 320) * 100;
-        const nodeTop = (points[index].y / svgHeight) * 100;
-        completedPopup.style.setProperty('--popup-top', `${nodeTop}%`);
-        completedPopup.style.setProperty('--popup-left', `${nodeLeft}%`);
-
         activeCompletedLesson = lesson;
-        completedPopupTitle.textContent = `✅ أكملت "${lesson.title || 'التحدي'}"`;
+        completedPopupTitle.textContent = lesson.title || 'التحدي';
         completedPopup.classList.remove('hidden');
+        placePopup(completedPopup, index);
       });
     }
 
@@ -375,8 +416,23 @@ container.innerHTML = `
         event.stopPropagation();
         if (completedPopup) completedPopup.classList.add('hidden');
         popup.classList.toggle('hidden');
+        placePopup(popup, index);
       });
     }
+  });
+
+  container.querySelectorAll('.lesson-node').forEach((node) => {
+    node.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        node.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      }
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    popup?.classList.add('hidden');
+    completedPopup?.classList.add('hidden');
   });
 
   document.addEventListener('click', (event) => {

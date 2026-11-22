@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // handles a missing grade gracefully by falling back to any
           // lesson, and it can be filled in later from the profile page.
           await setDoc(userRef, {
-            name: credential.user.displayName || 'طالب Delta AI',
+            name: credential.user.displayName || 'طالب دلتا',
             email: credential.user.email,
             grade: null,
             xp: 0,

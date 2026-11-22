@@ -22,29 +22,38 @@ function formatDate(timestamp) {
   return `${date.getDate()} ${ARABIC_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
+const SUBJECT_LABELS = { math: 'رياضيات', science: 'علوم' };
+const DIFFICULTY_LABELS = { easy: 'سهل', medium: 'متوسط', hard: 'صعب' };
+
 function getRating(score) {
-  if (score >= 85) return 'ممتاز';
-  if (score >= 70) return 'جيد جداً';
-  if (score >= 50) return 'جيد';
-  return 'يحتاج تحسين';
+  if (score >= 85) return 'ممتاز!';
+  if (score >= 70) return 'جيد جداً!';
+  if (score >= 50) return 'جيد، قرّبت!';
+  return 'ولا يهمك، جرّب كمان';
 }
 
+function getMessage(score) {
+  if (score >= 85) return 'حلّك قوي ومرتّب. دلتا فخور فيك!';
+  if (score >= 70) return 'شغل حلو! شوف ملاحظاتي عشان توصل للكمال.';
+  if (score >= 50) return 'فكرتك صح بس ناقصها شوي. راجع الملاحظات وجرّب مرة ثانية.';
+  return 'كل محاولة بتعلّمك إشي. اقرأ الملاحظات واطلب تلميح المرة الجاية.';
+}
+
+// Delta reacts to the score: cheers, smiles, or encourages.
 function updateMascot(score) {
-  const mascotSvg = document.getElementById('mascotSvg');
-  const mascotBubble = document.getElementById('mascotBubble');
-  if (!mascotSvg) return;
-
-  mascotSvg.classList.remove('celebrate', 'encourage');
-
-  if (score >= 70) {
-    mascotSvg.classList.add('celebrate');
-  } else {
-    mascotSvg.classList.add('encourage');
-  }
-
-  if (mascotBubble) {
-    mascotBubble.style.display = 'none';
-  }
+  const hero = document.getElementById('resultHero');
+  const slot = document.getElementById('resultMascot');
+  const tier = score >= 70 ? 'great' : score >= 50 ? 'good' : 'try';
+  hero?.classList.remove('tier-great', 'tier-good', 'tier-try');
+  hero?.classList.add(`tier-${tier}`);
+  if (!slot || !window.DeltaChar) return;
+  const pose = {
+    great: { mood: 'happy', arms: 'cheer' },
+    good: { mood: 'happy', arms: 'wave' },
+    try: { mood: 'kind', arms: 'wave' }
+  }[tier];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  slot.innerHTML = window.DeltaChar.svg({ ...pose, animate: !reduced });
 }
 
 // Scatters floating "+XP" fragments across the whole screen, split into a
@@ -61,6 +70,7 @@ function spawnXpParticles(totalXp) {
     const particle = document.createElement('span');
     particle.className = 'xp-particle';
     particle.textContent = `+${chunk} XP`;
+    particle.dir = 'ltr';
 
     const leftPos = 5 + Math.random() * 90;
     const delay = Math.random() * 0.9;
@@ -142,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderEmptyResult() {
     if (scorePercentHeading) scorePercentHeading.textContent = '0%';
-    if (ratingText) ratingText.textContent = '—';
-    if (scoreMessage) scoreMessage.textContent = 'لم يتم العثور على نتيجة بعد. أكمل تحدياً لعرض نتيجتك هنا.';
+    if (ratingText) ratingText.textContent = 'ما في نتيجة بعد';
+    if (scoreMessage) scoreMessage.textContent = 'حل أول تحدي وبتلاقي نتيجتك هون.';
     if (resultAnswerText) resultAnswerText.textContent = '—';
     if (feedbackText) feedbackText.textContent = 'لا توجد بيانات بعد.';
     if (summarySubject) summarySubject.textContent = '—';
@@ -167,10 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (scorePercentHeading) scorePercentHeading.textContent = `${score}%`;
     if (ratingText) ratingText.textContent = getRating(score);
-    if (scoreMessage) scoreMessage.textContent = 'راجع ملاحظات المساعد الذكي بالأسفل لمزيد من التفاصيل.';
+    if (scoreMessage) scoreMessage.textContent = getMessage(score);
     updateMascot(score);
     if (resultAnswerText) resultAnswerText.textContent = solution.answer || '—';
-    if (feedbackText) feedbackText.textContent = solution.feedback || 'بانتظار تقييم الذكاء الاصطناعي';
+    if (feedbackText) feedbackText.textContent = solution.feedback || 'ما وصلت ملاحظات لهالحل.';
     if (summaryDate) summaryDate.textContent = formatDate(solution.createdAt);
     if (xpValue) {
       xpValue.textContent = `+${xp} XP`;
@@ -181,15 +191,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (summaryDifficulty) summaryDifficulty.textContent = '—';
 
     let challengeQuestion = '';
+    let subjectId = '';
 
     if (solution.challengeId) {
       try {
         const challengeSnap = await getDoc(doc(db, 'challenges', solution.challengeId));
         if (challengeSnap.exists()) {
           const challenge = challengeSnap.data();
-          if (summarySubject) summarySubject.textContent = challenge.subject || '—';
+          subjectId = challenge.subject || '';
+          if (summarySubject) summarySubject.textContent = SUBJECT_LABELS[subjectId] || subjectId || '—';
           if (summaryChallenge) summaryChallenge.textContent = challenge.title || '—';
-          if (summaryDifficulty) summaryDifficulty.textContent = challenge.difficulty || '—';
+          if (summaryDifficulty) {
+            summaryDifficulty.textContent = DIFFICULTY_LABELS[challenge.difficulty] || challenge.difficulty || '—';
+          }
           challengeQuestion = challenge.question || '';
         }
       } catch (error) {
@@ -202,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
       answer: solution.answer || '',
       score,
       feedback: solution.feedback || '',
-      subject: summarySubject?.textContent || '',
+      subject: subjectId,
       title: summaryChallenge?.textContent || '',
       challengeId: solution.challengeId || null
     };

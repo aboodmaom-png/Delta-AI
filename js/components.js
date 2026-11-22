@@ -1,498 +1,383 @@
-// Shared topbar component. Every page includes this script and declares
-// <header class="topbar" data-topbar data-active="..." data-eyebrow="..." data-title="..."></header>
+// Shared UI for every page: app bar, bottom tab bar, Delta mascot slots,
+// the animated splash, the grade gate, the install banner and page transitions.
+// Pages declare: <header class="topbar" data-topbar data-variant="app|guest|auth|minimal" data-page-title="..."></header>
+// Needs js/delta-character.js loaded before this file (window.DeltaChar).
 
+// App icon / logo: Delta's face on green.
 const LQ_LOGO_SVG = `
   <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <linearGradient id="lqLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#5dd62c"/>
-        <stop offset="100%" stop-color="#337418"/>
-      </linearGradient>
-    </defs>
-    <rect x="6" y="6" width="88" height="88" rx="26" fill="url(#lqLogoGrad)"/>
-    <path d="M50 24 L76 72 L24 72 Z" fill="#ffffff"/>
-    <path d="M50 24 L76 72 L24 72 Z" fill="none" stroke="#0d1326" stroke-width="2" opacity="0.08"/>
+    <rect width="100" height="100" fill="#3CC46B"/><rect y="90" width="100" height="10" fill="#23A356"/>
+    <path d="M50 25 V13" stroke="#1B2A3A" stroke-width="3.6" stroke-linecap="round"/>
+    <circle cx="50" cy="10" r="5.6" fill="#FFC21A" stroke="#1B2A3A" stroke-width="2.4"/>
+    <rect x="12" y="25" width="76" height="60" rx="25" fill="#26394D"/><rect x="14" y="27" width="72" height="56" rx="23" fill="#1B2A3A"/>
+    <ellipse cx="37" cy="51" rx="10.5" ry="12.5" fill="#fff"/><circle cx="38" cy="53" r="5.2" fill="#1B2A3A"/><circle cx="39.8" cy="49.6" r="2.1" fill="#fff"/>
+    <ellipse cx="63" cy="51" rx="10.5" ry="12.5" fill="#fff"/><circle cx="64" cy="53" r="5.2" fill="#1B2A3A"/><circle cx="65.8" cy="49.6" r="2.1" fill="#fff"/>
+    <path d="M40 69 Q50 77.5 60 69" fill="none" stroke="#E2FCEF" stroke-width="4.4" stroke-linecap="round"/>
   </svg>
 `;
 
-const LQ_MASCOT_SVG = `
-  <svg viewBox="0 0 680 420" class="lq-mascot-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <linearGradient id="lqBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8ef05a" />
-        <stop offset="40%" stop-color="#5dd62c" />
-        <stop offset="80%" stop-color="#337418" />
-        <stop offset="100%" stop-color="#245011" />
-      </linearGradient>
-      <linearGradient id="lqScreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#0f172a" />
-        <stop offset="100%" stop-color="#070a12" />
-      </linearGradient>
-      <filter id="lqShadow" x="-10%" y="-10%" width="120%" height="120%">
-        <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.15" />
-      </filter>
-    </defs>
+const REDUCED_MOTION_UI = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    <ellipse cx="340" cy="385" rx="110" ry="12" fill="#000000" opacity="0.12" />
-
-    <g class="lq-mascot-arm-left" filter="url(#lqShadow)">
-      <path d="M 240,200 Q 180,230 200,300 Q 220,330 240,290 Q 230,240 250,210 Z" fill="url(#lqBodyGrad)" />
-      <circle cx="204" cy="298" r="16" fill="url(#lqBodyGrad)" />
-    </g>
-
-    <g class="lq-mascot-arm-right" filter="url(#lqShadow)">
-      <path d="M 440,190 Q 510,160 520,110 Q 545,120 505,170 Q 465,220 435,200 Z" fill="url(#lqBodyGrad)" />
-      <circle cx="516" cy="116" r="16" fill="url(#lqBodyGrad)" />
-    </g>
-
-    <g class="lq-mascot-legs">
-      <rect x="290" y="310" width="45" height="50" rx="22" fill="url(#lqBodyGrad)" filter="url(#lqShadow)" />
-      <circle cx="312" cy="362" r="16" fill="url(#lqBodyGrad)"></circle>
-      <rect x="365" y="310" width="45" height="50" rx="22" fill="url(#lqBodyGrad)" filter="url(#lqShadow)" />
-      <circle cx="388" cy="362" r="16" fill="url(#lqBodyGrad)"></circle>
-    </g>
-
-    <rect x="220" y="70" width="260" height="250" rx="75" fill="url(#lqBodyGrad)" filter="url(#lqShadow)" />
-
-    <rect x="250" y="100" width="200" height="155" rx="48" fill="url(#lqScreenGrad)" />
-    <rect x="252" y="102" width="196" height="151" rx="46" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.15" />
-
-    <g class="lq-mascot-eyes">
-      <ellipse cx="305" cy="160" rx="24" ry="26" fill="#ffffff" />
-      <ellipse cx="308" cy="162" rx="13" ry="14" fill="#0f172a" />
-      <circle cx="302" cy="154" r="5" fill="#ffffff" />
-      <circle cx="314" cy="166" r="2.5" fill="#ffffff" />
-      <ellipse cx="395" cy="160" rx="24" ry="26" fill="#ffffff" />
-      <ellipse cx="392" cy="162" rx="13" ry="14" fill="#0f172a" />
-      <circle cx="386" cy="154" r="5" fill="#ffffff" />
-      <circle cx="398" cy="166" r="2.5" fill="#ffffff" />
-    </g>
-
-    <path class="lq-mascot-mouth" d="M 335,188 Q 350,202 365,188" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" />
-  </svg>
-`;
-
-function injectMascotStyles() {
-  if (document.getElementById('lqMascotStyles')) return;
-  const style = document.createElement('style');
-  style.id = 'lqMascotStyles';
-  style.textContent = `
-    .lq-mascot { display: flex; align-items: center; justify-content: center; }
-    .lq-mascot-svg { width: 100%; max-width: 260px; height: auto; animation: lqMascotFloat 3.2s ease-in-out infinite; }
-    @keyframes lqMascotFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-  `;
-  document.head.appendChild(style);
+function deltaMarkup(opts = {}) {
+  if (!window.DeltaChar) return '';
+  return window.DeltaChar.svg({ animate: !REDUCED_MOTION_UI, ...opts });
 }
 
-function injectBrandFont() {
-  if (document.getElementById('lqBrandFont')) return;
-  const link = document.createElement('link');
-  link.id = 'lqBrandFont';
-  link.rel = 'stylesheet';
-  link.href = 'https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap';
-  document.head.appendChild(link);
-
-  const style = document.createElement('style');
-  style.textContent = `.brand-group h1, .splash-title { font-family: 'Sora', sans-serif; letter-spacing: 0.2px; }`;
-  document.head.appendChild(style);
-}
-
+// [data-mascot] slots become Delta. A slot can set data-mood, data-arms, data-prop;
+// otherwise its class decides a sensible pose.
+const MASCOT_DEFAULTS = [
+  ['page-load-mascot', { mood: 'think', arms: 'rest' }],
+  ['submit-blur-mascot', { mood: 'think', arms: 'rest' }],
+  ['coach-mascot', { mood: 'neutral', arms: 'wave' }],
+  ['revisit-mascot', { mood: 'happy', arms: 'hold', prop: 'book' }],
+  ['hero-mascot', { mood: 'happy', arms: 'hold', prop: 'ruler' }],
+];
 function renderMascots() {
-  const slots = document.querySelectorAll('[data-mascot]');
-  if (!slots.length) return;
-  injectMascotStyles();
-  slots.forEach((slot, index) => {
+  document.querySelectorAll('[data-mascot]').forEach((slot) => {
+    const byClass = MASCOT_DEFAULTS.find(([cls]) => slot.classList.contains(cls));
+    const base = byClass ? byClass[1] : { mood: 'neutral', arms: 'rest' };
+    const opts = {
+      ...base,
+      ...(slot.dataset.mood ? { mood: slot.dataset.mood } : {}),
+      ...(slot.dataset.arms ? { arms: slot.dataset.arms } : {}),
+      ...(slot.dataset.prop !== undefined && slot.dataset.prop !== '' ? { prop: slot.dataset.prop } : {}),
+      ...(slot.dataset.headOnly !== undefined ? { headOnly: true } : {}),
+      label: slot.dataset.label || 'دلتا',
+    };
     slot.classList.add('lq-mascot');
-    const uniqueSuffix = `${Date.now()}${index}`;
-    const uniqueSvg = LQ_MASCOT_SVG
-      .replaceAll('lqBodyGrad', `lqBodyGrad${uniqueSuffix}`)
-      .replaceAll('lqScreenGrad', `lqScreenGrad${uniqueSuffix}`)
-      .replaceAll('lqShadow', `lqShadow${uniqueSuffix}`);
-    slot.innerHTML = uniqueSvg;
+    slot.innerHTML = deltaMarkup(opts);
   });
 }
+window.renderDeltaMascots = renderMascots;
 
+/* ==========================================================================
+   Splash: once per browser session. Delta walks in from the side, hops,
+   waves, and his name pops out from behind him. Tap or "تخطّي" skips it.
+   ========================================================================== */
 (function showSplash() {
-  // The splash is a nice "app launch" moment, but showing it on every single
-  // page navigation is jarring — especially since individual pages already
-  // have their own transitions. So we only show it once per browser session:
-  // the first page the user lands on shows it, and every navigation after that
-  // skips it entirely. It comes back only when they close the tab/browser and
-  // open the site fresh (which starts a new session).
-  if (sessionStorage.getItem('splashShown')) {
-    return;
-  }
-  sessionStorage.setItem('splashShown', '1');
+  try {
+    if (sessionStorage.getItem('splashShown')) return;
+    sessionStorage.setItem('splashShown', '1');
+  } catch (e) { /* storage blocked: still show it once on this load */ }
+  if (!window.DeltaChar) return;
 
   const splash = document.createElement('div');
   splash.id = 'appSplash';
+  splash.setAttribute('role', 'presentation');
   splash.innerHTML = `
-    <div class="splash-logo">
-      <div class="splash-circle">${LQ_LOGO_SVG}</div>
-      <p class="splash-title">Delta AI</p>
+    <div class="splash-doodles" aria-hidden="true">
+      <span style="left:8%;top:8%;font-size:56px;transform:rotate(-12deg)">+</span>
+      <span style="left:76%;top:7%;font-size:48px;transform:rotate(10deg)">×</span>
+      <span style="left:84%;top:32%;font-size:56px">π</span>
+      <span style="left:6%;top:36%;font-size:50px;transform:rotate(-6deg)">Δ</span>
+      <span style="left:10%;top:86%;font-size:46px;transform:rotate(12deg)">÷</span>
+      <span style="left:80%;top:84%;font-size:44px;transform:rotate(-10deg)">%</span>
     </div>
+    <div class="splash-halo"></div>
+    <div class="splash-name">دلتا</div>
+    <div class="splash-actor">${window.DeltaChar.svg({ rig: true, arms: 'rest', label: 'دلتا' })}</div>
+    <div class="splash-tag">تعلّم بذكاء، وتقدّم أسرع</div>
+    <button type="button" class="splash-skip">تخطّي</button>
   `;
   document.body.appendChild(splash);
   document.body.style.overflow = 'hidden';
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      splash.classList.add('splash-hide');
-      document.body.style.overflow = '';
-      setTimeout(() => splash.remove(), 500);
-    }, 900);
-  });
-})();
+  const q = (s) => splash.querySelector(s);
+  const P = (n) => splash.querySelector(`[data-p="${n}"]`);
+  const actor = q('.splash-actor'), nameEl = q('.splash-name'), tagEl = q('.splash-tag'), halo = q('.splash-halo');
+  const all = P('all'), legL = P('legL'), legR = P('legR'), armL = P('armL'), armR = P('armR'), ant = P('ant');
+  const faceN = P('faceN'), faceH = P('faceH');
+  const set = (el, v) => el && el.setAttribute('transform', v);
+  const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+  const back = (x) => { x = Math.min(1, Math.max(0, x)); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 
+  let loaded = document.readyState === 'complete';
+  window.addEventListener('load', () => { loaded = true; });
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    splash.classList.add('splash-hide');
+    document.body.style.overflow = '';
+    setTimeout(() => splash.remove(), 480);
+  };
+  splash.addEventListener('click', finish);
+
+  const END = REDUCED_MOTION_UI ? 0.9 : 3.5;
+  const t0 = performance.now();
+  const frame = () => {
+    if (done) return;
+    const t = REDUCED_MOTION_UI ? 9 : (performance.now() - t0) / 1000;
+    const walking = t < 1.6;
+    const x = (1 - ease((t - 0.15) / 1.45)) * Math.min(window.innerWidth * 0.75, 420);
+    actor.style.transform = `translate(calc(-50% + ${x}px), -50%)`;
+    const ph = t * 13;
+    set(legL, `translate(0 ${walking ? -Math.max(0, Math.sin(ph)) * 9 : 0})`);
+    set(legR, `translate(0 ${walking ? -Math.max(0, Math.sin(ph + Math.PI)) * 9 : 0})`);
+    let y = walking ? -Math.abs(Math.sin(ph)) * 4 : 0;
+    if (t >= 1.6 && t < 2.0) y = -Math.sin(((t - 1.6) / 0.4) * Math.PI) * 18;
+    set(all, `translate(0 ${y})`);
+    let aL = 22, aR = -22;
+    if (walking) { aL = 22 + Math.sin(ph) * 16; aR = -22 + Math.sin(ph) * 16; }
+    else if (t < 3.3) { const k = ease((t - 1.8) / 0.25); aR = -22 - 68 * k + Math.sin((t - 1.8) * 13) * 14 * k; }
+    set(armL, `rotate(${aL})`);
+    set(armR, `rotate(${aR})`);
+    set(ant, `rotate(${Math.sin(t * 7) * (walking ? 10 : 5)})`);
+    const happy = t >= 1.75;
+    if (faceN) faceN.style.display = happy ? 'none' : '';
+    if (faceH) faceH.style.display = happy ? '' : 'none';
+    halo.style.transform = `translate(-50%, -50%) scale(${Math.max(0, back((t - 1.55) / 0.5))})`;
+    const nk = (t - 1.95) / 0.7;
+    nameEl.style.opacity = nk <= 0 ? 0 : 1;
+    nameEl.style.transform = `translateY(${(1 - back(nk)) * -190}px) scale(${0.45 + 0.55 * Math.min(1, back(nk))})`;
+    const tk = ease((t - 2.65) / 0.5);
+    tagEl.style.opacity = tk;
+    tagEl.style.transform = `translateY(${(1 - tk) * 12}px)`;
+    const elapsed = (performance.now() - t0) / 1000;
+    if (elapsed >= END && loaded) { finish(); return; }
+    if (elapsed > 8) { finish(); return; } // never block the app
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+})();
 
 (function () {
   const NAV_ITEMS = [
     { href: 'dashboard.html', label: 'الرئيسية', key: 'dashboard', icon: 'home' },
     { href: 'subjects.html', label: 'المواد', key: 'subjects', icon: 'book-open' },
-    { href: 'learnquest-ai.html', label: 'المساعد', key: 'assistant', icon: 'bot' },
-    { href: 'profile.html', label: 'الملف الشخصي', key: 'profile', icon: 'user' }
+    { href: 'learnquest-ai.html', label: 'اسأل دلتا', key: 'assistant', icon: 'sparkles' },
+    { href: 'profile.html', label: 'حسابي', key: 'profile', icon: 'user' }
   ];
 
-const GRADE_OPTIONS = [
-  'الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس',
-  'السابع', 'الثامن', 'التاسع'
-];
+  const GRADE_OPTIONS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع'];
 
-// Every page's content (subjects, lessons, challenges) is filtered by grade.
-// A student without a saved grade — most commonly someone who signed up via
-// Google, where auth.js has no grade to ask for at that point — would see
-// broken or empty content everywhere. This blocks the app with a mandatory
-// picker until a grade is saved, then reloads so everything downstream
-// (lessons.js's GRADE_MAP filtering, etc.) works correctly from then on.
-function showGradeGateModal(uid) {
-  if (document.getElementById('gradeGateModal')) return;
-
-  const overlay = document.createElement('div');
-  overlay.id = 'gradeGateModal';
-  overlay.className = 'grade-gate-overlay';
-  overlay.innerHTML = `
-    <div class="grade-gate-card">
-      <div class="grade-gate-icon">${LQ_LOGO_SVG}</div>
-      <h2>شو صفك الدراسي؟</h2>
-      <p>محتوى المنصة (المواد والدروس والتحديات) بيتغيّر حسب صفك، فلازم تختاره قبل ما تكمل.</p>
-      <div class="grade-gate-options">
-        ${GRADE_OPTIONS.map((g) => `<button type="button" class="grade-gate-option" data-grade="${g}">${g}</button>`).join('')}
-      </div>
-      <p class="grade-gate-error hidden" id="gradeGateError">صار خطأ أثناء الحفظ، حاول مرة أخرى.</p>
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-  document.body.style.overflow = 'hidden';
-
-  overlay.querySelectorAll('.grade-gate-option').forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      overlay.querySelectorAll('.grade-gate-option').forEach((b) => { b.disabled = true; });
-      btn.classList.add('selected');
-
-      try {
-        // setDoc with merge (not updateDoc): updateDoc throws if the user
-        // document doesn't exist yet — which is exactly the Google-sign-in
-        // case this modal serves — producing the "صار خطأ أثناء الحفظ" error.
-        // merge writes the grade whether the doc is new or already there, and
-        // when a student picks a different grade here it overwrites the old
-        // one, so lessons/subjects immediately reflect the new grade on reload.
-        const [{ db }, { doc, setDoc }] = await Promise.all([
-          import('./firebase.js'),
-          import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
-        ]);
-        await setDoc(doc(db, 'users', uid), { grade: btn.dataset.grade }, { merge: true });
-        document.body.style.overflow = '';
-        window.location.reload();
-      } catch (error) {
-        console.error('Failed to save grade:', error);
-        document.getElementById('gradeGateError')?.classList.remove('hidden');
-        overlay.querySelectorAll('.grade-gate-option').forEach((b) => { b.disabled = false; });
-        btn.classList.remove('selected');
-      }
-    });
-  });
-}
-
-function renderBrand(eyebrow, title) {
-  return `
-    <div class="brand-group">
-      <div class="brand-mark">${LQ_LOGO_SVG}</div>
-      <div>
-        ${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ''}
-        <h1>${title}</h1>
-      </div>
-    </div>
-  `;
-}
-
-function currentPageFile() {
-  const file = window.location.pathname.split('/').pop();
-  return file || 'dashboard.html';
-}
-
-function renderBottomNav() {
-  // Never draw it twice (e.g. if renderTopbar somehow runs more than once).
-  if (document.querySelector('[data-bottom-nav]')) return;
-
-  const current = currentPageFile();
-
-  const nav = document.createElement('nav');
-  nav.className = 'bottom-nav';
-  nav.setAttribute('data-bottom-nav', '');
-  nav.setAttribute('aria-label', 'التنقل الرئيسي');
-
-  nav.innerHTML = NAV_ITEMS.map((item) => `
-    <a href="${item.href}" class="bottom-nav-item${item.href === current ? ' active' : ''}">
-      <i data-lucide="${item.icon}"></i>
-      <span>${item.label}</span>
-    </a>
-  `).join('');
-
-  document.body.appendChild(nav);
-  document.body.classList.add('has-bottom-nav');
-}
-
- function renderAppTopbar(root) {
-  const active = root.dataset.active || '';
-  const eyebrow = root.dataset.eyebrow || '';
-  const title = root.dataset.title || 'Delta AI';
-    const navHtml = NAV_ITEMS.map(
-      (item) => `<a href="${item.href}"${item.key === active ? ' class="active"' : ''}>${item.label}</a>`
-    ).join('');
-
-   root.innerHTML = `
-      <div class="topbar-left">
-        ${renderBrand(eyebrow, title)}
-        <nav class="nav-links">${navHtml}</nav>
-      </div>
-      <div class="user-pill">
-        <a href="login.html" class="logout-btn" id="navAuthAction" aria-label="تسجيل الدخول" title="تسجيل الدخول">
-          <i data-lucide="log-in"></i>
-        </a>
-          <div class="user-pill-info" id="navUserInfo">
-          <p class="hello-text" id="navHelloText">أهلاً، زائر</p>
-          </div>
+  // Content is filtered by grade, so a student without one (usually a Google
+  // sign-up) must pick it before using the app.
+  function showGradeGateModal(uid) {
+    if (document.getElementById('gradeGateModal')) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'gradeGateModal';
+    overlay.className = 'grade-gate-overlay';
+    overlay.innerHTML = `
+      <div class="grade-gate-card" role="dialog" aria-modal="true" aria-labelledby="gradeGateTitle">
+        <div class="grade-gate-icon">${deltaMarkup({ mood: 'think', arms: 'rest', label: 'دلتا بيسأل' })}</div>
+        <h2 id="gradeGateTitle">بأي صف إنت؟</h2>
+        <p>المواد والدروس والتحديات بتتغيّر حسب صفك، فاختاره عشان نبلش.</p>
+        <div class="grade-gate-options">
+          ${GRADE_OPTIONS.map((g) => `<button type="button" class="grade-gate-option" data-grade="${g}">${g}</button>`).join('')}
+        </div>
+        <p class="grade-gate-error hidden" id="gradeGateError">صار خطأ أثناء الحفظ، جرّب مرة ثانية.</p>
       </div>
     `;
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
 
+    overlay.querySelectorAll('.grade-gate-option').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        overlay.querySelectorAll('.grade-gate-option').forEach((b) => { b.disabled = true; });
+        btn.classList.add('selected');
+        try {
+          // setDoc with merge: the user document may not exist yet (Google sign-up).
+          const [{ db }, { doc, setDoc }] = await Promise.all([
+            import('./firebase.js'),
+            import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
+          ]);
+          await setDoc(doc(db, 'users', uid), { grade: btn.dataset.grade }, { merge: true });
+          document.body.style.overflow = '';
+          window.location.reload();
+        } catch (error) {
+          console.error('Failed to save grade:', error);
+          document.getElementById('gradeGateError')?.classList.remove('hidden');
+          overlay.querySelectorAll('.grade-gate-option').forEach((b) => { b.disabled = false; });
+          btn.classList.remove('selected');
+        }
+      });
+    });
+  }
+
+  function brandHtml(href = 'dashboard.html') {
+    return `<a href="${href}" class="brand" aria-label="دلتا — الرئيسية">
+      <span class="brand-mark">${LQ_LOGO_SVG}</span><span class="brand-name">دلتا</span></a>`;
+  }
+
+  function currentPageFile() {
+    return window.location.pathname.split('/').pop() || 'dashboard.html';
+  }
+
+  function renderBottomNav() {
+    if (document.querySelector('[data-bottom-nav]')) return;
+    const current = currentPageFile();
+    const nav = document.createElement('nav');
+    nav.className = 'bottom-nav';
+    nav.setAttribute('data-bottom-nav', '');
+    nav.setAttribute('aria-label', 'التنقل الرئيسي');
+    nav.innerHTML = NAV_ITEMS.map((item) => `
+      <a href="${item.href}" class="bottom-nav-item${item.href === current ? ' active' : ''}"${item.href === current ? ' aria-current="page"' : ''}>
+        <i data-lucide="${item.icon}"></i><span>${item.label}</span>
+      </a>`).join('');
+    document.body.appendChild(nav);
+    document.body.classList.add('has-bottom-nav');
+  }
+
+  function renderAppTopbar(root) {
+    const active = root.dataset.active || '';
+    const navHtml = NAV_ITEMS.map((item) =>
+      `<a href="${item.href}"${item.key === active ? ' class="active" aria-current="page"' : ''}><i data-lucide="${item.icon}"></i>${item.label}</a>`).join('');
+    root.innerHTML = `
+      ${brandHtml()}
+      <nav class="nav-links" aria-label="التنقل الرئيسي">${navHtml}</nav>
+      <div class="bar-actions">
+        <span class="xp-chip" id="navXp" title="نقاطك"><i data-lucide="zap"></i><span dir="ltr">0 XP</span></span>
+        <a href="profile.html" class="avatar-btn" id="navAvatar" aria-label="حسابي">؟</a>
+      </div>
+    `;
     loadCurrentUser(root);
   }
 
   async function loadCurrentUser(root) {
-    const helloEl = root.querySelector('#navHelloText');
-    const authActionEl = root.querySelector('#navAuthAction');
-
-    function setGuestState() {
-      if (helloEl) helloEl.textContent = 'أهلاً، زائر';
-      if (authActionEl) {
-        authActionEl.href = 'login.html';
-        authActionEl.setAttribute('aria-label', 'تسجيل الدخول');
-        authActionEl.title = 'تسجيل الدخول';
-        authActionEl.innerHTML = '<i data-lucide="log-in"></i>';
-        if (window.lucide) window.lucide.createIcons();
-      }
-    }
-
-    function setLoggedInState(name) {
-      if (helloEl) helloEl.textContent = `أهلاً، ${name}`;
-      if (authActionEl) {
-        authActionEl.href = 'login.html';
-        authActionEl.setAttribute('aria-label', 'تسجيل الخروج');
-        authActionEl.title = 'تسجيل الخروج';
-        authActionEl.innerHTML = '<i data-lucide="log-out"></i>';
-        if (window.lucide) window.lucide.createIcons();
-      }
-    }
-
+    const xpEl = root.querySelector('#navXp span');
+    const avatarEl = root.querySelector('#navAvatar');
     try {
       const [{ auth, db }, { onAuthStateChanged }, { doc, getDoc }] = await Promise.all([
         import('./firebase.js'),
         import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js'),
         import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
       ]);
-
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
-          setGuestState();
+          if (avatarEl) { avatarEl.href = 'login.html'; avatarEl.setAttribute('aria-label', 'تسجيل الدخول'); }
           return;
         }
-
         let name = user.displayName || (user.email ? user.email.split('@')[0] : 'طالب');
-
+        let xp = 0;
         try {
           const snapshot = await getDoc(doc(db, 'users', user.uid));
           if (snapshot.exists()) {
             const data = snapshot.data();
             name = data.name || name;
-
-            if (!data.grade) {
-              showGradeGateModal(user.uid);
-            }
+            xp = typeof data.xp === 'number' ? data.xp : 0;
+            if (!data.grade) showGradeGateModal(user.uid);
           } else {
             showGradeGateModal(user.uid);
           }
         } catch (error) {
-          console.error('Failed to load user data for navbar:', error);
+          console.error('Failed to load user data for the app bar:', error);
         }
-
-        setLoggedInState(name);
+        if (xpEl) xpEl.textContent = `${xp.toLocaleString('en-US')} XP`;
+        if (avatarEl) {
+          avatarEl.textContent = (name.trim()[0] || '؟');
+          avatarEl.setAttribute('aria-label', `حسابي — ${name}`);
+          avatarEl.title = name;
+        }
       });
     } catch (error) {
-      console.error('Failed to initialize Firebase for navbar:', error);
+      console.error('Failed to initialize Firebase for the app bar:', error);
     }
   }
 
   function renderGuestTopbar(root) {
-    const eyebrow = root.dataset.eyebrow || 'منصة تعليمية ذكية';
-    const title = root.dataset.title || 'Delta AI';
-
     root.innerHTML = `
-      <div class="topbar-left">
-        ${renderBrand(eyebrow, title)}
-      </div>
+      ${brandHtml('index.html')}
       <div class="guest-actions">
         <a href="login.html" class="secondary-btn">تسجيل الدخول</a>
-        <a href="signup.html" class="primary-btn">إنشاء حساب</a>
+        <a href="signup.html" class="primary-btn">ابدأ مجاناً</a>
       </div>
     `;
   }
 
   function renderAuthTopbar(root) {
-    const eyebrow = root.dataset.eyebrow || 'منصة تعليمية ذكية';
-    const title = root.dataset.title || 'Delta AI';
-
     root.innerHTML = `
-      <div class="topbar-left">
-        ${renderBrand(eyebrow, title)}
-      </div>
-      <a href="index.html" class="back-btn" aria-label="العودة للرئيسية" title="العودة للرئيسية">
-        <i data-lucide="arrow-right"></i>
-      </a>
+      ${brandHtml('index.html')}
+      <a href="index.html" class="back-btn" aria-label="رجوع للصفحة الرئيسية" title="رجوع"><i data-lucide="arrow-right"></i></a>
     `;
   }
 
-function renderMinimalTopbar(root) {
-    const title = root.dataset.title || 'Delta AI';
-
+  function renderMinimalTopbar(root) {
+    const title = root.dataset.pageTitle || 'اسأل دلتا';
     root.innerHTML = `
-      <a href="dashboard.html" class="back-btn" aria-label="العودة للرئيسية" title="العودة للرئيسية">
-        <i data-lucide="arrow-right"></i>
-      </a>
       <div class="minimal-brand">
-        <div class="brand-mark brand-mark-mini">${LQ_LOGO_SVG}</div>
-        <h1 style="font-size: 1.1rem;">${title}</h1>
+        <a href="dashboard.html" class="back-btn" aria-label="رجوع للرئيسية" title="رجوع"><i data-lucide="arrow-right"></i></a>
+        <span class="brand-mark brand-mark-mini">${LQ_LOGO_SVG}</span>
+        <span class="page-title">${title}</span>
+      </div>
+      <div class="bar-actions">
+        <span class="xp-chip" id="navXp"><i data-lucide="zap"></i><span dir="ltr">0 XP</span></span>
       </div>
     `;
+    loadCurrentUser(root);
   }
 
   function renderTopbar() {
     const root = document.querySelector('[data-topbar]');
     if (!root) return;
-
     const variant = root.dataset.variant || 'app';
-    if (variant === 'guest') {
-      renderGuestTopbar(root);
-    } else if (variant === 'auth') {
-      renderAuthTopbar(root);
-    } else if (variant === 'minimal') {
-      renderMinimalTopbar(root);
-      renderBottomNav();
-    } else {
-      renderAppTopbar(root);
-      renderBottomNav();
-    }
-
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
+    if (variant === 'guest') renderGuestTopbar(root);
+    else if (variant === 'auth') renderAuthTopbar(root);
+    else if (variant === 'minimal') { renderMinimalTopbar(root); renderBottomNav(); }
+    else { renderAppTopbar(root); renderBottomNav(); }
+    if (window.lucide) window.lucide.createIcons();
   }
+
   document.addEventListener('DOMContentLoaded', () => {
-    injectBrandFont();
     renderTopbar();
     renderMascots();
+    if (window.lucide) window.lucide.createIcons();
   });
 })();
 
 (function pwaInstallBanner() {
   const DISMISS_KEY = 'installBannerDismissed';
   let deferredPrompt = null;
-
-  function isStandalone() {
-    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  }
-
-  function isIos() {
-    return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-  }
+  const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const isIos = () => /iphone|ipad|ipod/i.test(window.navigator.userAgent);
 
   function dismissBanner() {
     const banner = document.getElementById('installBanner');
     if (!banner) return;
     banner.classList.remove('show');
-    document.body.classList.remove('has-install-banner');
     setTimeout(() => banner.remove(), 400);
   }
 
   function createBanner(mode) {
     if (document.getElementById('installBanner')) return;
-    if (sessionStorage.getItem(DISMISS_KEY)) return;
+    try { if (sessionStorage.getItem(DISMISS_KEY)) return; } catch (e) {}
     if (isStandalone()) return;
-
     const banner = document.createElement('div');
     banner.id = 'installBanner';
     banner.className = 'install-banner';
-
     const actionHtml = mode === 'ios'
-      ? '<span class="install-banner-hint">اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية"</span>'
+      ? '<span class="install-banner-hint">اضغط زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»</span>'
       : '<button type="button" class="install-banner-install-btn">تثبيت</button>';
-
     banner.innerHTML = `
       <div class="install-banner-icon">${LQ_LOGO_SVG}</div>
-      <div class="install-banner-text">
-        <strong>ثبّت تطبيق Delta AI</strong>
-        <span>وصول أسرع من شاشتك الرئيسية</span>
-      </div>
+      <div class="install-banner-text"><strong>ثبّت تطبيق دلتا</strong><span>افتحه بلمسة من شاشتك الرئيسية</span></div>
       ${actionHtml}
       <button type="button" class="install-banner-close" aria-label="إغلاق">×</button>
     `;
-
     document.body.appendChild(banner);
-    document.body.classList.add('has-install-banner');
     requestAnimationFrame(() => banner.classList.add('show'));
-
     banner.querySelector('.install-banner-close')?.addEventListener('click', () => {
-      sessionStorage.setItem(DISMISS_KEY, '1');
+      try { sessionStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
       dismissBanner();
     });
-
     banner.querySelector('.install-banner-install-btn')?.addEventListener('click', async () => {
       if (!deferredPrompt) return;
       deferredPrompt.prompt();
       await deferredPrompt.userChoice;
       deferredPrompt = null;
-      sessionStorage.setItem(DISMISS_KEY, '1');
+      try { sessionStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
       dismissBanner();
     });
   }
 
-  // Android/Chrome: fires when the browser decides the site is installable.
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredPrompt = event;
     createBanner('android');
   });
-
   window.addEventListener('appinstalled', dismissBanner);
-
-  // iOS Safari never fires beforeinstallprompt, so show manual steps instead.
   document.addEventListener('DOMContentLoaded', () => {
-    if (isIos() && !isStandalone()) {
-      createBanner('ios');
-    }
+    if (isIos() && !isStandalone()) createBanner('ios');
   });
 })();
 
@@ -503,83 +388,40 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-/* ==========================================================================
-   Internal page transitions
-   Full page reloads between HTML files cause an abrupt flash — the old page
-   vanishes, then the new one snaps in after Firebase and scripts load. This
-   smooths that over with a fade so navigation feels like a single app.
 
-   Two layers, chosen automatically:
-   • Modern browsers → the View Transitions API for a genuinely smooth
-     cross-page morph.
-   • Everyone else → a plain CSS fade-out on click + fade-in on load.
-   Nothing here changes any HTML; it only intercepts same-site link clicks
-   and toggles a class the CSS animates.
+/* ==========================================================================
+   Page transitions: a gentle fade between pages (View Transitions API where
+   available, a CSS fade otherwise). Respects reduced motion.
    ========================================================================== */
 (function pageTransitions() {
-  const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (REDUCED_MOTION_UI) return;
+  window.addEventListener('pageshow', () => document.body.classList.remove('page-transition-out'));
 
-  if (REDUCED_MOTION) return; // Respect users who ask for less motion.
-
-  // If the user hits Back/Forward and the browser restores this page from
-  // its cache while it was mid-fade-out (opacity 0), clear that class so the
-  // page isn't left invisible.
-  window.addEventListener('pageshow', () => {
-    document.body.classList.remove('page-transition-out');
-  });
-
-  // --- Decide whether a clicked link should get a fade-out ---
-  // We only animate genuine in-site navigations to another page.
   function isInternalNavigation(anchor) {
     if (!anchor) return false;
-    if (anchor.target && anchor.target !== '_self') return false; // opens new tab
+    if (anchor.target && anchor.target !== '_self') return false;
     if (anchor.hasAttribute('download')) return false;
-    if (anchor.dataset.noTransition !== undefined) return false; // opt-out hook
-
+    if (anchor.dataset.noTransition !== undefined) return false;
     const href = anchor.getAttribute('href');
-    if (!href) return false;
-    if (href.startsWith('#')) return false;                 // same-page anchor
-    if (href.startsWith('mailto:') || href.startsWith('tel:')) return false;
-
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
     const url = new URL(anchor.href, window.location.href);
-    if (url.origin !== window.location.origin) return false; // external site
-    // Same page (e.g. clicking the link you're already on) — nothing to do.
-    if (url.pathname === window.location.pathname && url.search === window.location.search) {
-      return false;
-    }
+    if (url.origin !== window.location.origin) return false;
+    if (url.pathname === window.location.pathname && url.search === window.location.search) return false;
     return true;
   }
 
   const supportsViewTransitions = typeof document.startViewTransition === 'function';
-
   document.addEventListener('click', (event) => {
-    // Ignore modified clicks (ctrl/cmd/middle-click open in new tab, etc.)
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey ||
-        event.ctrlKey || event.shiftKey || event.altKey) {
-      return;
-    }
-
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const anchor = event.target.closest('a');
     if (!isInternalNavigation(anchor)) return;
-
     const destination = anchor.href;
-
+    event.preventDefault();
     if (supportsViewTransitions) {
-      // Let the API own the animation. We prevent the default nav, run the
-      // transition, and navigate inside it so the browser can cross-fade.
-      event.preventDefault();
-      document.startViewTransition(() => {
-        window.location.href = destination;
-      });
+      document.startViewTransition(() => { window.location.href = destination; });
       return;
     }
-
-    // Fallback: fade the current page out, then navigate. A short timeout
-    // matches the CSS transition duration so the fade is actually seen.
-    event.preventDefault();
     document.body.classList.add('page-transition-out');
-    setTimeout(() => {
-      window.location.href = destination;
-    }, 220);
+    setTimeout(() => { window.location.href = destination; }, 200);
   });
 })();

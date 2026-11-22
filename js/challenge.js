@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       submitButton.disabled = true;
       showSubmitLoadingState();
-      showBlurOverlay('جاري تحليل حلّك...');
+      showBlurOverlay('دلتا يقرأ حلّك...');
 
       let solutionRef;
       try {
@@ -261,8 +261,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  // Shows the hint in its own card under the question (falls back to the
+  // textarea placeholder if the card is missing).
+  function showHint(text) {
+    const box = document.getElementById('hintBox');
+    const boxText = document.getElementById('hintText');
+    if (box && boxText) {
+      boxText.textContent = text;
+      box.classList.remove('hidden');
+    } else if (textarea) {
+      textarea.placeholder = `💡 ${text}`;
+    }
+  }
 
-  'https://delta-ai-backend-aq3d.onrender.com/api/hint';
   async function requestHint(button) {
     if (!currentChallengeQuestion) return;
 
@@ -285,15 +296,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       const hint = data.hint || 'حاول التفكير بالمعطيات خطوة بخطوة.';
 
-      if (textarea) {
-        textarea.placeholder = `💡 ${hint}`;
-        textarea.focus();
-      }
+      showHint(hint);
+      textarea?.focus();
     } catch (error) {
       console.error('Hint request failed:', error);
-      if (textarea) {
-        textarea.placeholder = 'تعذّر جلب تلميح الآن، حاول مرة أخرى.';
-      }
+      showHint('تعذّر جلب تلميح الآن، حاول مرة أخرى.');
     } finally {
       button.disabled = false;
       button.textContent = originalText;
@@ -528,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
       )[0];
 
       const score = previous.score;
-      bannerText.textContent = `✅ حليت هذا التحدي من قبل — الدرجة: ${score}%`;
+      bannerText.textContent = `حليت هذا التحدي من قبل — درجتك ${score}%`;
       banner.classList.remove('hidden');
 
       viewBtn.addEventListener('click', () => {
@@ -560,10 +567,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    showBlurOverlay('🤖 جاري تحضير التحدي...');
+    showBlurOverlay('دلتا يجهّز تحديك...');
 
     const slowLoadTimeout = setTimeout(() => {
-      showBlurOverlay('🤖 لسا شوي وبيجهز تحديك...');
+      showBlurOverlay('لسا شوي وبيجهز تحديك...');
     }, 5000);
 
     try {

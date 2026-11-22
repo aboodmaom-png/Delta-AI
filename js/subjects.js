@@ -26,32 +26,49 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let renderedSubjects = [];
 
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+  ));
+
+  // Colour + icon per subject, matched by name so Firestore ids don't matter.
+  function subjectTheme(subject) {
+    const name = `${subject.name || ''} ${subject.id || ''}`.toLowerCase();
+    if (name.includes('علوم') || name.includes('science')) return { key: 'science', icon: 'flask-conical' };
+    return { key: 'math', icon: 'sigma' };
+  }
+
   function renderSubjects(subjects) {
     renderedSubjects = subjects;
     grid.innerHTML = subjects
-      .map(
-        (subject) => `
-          <article class="subject-card">
-            <div class="subject-icon">${subject.icon || '📘'}</div>
-            <h3>${subject.name}</h3>
-            <p>${subject.description || 'تمارين وتحديات متنوعة'}</p>
-            <div class="subject-progress">
-              <div class="subject-progress-track">
-                <div class="subject-progress-fill" id="progressFill-${subject.id}"></div>
+      .map((subject) => {
+        const theme = subjectTheme(subject);
+        const id = escapeHtml(subject.id);
+        const name = escapeHtml(subject.name);
+        return `
+          <article class="subject-card subject-${theme.key}">
+            <div class="subject-band" aria-hidden="true"><i data-lucide="${theme.icon}"></i></div>
+            <div class="subject-body">
+              <h3>${name}</h3>
+              <p>${escapeHtml(subject.description || 'دروس وتحديات من حياتك اليومية')}</p>
+              <div class="subject-progress">
+                <div class="subject-progress-track">
+                  <div class="subject-progress-fill" id="progressFill-${id}"></div>
+                </div>
+                <span class="subject-progress-text" id="progressText-${id}">جاري حساب تقدّمك...</span>
               </div>
-              <span class="subject-progress-text" id="progressText-${subject.id}">— % من دروس المستوى الأول</span>
-            </div>
-            <div class="subject-actions">
-              <button type="button" class="primary-btn full-width" data-subject-id="${subject.id}">ابدأ</button>
-              <button type="button" class="secondary-btn full-width subject-ai-btn" data-subject-id="${subject.id}" data-subject-name="${subject.name}">
-                تابع مع المساعد 🤖
-              </button>
+              <div class="subject-actions">
+                <button type="button" class="primary-btn" data-subject-id="${id}">ابدأ الدروس</button>
+                <button type="button" class="secondary-btn subject-ai-btn" data-subject-id="${id}" data-subject-name="${name}">
+                  <i data-lucide="sparkles"></i> اسأل دلتا
+                </button>
+              </div>
             </div>
           </article>
-        `
-      )
+        `;
+      })
       .join('');
 
+    if (window.lucide) window.lucide.createIcons();
     loadSubjectProgress(subjects);
   }
 
@@ -158,7 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         fillEl.style.width = `${percent}%`;
         textEl.textContent = total > 0
-          ? `${percent}% من دروس المستوى الأول (${completed}/${total})`
+          ? `أنجزت ${completed} من ${total} دروس`
           : 'لا توجد دروس بعد';
       });
     });

@@ -1,11 +1,11 @@
 {
-  "name": "Delta AI",
-  "short_name": "Delta",
-  "description": "منصة تعليمية ذكية توظّف الرياضيات والعلوم في الحياة اليومية",
+  "name": "دلتا",
+  "short_name": "دلتا",
+  "description": "تعلّم بذكاء، وتقدّم أسرع — تحديات واقعية في الرياضيات والعلوم مع دلتا",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#0f0f0f",
-  "theme_color": "#0f0f0f",
+  "background_color": "#FFF9F1",
+  "theme_color": "#FFF9F1",
   "orientation": "portrait",
   "icons": [
     {
@@ -15,16 +15,24 @@
       "purpose": "any"
     },
     {
-      "src": "assets/icon-badge.png",
+      "src": "assets/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icon-icon-badge.png",
+      "src": "assets/icon-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "lang": "ar",
+  "dir": "rtl"
 }

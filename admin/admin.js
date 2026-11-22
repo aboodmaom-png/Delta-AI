@@ -175,7 +175,7 @@ function initNav() {
 // Lessons management (add / edit / delete / drag-reorder)
 // ============================
 
-const GENERATE_LESSONS_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com';
+const GENERATE_LESSONS_ENDPOINT = 'https://delta-ai-backend-aq3d.onrender.com/api/generate-lessons';
 let generatedLessonsPreview = [];
 
 async function initLessonsSection() {
@@ -328,9 +328,14 @@ function initAiLessonModal() {
     confirmBtn.textContent = 'جاري الإضافة...';
 
     try {
-      let nextOrder = currentLessons.length
-        ? Math.max(...currentLessons.map((l) => l.order || 0)) + 1
-        : 1;
+      // الترتيب يُحسب من دروس الصف اللي بنضيفله فعلاً، مش من الصف المعروض بالقائمة
+      const targetGrade = generatedLessonsPreview[0].grade;
+      const subjectLessonsSnap = await getDocs(query(collection(db, 'lessons'), where('subject', '==', currentSubjectId)));
+      const targetOrders = subjectLessonsSnap.docs
+        .map((d) => d.data())
+        .filter((l) => l.grade === targetGrade)
+        .map((l) => l.order || 0);
+      let nextOrder = targetOrders.length ? Math.max(...targetOrders) + 1 : 1;
 
       for (const lesson of generatedLessonsPreview) {
         await addDoc(collection(db, 'lessons'), {

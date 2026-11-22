@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>التحدي | دلتا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#FFF9F1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="دلتا" />
+    <meta name="msapplication-TileColor" content="#FFF9F1" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/challenge.css" />
+  </head>
+  <body>
+    <div class="page-shell challenge-page">
+      <header class="topbar" data-topbar data-active="subjects"></header>
+
+      <main class="challenge-layout">
+        <section class="main-column">
+          <article class="glass-card loading-card" id="challengeLoadingCard" aria-live="polite">
+            <div class="loading-content">
+              <div class="loader"></div>
+              <p>دلتا يجهّز تحديك...</p>
+            </div>
+          </article>
+
+          <article class="glass-card loading-card state-card hidden" id="challengeErrorCard" aria-live="polite">
+            <div class="state-mascot" data-mascot data-mood="think"></div>
+            <p id="challengeErrorText">تعذّر تحميل التحدي، حاول لاحقًا.</p>
+            <div class="answer-actions">
+              <a href="lessons.html" class="secondary-btn">العودة للدروس</a>
+            </div>
+          </article>
+
+          <article class="glass-card challenge-header-card hidden" id="challengeHeaderCard">
+            <div class="challenge-icon" aria-hidden="true">
+              <i data-lucide="rocket"></i>
+            </div>
+            <div class="challenge-meta">
+              <p class="challenge-kicker">تحدي اليوم</p>
+              <h1 id="challengeTitle">—</h1>
+              <div class="meta-row">
+                <span class="meta-pill pill-subject" id="metaSubject">—</span>
+                <span class="meta-pill pill-level" id="metaDifficulty">المستوى: —</span>
+                <span class="meta-pill accent">حتى 100 XP</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="challenge-chat-layout hidden" id="chatLayout">
+            <div class="previous-attempt-banner hidden" id="previousAttemptBanner">
+              <span id="previousAttemptText">حليت هذا التحدي من قبل</span>
+              <button type="button" class="secondary-btn" id="viewPreviousResultBtn">شوف نتيجتك السابقة</button>
+            </div>
+
+            <div class="chat-row chat-row-question">
+              <div class="chat-mascot-slot" data-mascot data-mood="happy" data-arms="wave"></div>
+              <div class="speech-bubble bubble-question" id="problemCard">
+                <p class="bubble-name">دلتا يسألك</p>
+                <p class="problem-text" id="problemText"></p>
+              </div>
+            </div>
+
+            <div class="hint-box hidden" id="hintBox" aria-live="polite">
+              <span class="hint-box-icon" aria-hidden="true"><i data-lucide="lightbulb"></i></span>
+              <div>
+                <p class="hint-box-title">تلميح من دلتا</p>
+                <p class="hint-box-text" id="hintText"></p>
+              </div>
+            </div>
+
+            <div class="speech-bubble bubble-answer" id="answerCard">
+              <div class="card-heading">
+                <h2>إجابتك</h2>
+                <div class="answer-heading-actions">
+                  <span class="char-counter" id="charCounter" dir="ltr">0 / 500</span>
+                  <button type="button" class="hint-chip" id="requestHint">💡 تلميح</button>
+                </div>
+              </div>
+              <label class="sr-only" for="studentAnswer">إجابتك</label>
+              <textarea
+                id="studentAnswer"
+                maxlength="500"
+                rows="5"
+                placeholder="اكتب طريقة تفكيرك والحل خطوة بخطوة..."
+              ></textarea>
+              <div class="answer-actions">
+                <button class="primary-btn" id="submitAnswer"><i data-lucide="send"></i> إرسال الحل</button>
+              </div>
+            </div>
+          </div>
+
+          <article class="glass-card loading-card hidden" id="loadingCard" aria-live="polite">
+            <div class="loading-content">
+              <div class="loader"></div>
+              <p>دلتا يقرأ إجابتك...</p>
+            </div>
+          </article>
+        </section>
+
+        <aside class="side-column">
+          <article class="glass-card side-coach">
+            <div class="side-coach-icon" aria-hidden="true"><i data-lucide="sparkles"></i></div>
+            <h3>محتار؟</h3>
+            <p>دلتا يعطيك تلميحًا يقرّبك من الحل بدون ما يحلّه عنك.</p>
+            <button class="secondary-btn full-width" id="coachHint">اطلب تلميح</button>
+          </article>
+
+          <article class="glass-card tips-card">
+            <h3>نصائح للتفكير</h3>
+            <ul>
+              <li><span>1</span>ابدأ من المعطيات واكتبها.</li>
+              <li><span>2</span>قسّم الحل لخطوات صغيرة.</li>
+              <li><span>3</span>اشرح ليش اخترت هالطريقة.</li>
+              <li><span>4</span>راجع الناتج: هل هو منطقي؟</li>
+            </ul>
+          </article>
+        </aside>
+      </main>
+    </div>
+
+    <div class="submit-blur-overlay" id="submitBlurOverlay">
+      <div class="submit-blur-mascot" data-mascot></div>
+      <p class="submit-blur-text" id="submitBlurText">دلتا يجهّز تحديك...</p>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="js/auth-guard.js"></script>
+    <script src="js/delta-character.js"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/challenge.js"></script>
+  </body>
+</html>

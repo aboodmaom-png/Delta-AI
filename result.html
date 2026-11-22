@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>النتيجة | دلتا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#FFF9F1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="دلتا" />
+    <meta name="msapplication-TileColor" content="#FFF9F1" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/result.css" />
+  </head>
+  <body>
+    <div id="xpParticlesContainer" aria-hidden="true"></div>
+    <div class="page-shell result-page">
+      <header class="topbar" data-topbar data-active="subjects"></header>
+
+      <main class="result-layout">
+        <section class="result-hero" id="resultHero">
+          <div class="result-hero-doodles" aria-hidden="true"><span>+</span><span>×</span><span>π</span><span>%</span></div>
+          <div class="result-mascot" id="resultMascot" data-mascot data-mood="think"></div>
+          <div class="result-hero-copy">
+            <p class="result-kicker">نتيجة التحدي</p>
+            <h1 id="ratingText">لحظة...</h1>
+            <p class="result-message" id="scoreMessage">دلتا يجهّز نتيجتك...</p>
+          </div>
+          <div class="result-stats">
+            <div class="stat-tile tile-score">
+              <span class="stat-tile-label"><i data-lucide="target"></i> الدرجة</span>
+              <strong dir="ltr"><span id="scoreValue">0</span>%</strong>
+            </div>
+            <div class="stat-tile tile-xp">
+              <span class="stat-tile-label"><i data-lucide="zap"></i> XP</span>
+              <strong id="xpValue" dir="ltr">—</strong>
+            </div>
+            <div class="stat-tile tile-level">
+              <span class="stat-tile-label"><i data-lucide="gauge"></i> الصعوبة</span>
+              <strong id="summaryDifficulty">—</strong>
+            </div>
+          </div>
+        </section>
+
+        <div class="result-grid">
+          <article class="glass-card feedback-card">
+            <div class="feedback-head">
+              <div class="feedback-avatar" data-mascot data-mood="kind" data-head-only></div>
+              <div>
+                <p class="feedback-kicker">ملاحظات دلتا</p>
+                <h2>شو رأيي بحلّك</h2>
+              </div>
+            </div>
+            <p class="feedback-text" id="feedbackText">بانتظار تقييم دلتا...</p>
+            <button type="button" class="secondary-btn discuss-btn" id="discussResultBtn">
+              <i data-lucide="message-circle"></i> ناقش نتيجتك مع دلتا
+            </button>
+          </article>
+
+          <article class="glass-card answer-card">
+            <h2>إجابتك</h2>
+            <p class="answer-text" id="resultAnswerText">—</p>
+            <dl class="summary-list">
+              <div><dt>التحدي</dt><dd id="summaryChallenge">—</dd></div>
+              <div><dt>المادة</dt><dd id="summarySubject">—</dd></div>
+              <div><dt>تاريخ الإكمال</dt><dd id="summaryDate">—</dd></div>
+            </dl>
+          </article>
+        </div>
+
+        <div class="result-actions">
+          <button type="button" class="primary-btn" id="nextChallengeBtn">التحدي التالي <i data-lucide="arrow-left"></i></button>
+          <a href="dashboard.html" class="secondary-btn">الرئيسية</a>
+        </div>
+      </main>
+    </div>
+
+    <div class="revisit-nudge hidden" id="revisitNudge">
+      <div class="revisit-mascot" data-mascot data-mood="happy" data-arms="wave"></div>
+      <div class="revisit-bubble">
+        <button type="button" class="revisit-close" id="revisitClose" aria-label="إغلاق">×</button>
+        <p class="revisit-text">لسا هون؟ جاهز لتحدي جديد؟</p>
+        <div class="revisit-actions">
+          <button type="button" class="primary-btn" id="revisitNextBtn">التحدي التالي</button>
+          <button type="button" class="secondary-btn" id="revisitDiscussBtn">ناقش النتيجة</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="js/auth-guard.js"></script>
+    <script src="js/delta-character.js"></script>
+    <script src="js/components.js"></script>
+    <script type="module" src="js/result.js"></script>
+  </body>
+</html>

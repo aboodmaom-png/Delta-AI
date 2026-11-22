@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>دلتا | تعلم بذكاء</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" content="#FFF9F1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="دلتا" />
+    <meta name="msapplication-TileColor" content="#FFF9F1" />
+    <meta name="msapplication-TileImage" content="assets/icon-192.png" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header
+        class="topbar"
+        data-topbar
+        data-variant="guest"
+      ></header>
+
+      <main class="landing">
+        <section class="landing-hero">
+          <div class="landing-copy">
+            <span class="landing-kicker">للصفوف من الأول للتاسع</span>
+            <h1>تعلّم بذكاء،<br />وتقدّم أسرع</h1>
+            <p>تحديات من حياتك اليومية بالرياضيات والعلوم، ودلتا معك خطوة بخطوة: بيشرح، وبيلمّح، وبيفرح معك لما تنجح.</p>
+            <div class="hero-actions">
+              <a href="signup.html" class="primary-btn">ابدأ مجاناً</a>
+              <a href="login.html" class="secondary-btn">عندي حساب</a>
+            </div>
+          </div>
+          <div class="landing-art">
+            <div class="landing-halo" aria-hidden="true"></div>
+            <div class="landing-mascot" data-mascot data-mood="neutral" data-arms="wave" data-label="دلتا بيسلّم عليك"></div>
+            <span class="float-chip chip-xp" aria-hidden="true"><i data-lucide="zap"></i><span dir="ltr">+100 XP</span></span>
+            <span class="float-chip chip-ok" aria-hidden="true"><i data-lucide="check"></i>إجابة صحيحة!</span>
+          </div>
+        </section>
+
+        <section class="features" aria-label="شو في بدلتا">
+          <article class="glass-card feature-card">
+            <div class="feature-icon fi-green"><i data-lucide="target"></i></div>
+            <h3>تحديات من حياتك</h3>
+            <p>مواقف حقيقية زي التسوق والطبخ والبناء، بتحلها بالرياضيات والعلوم.</p>
+          </article>
+          <article class="glass-card feature-card">
+            <div class="feature-icon fi-blue"><i data-lucide="map"></i></div>
+            <h3>مسار دروس بمستويات</h3>
+            <p>كل درس بيفتح اللي بعده، وبتجمع نقاط وبتطلع مستوى ورا مستوى.</p>
+          </article>
+          <article class="glass-card feature-card">
+            <div class="feature-icon fi-purple"><i data-lucide="sparkles"></i></div>
+            <h3>اسأل دلتا</h3>
+            <p>مساعد ذكي بيشرحلك أي درس ببساطة، وبيوجّهك من غير ما يعطيك الحل جاهز.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/delta-character.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+      });
+    </script>
+    <script type="module">
+      // A logged-in student landing here — whether from the installed app
+      // icon, a browser tab, or an old bookmark — has no reason to see the
+      // guest marketing page, so they're sent straight to the dashboard.
+      // Guests simply stay put; there's nothing to redirect them to.
+      import { auth } from './js/firebase.js';
+      import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location.replace('dashboard.html');
+        }
+      });
+    </script>
+  </body>
+</html>

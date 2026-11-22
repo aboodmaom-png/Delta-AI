@@ -1,0 +1,510 @@
+/* ==========================================================================
+   دلتا — Shared design system
+   Loaded on every page. Page CSS files only add page-specific rules.
+   Identity: playful and warm — cream ground, Delta green, chunky "pressable"
+   buttons and cards (a solid lip underneath), Baloo Bhaijaan 2 everywhere.
+   Mobile-first; layouts widen at 600px, 900px and 1200px.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light;
+  /* ground + text */
+  --bg: #FFF9F1;
+  --card: #FFFFFF;
+  --card-2: #FBF7F0;
+  --text: #1B2A3A;
+  --muted: #5E6B7A;
+  --border: #EDE6D8;
+  --line-strong: #E2D9C8;
+  /* brand */
+  --primary: #158246;          /* buttons + green text (≥4.5:1 on white) */
+  --secondary: #0F6334;        /* lip under green buttons */
+  --green: #3CC46B;            /* Delta himself, progress fills */
+  --soft: #E7F8EC;
+  --btn-gradient: #158246;     /* kept for older rules: now a solid colour */
+  /* subjects + accents */
+  --blue: #2468E8; --blue-lip: #1A4FB8; --blue-soft: #E7F0FF;
+  --orange: #FF8A1F; --orange-lip: #D96A00; --orange-soft: #FFF0E0; --orange-ink: #8A3B00;
+  --yellow: #FFC21A; --yellow-soft: #FFF3CC; --yellow-ink: #7A5200;
+  --purple: #8B5CF6; --purple-lip: #6D3FE0; --purple-soft: #F1EAFE; --purple-ink: #5B2FC9;
+  --success: #158246;
+  --warning: #E8700C;
+  --accent: #FF8A1F;
+  --danger: #D93A3F; --danger-soft: #FDECEC;
+  /* shape */
+  --radius-sm: 14px;
+  --radius: 20px;
+  --radius-lg: 28px;
+  --lip: 0 5px 0 var(--border);
+  --font: 'Baloo Bhaijaan 2', 'Tajawal', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+button, input, textarea, select, a { font: inherit; }
+a { color: inherit; }
+img, svg { max-width: 100%; height: auto; }
+.hidden { display: none !important; }
+.full-width { width: 100%; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* --- Layout shell --- */
+.page-shell {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 16px 28px;
+}
+@media (min-width: 600px) { .page-shell { padding: 16px 24px 32px; } }
+@media (min-width: 1200px) { .page-shell { padding: 20px 32px 40px; } }
+
+/* ==========================================================================
+   App bar (rendered by js/components.js into <header data-topbar>)
+   ========================================================================== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 60px;
+  -webkit-tap-highlight-color: transparent;
+}
+.topbar a { text-decoration: none; }
+
+.brand-group, .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.brand-mark {
+  width: 42px; height: 42px;
+  border-radius: 13px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 3px 0 var(--secondary);
+}
+.brand-mark svg { width: 100%; height: 100%; display: block; }
+.brand-name, .topbar h1 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text);
+}
+.eyebrow { display: none; }
+.page-title { font-size: 1.25rem; font-weight: 800; line-height: 1.2; }
+
+.nav-links { display: none; }
+@media (min-width: 900px) {
+  .nav-links {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px; border-radius: 999px;
+    background: var(--card); border: 2px solid var(--border);
+  }
+  .nav-links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 40px; padding: 0 16px; border-radius: 999px;
+    color: var(--muted); font-weight: 700;
+    transition: background .2s ease, color .2s ease;
+  }
+  .nav-links a svg { width: 18px; height: 18px; }
+  .nav-links a:hover { color: var(--text); background: var(--card-2); }
+  .nav-links a.active { color: var(--primary); background: var(--soft); }
+}
+
+.bar-actions { display: flex; align-items: center; gap: 8px; }
+
+.xp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 40px; padding: 0 14px;
+  border-radius: 999px;
+  background: var(--yellow-soft);
+  color: var(--yellow-ink);
+  font-weight: 800; font-size: .98rem;
+  white-space: nowrap;
+}
+.xp-chip svg { width: 18px; height: 18px; color: #E3A500; fill: var(--yellow); }
+
+.avatar-btn, .avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--soft);
+  border: 2px solid var(--border);
+  color: var(--primary);
+  font-weight: 800; font-size: 1.15rem; line-height: 1;
+  flex-shrink: 0;
+}
+
+.back-btn {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 2px solid var(--border);
+  box-shadow: 0 3px 0 var(--border);
+  color: var(--text);
+  flex-shrink: 0;
+  transition: transform .15s ease;
+}
+.back-btn svg { width: 22px; height: 22px; }
+.back-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border); }
+
+.minimal-brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark-mini { width: 34px; height: 34px; border-radius: 11px; }
+
+.guest-actions { display: flex; align-items: center; gap: 8px; }
+.guest-actions .primary-btn, .guest-actions .secondary-btn {
+  min-height: 42px; padding: 0 14px; font-size: .98rem;
+}
+@media (max-width: 420px) { .guest-actions .secondary-btn { display: none; } }
+
+/* legacy pieces some pages still reference */
+.user-pill { display: none; }
+.hello-text { font-weight: 700; }
+.logout-btn { display: none; }
+
+/* ==========================================================================
+   Cards, headings, pills
+   ========================================================================== */
+.glass-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lip);
+}
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--primary); font-weight: 800; font-size: .95rem;
+  margin-bottom: 6px;
+}
+
+.section-heading {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; margin-bottom: 14px;
+}
+.section-heading h2, .section-heading h3 { font-size: 1.3rem; font-weight: 800; }
+.section-heading a { color: var(--primary); text-decoration: none; font-weight: 800; }
+
+.status-pill, .pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px; border-radius: 999px;
+  background: var(--soft); color: var(--primary);
+  font-size: .9rem; font-weight: 800;
+}
+.status-pill.success { background: var(--soft); color: var(--primary); }
+.status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+
+/* ==========================================================================
+   Buttons — chunky, with a lip that presses in
+   ========================================================================== */
+.primary-btn,
+.secondary-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 52px; padding: 0 22px;
+  border-radius: 16px;
+  font-weight: 800; font-size: 1.1rem; line-height: 1.2;
+  text-align: center; text-decoration: none;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.primary-btn {
+  background: var(--primary);
+  color: #FFFFFF;
+  border: 0;
+  box-shadow: 0 5px 0 var(--secondary);
+}
+.primary-btn:hover { background: #179050; }
+.secondary-btn {
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--border);
+  box-shadow: 0 5px 0 var(--border);
+}
+.secondary-btn:hover { background: var(--card-2); }
+.primary-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--secondary); }
+.secondary-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--border); }
+.primary-btn:disabled, .secondary-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.primary-btn svg, .secondary-btn svg { width: 20px; height: 20px; }
+
+/* ==========================================================================
+   Form controls
+   ========================================================================== */
+input[type="text"], input[type="email"], input[type="password"], input[type="search"],
+input[type="number"], textarea, select {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 1.05rem;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+textarea { line-height: 1.7; }
+input::placeholder, textarea::placeholder { color: #8C97A3; }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(60, 196, 107, .2);
+}
+
+/* ==========================================================================
+   Stats
+   ========================================================================== */
+.stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 900px) { .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+.stat-card { padding: 18px; }
+.stat-card h4 { font-size: 1.7rem; font-weight: 800; margin-top: 4px; color: var(--primary); }
+.stat-label { color: var(--muted); font-weight: 600; }
+
+/* ==========================================================================
+   Bottom tab bar (phones + tablets) — desktop uses .nav-links in the app bar
+   ========================================================================== */
+.bottom-nav {
+  display: flex;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 900;
+  gap: 6px;
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+  background: var(--card);
+  border-top: 2px solid var(--border);
+}
+.bottom-nav-item {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-height: 52px; padding: 6px 4px;
+  border-radius: 16px;
+  color: var(--muted); text-decoration: none;
+  font-size: .8rem; font-weight: 700;
+  transition: color .2s ease, background .2s ease, transform .15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.bottom-nav-item svg { width: 24px; height: 24px; }
+.bottom-nav-item.active { color: var(--primary); background: var(--soft); font-weight: 800; }
+.bottom-nav-item:active { transform: scale(.94); }
+@media (min-width: 600px) {
+  .bottom-nav { left: 50%; right: auto; transform: translateX(-50%); width: min(560px, calc(100% - 32px));
+    bottom: calc(12px + env(safe-area-inset-bottom)); border: 2px solid var(--border); border-radius: 24px;
+    box-shadow: 0 5px 0 var(--border); padding: 8px; }
+}
+@media (min-width: 900px) { .bottom-nav { display: none; } }
+
+body.has-bottom-nav .page-shell { padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important; }
+@media (min-width: 900px) { body.has-bottom-nav .page-shell { padding-bottom: 40px !important; } }
+
+/* The assistant page manages its own scrolling chat area. */
+@media (max-width: 899px) {
+  body.has-bottom-nav .page-shell.learnquest-page { padding-bottom: calc(8px + env(safe-area-inset-bottom)) !important; }
+  body.has-bottom-nav .learnquest-page .chat-card {
+    height: calc(100dvh - 150px - 80px - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 150px - 80px - env(safe-area-inset-bottom));
+  }
+}
+
+/* ==========================================================================
+   Grade gate (blocks the app until a grade is saved)
+   ========================================================================== */
+.grade-gate-overlay {
+  position: fixed; inset: 0; z-index: 9990;
+  background: rgba(255, 249, 241, .96);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; overflow-y: auto;
+}
+.grade-gate-card {
+  width: 100%; max-width: 460px;
+  background: var(--card);
+  border: 2px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--lip);
+  padding: 28px 22px; text-align: center;
+}
+.grade-gate-icon { width: 120px; margin: 0 auto 8px; }
+.grade-gate-card h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
+.grade-gate-card > p { color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+.grade-gate-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 360px) { .grade-gate-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.grade-gate-option {
+  min-height: 52px; padding: 8px;
+  border-radius: 16px;
+  border: 2px solid var(--border); background: var(--card); box-shadow: 0 4px 0 var(--border);
+  color: var(--text); font-weight: 800; font-size: 1.02rem;
+  cursor: pointer;
+  transition: transform .12s ease, background .2s ease, border-color .2s ease;
+}
+.grade-gate-option:hover:not(:disabled) { border-color: var(--green); background: var(--soft); }
+.grade-gate-option:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--border); }
+.grade-gate-option.selected { background: var(--primary); color: #FFFFFF; border-color: var(--primary); box-shadow: 0 4px 0 var(--secondary); }
+.grade-gate-option:disabled { opacity: .55; cursor: not-allowed; }
+.grade-gate-error { margin-top: 14px; color: var(--danger); font-weight: 700; }
+
+/* ==========================================================================
+   Install banner (phones)
+   ========================================================================== */
+.install-banner {
+  display: none;
+  position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 950;
+  align-items: center; gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--card); border: 2px solid var(--border); box-shadow: var(--lip);
+  transform: translateY(150%);
+  transition: transform .4s cubic-bezier(.34, 1.56, .64, 1);
+}
+.install-banner.show { transform: translateY(0); }
+body.has-bottom-nav .install-banner { bottom: calc(92px + env(safe-area-inset-bottom)); }
+.install-banner-icon { width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; overflow: hidden; }
+.install-banner-icon svg { width: 100%; height: 100%; display: block; }
+.install-banner-text { flex: 1; display: flex; flex-direction: column; line-height: 1.3; }
+.install-banner-text strong { font-size: 1rem; font-weight: 800; }
+.install-banner-text span { font-size: .88rem; color: var(--muted); }
+.install-banner-hint { flex-shrink: 0; max-width: 130px; font-size: .82rem; color: var(--muted); line-height: 1.35; }
+.install-banner-install-btn {
+  flex-shrink: 0; min-height: 44px; padding: 0 16px;
+  border: 0; border-radius: 14px; background: var(--primary); box-shadow: 0 4px 0 var(--secondary);
+  color: #FFFFFF; font-weight: 800; cursor: pointer;
+}
+.install-banner-close {
+  flex-shrink: 0; width: 36px; height: 36px; border: 0; border-radius: 50%;
+  background: var(--card-2); color: var(--muted); font-size: 1.2rem; line-height: 1; cursor: pointer;
+}
+@media (max-width: 899px) { .install-banner { display: flex; } }
+
+/* ==========================================================================
+   Splash — Delta walks in, waves, and his name pops out from behind him
+   ========================================================================== */
+#appSplash {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  overflow: hidden;
+  transition: opacity .45s ease;
+}
+#appSplash.splash-hide { opacity: 0; pointer-events: none; }
+#appSplash .splash-doodles span {
+  position: absolute; font-weight: 800; color: var(--primary); opacity: .08; line-height: 1;
+}
+#appSplash .splash-halo {
+  position: absolute; left: 50%; top: 40%;
+  width: min(62vw, 330px); aspect-ratio: 1; border-radius: 50%;
+  background: var(--soft); transform: translate(-50%, -50%) scale(0);
+}
+#appSplash .splash-name {
+  position: absolute; left: 0; right: 0; top: calc(40% + min(39vw, 205px));
+  text-align: center; font-size: clamp(56px, 16vw, 84px); font-weight: 800; line-height: 1;
+  color: var(--primary); text-shadow: 0 5px 0 var(--secondary); opacity: 0;
+}
+#appSplash .splash-tag {
+  position: absolute; left: 0; right: 0; top: calc(40% + min(39vw, 205px) + clamp(70px, 19vw, 100px));
+  text-align: center; font-size: clamp(17px, 4.6vw, 22px); font-weight: 700; color: var(--text); opacity: 0;
+}
+#appSplash .splash-actor {
+  position: absolute; left: 50%; top: 40%;
+  width: min(58vw, 300px);
+  transform: translate(-50%, -50%);
+}
+#appSplash .splash-actor svg { width: 100%; height: auto; display: block; overflow: visible; }
+#appSplash .splash-skip {
+  position: absolute; bottom: calc(18px + env(safe-area-inset-bottom)); inset-inline-start: 18px;
+  min-height: 44px; padding: 0 16px; border-radius: 14px;
+  border: 2px solid var(--border); background: var(--card); color: var(--muted); font-weight: 700; cursor: pointer;
+}
+
+/* ==========================================================================
+   Mascot slots ([data-mascot], rendered by components.js)
+   ========================================================================== */
+.lq-mascot { display: flex; align-items: center; justify-content: center; }
+.lq-mascot svg { width: 100%; height: auto; display: block; }
+
+/* ==========================================================================
+   Full-page loading overlay (subjects, lessons, profile)
+   ========================================================================== */
+.page-load-overlay {
+  position: fixed; inset: 0; z-index: 9997;
+  background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+}
+.page-load-mascot { width: 150px; }
+.page-load-text { color: var(--text); font-weight: 800; font-size: 1.15rem; }
+
+/* ==========================================================================
+   Lesson level banner, grade edit button, popups
+   ========================================================================== */
+.level-banner {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  margin: 0 auto 18px; padding: 10px 22px; width: fit-content; max-width: 100%;
+  text-align: center; border-radius: 999px;
+  background: var(--soft); border: 2px solid #CDEFD8;
+}
+.level-banner-title { font-weight: 800; font-size: 1.15rem; color: var(--primary); }
+.level-banner-meta { font-size: .9rem; color: var(--muted); }
+
+.edit-grade-btn {
+  margin-inline-start: 10px; min-height: 36px; padding: 0 14px;
+  font-weight: 800; font-size: .9rem;
+  color: var(--primary); background: var(--soft);
+  border: 2px solid #CDEFD8; border-radius: 999px; cursor: pointer;
+}
+.edit-grade-btn:hover { background: #D7F3E0; }
+
+.grade-edit-close {
+  position: absolute; top: 12px; inset-inline-end: 14px;
+  width: 40px; height: 40px; font-size: 1.5rem; line-height: 1;
+  color: var(--muted); background: transparent; border: 0; border-radius: 50%; cursor: pointer;
+}
+.grade-edit-close:hover { background: var(--card-2); color: var(--text); }
+
+#completedLessonPopup {
+  position: absolute; transform: translate(-50%, -115%); z-index: 1000;
+  width: 280px; padding: 16px;
+  background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); box-shadow: var(--lip);
+}
+
+/* Side-by-side button rows stack on small phones. */
+@media (max-width: 480px) {
+  .hero-actions, .answer-actions { flex-direction: column; align-items: stretch; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   Page transitions (paired with pageTransitions() in components.js)
+   ========================================================================== */
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+body { animation: pageFadeIn .28s ease both; }
+body.page-transition-out { opacity: 0; transition: opacity .2s ease; animation: none; }
+@keyframes vtFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes vtFadeOut { from { opacity: 1; } to { opacity: 0; } }
+::view-transition { background: var(--bg); }
+::view-transition-old(root) { animation: vtFadeOut .22s ease both; }
+::view-transition-new(root) { animation: vtFadeIn .28s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  body.page-transition-out { transition: none; opacity: 1; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  .primary-btn, .secondary-btn { transition: none; }
+}

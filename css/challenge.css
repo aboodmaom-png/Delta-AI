@@ -1,0 +1,381 @@
+/* ==========================================================================
+   دلتا — Challenge page
+   Phone first: one column. From 1024px the tips/coach column sits beside it.
+   ========================================================================== */
+
+.challenge-layout {
+  display: grid;
+  gap: 16px;
+  margin-top: 12px;
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .challenge-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; margin-top: 20px; }
+}
+
+.main-column,
+.side-column {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  min-width: 0;
+}
+
+/* ---------- loading / error states ---------- */
+#challengeLoadingCard { display: none; }
+
+.loading-card { padding: 20px; }
+.loading-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text);
+  font-weight: 700;
+}
+.loader {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.state-card { text-align: center; display: grid; gap: 10px; justify-items: center; padding: 28px 20px; }
+.state-card p { font-weight: 700; line-height: 1.7; max-width: 42ch; }
+.state-mascot { width: 120px; }
+
+/* ---------- header ---------- */
+.challenge-header-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.challenge-header-card::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -40px;
+  top: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--orange-soft);
+  z-index: 0;
+}
+.challenge-header-card > * { position: relative; z-index: 1; }
+
+.challenge-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: var(--orange);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--orange-lip);
+}
+.challenge-icon svg { width: 28px; height: 28px; }
+
+.challenge-meta { min-width: 0; }
+.challenge-kicker {
+  color: var(--orange-lip);
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+.challenge-meta h1 {
+  font-size: clamp(1.25rem, 4.6vw, 1.7rem);
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+
+.meta-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  background: var(--card-2);
+  color: var(--muted);
+}
+.meta-pill.pill-subject { background: var(--blue-soft); color: var(--blue-lip); }
+.meta-pill.pill-level { background: var(--purple-soft); color: var(--purple-lip); }
+.meta-pill.accent { background: var(--yellow-soft); color: var(--yellow-ink); }
+
+@media (max-width: 420px) {
+  .challenge-header-card { align-items: flex-start; padding: 16px; gap: 12px; }
+  .challenge-icon { width: 46px; height: 46px; border-radius: 15px; }
+  .challenge-icon svg { width: 24px; height: 24px; }
+}
+
+/* ---------- previous attempt ---------- */
+.previous-attempt-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: var(--soft);
+  border: 2px solid #BFE9CC;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--secondary);
+  font-weight: 800;
+}
+.previous-attempt-banner .secondary-btn { min-height: 44px; padding-inline: 16px; font-size: 0.92rem; }
+@media (max-width: 480px) {
+  .previous-attempt-banner { flex-direction: column; align-items: stretch; text-align: center; }
+}
+
+/* ---------- conversation ---------- */
+.challenge-chat-layout {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.chat-row-question {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  align-items: end;
+  gap: 10px;
+}
+@media (min-width: 600px) { .chat-row-question { grid-template-columns: 120px minmax(0, 1fr); gap: 16px; } }
+@media (min-width: 1024px) { .chat-row-question { grid-template-columns: 150px minmax(0, 1fr); } }
+
+.chat-mascot-slot { width: 100%; align-self: end; }
+
+.speech-bubble {
+  position: relative;
+  min-width: 0;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--lip);
+  padding: 18px;
+}
+@media (min-width: 600px) { .speech-bubble { padding: 22px 24px; } }
+
+/* the question bubble points at Delta (the start side in RTL) */
+.bubble-question {
+  background: var(--soft);
+  border-color: #BFE9CC;
+  box-shadow: 0 5px 0 #BFE9CC;
+  border-end-start-radius: 8px;
+}
+.bubble-question::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -11px;
+  bottom: 22px;
+  width: 18px;
+  height: 18px;
+  background: var(--soft);
+  border-inline-start: 2px solid #BFE9CC;
+  border-bottom: 2px solid #BFE9CC;
+  transform: rotate(45deg);
+  border-radius: 0 0 0 4px;
+}
+[dir="rtl"] .bubble-question::before { transform: rotate(-45deg); border-radius: 0 0 4px 0; }
+
+.bubble-name {
+  color: var(--secondary);
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.problem-text {
+  color: var(--text);
+  line-height: 1.85;
+  font-size: clamp(1.02rem, 3.6vw, 1.15rem);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* hint card */
+.hint-box {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--yellow-soft);
+  border: 2px solid #F5DC8A;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  animation: hintIn 0.35s cubic-bezier(.2, .9, .3, 1.3);
+}
+.hint-box-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--yellow);
+  color: var(--text);
+}
+.hint-box-icon svg { width: 20px; height: 20px; }
+.hint-box-title { font-weight: 800; color: var(--yellow-ink); font-size: 0.9rem; }
+.hint-box-text { line-height: 1.75; font-weight: 600; }
+@keyframes hintIn { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+
+/* answer card */
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.card-heading h2 { font-size: 1.2rem; font-weight: 800; }
+
+.answer-heading-actions { display: flex; align-items: center; gap: 8px; }
+.char-counter {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hint-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 2px solid #F5DC8A;
+  background: var(--yellow-soft);
+  color: var(--yellow-ink);
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .15s ease;
+}
+.hint-chip:hover { transform: translateY(-1px); }
+.hint-chip:disabled { opacity: .7; cursor: progress; }
+
+.speech-bubble textarea {
+  display: block;
+  width: 100%;
+  min-height: 150px;
+  max-height: 340px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  background: var(--card-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.8;
+  resize: none;
+  overflow-y: auto;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.speech-bubble textarea::placeholder { color: var(--muted); opacity: .85; }
+.speech-bubble textarea:focus {
+  outline: none;
+  background: var(--card);
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px var(--soft);
+}
+
+.answer-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.answer-actions .primary-btn { padding-inline: 32px; }
+@media (max-width: 599px) {
+  .answer-actions .primary-btn { width: 100%; }
+}
+
+.answer-error {
+  margin-top: 12px;
+  color: var(--danger);
+  background: var(--danger-soft);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+/* ---------- side column ---------- */
+.side-coach {
+  background: var(--purple);
+  border-color: var(--purple-lip);
+  box-shadow: 0 5px 0 var(--purple-lip);
+  color: #fff;
+  padding: 18px;
+}
+.side-coach-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, .18);
+  margin-bottom: 8px;
+}
+.side-coach-icon svg { width: 22px; height: 22px; }
+.side-coach h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+.side-coach p { line-height: 1.7; opacity: .92; margin-bottom: 14px; }
+.side-coach .secondary-btn { color: var(--purple-lip); border-color: #fff; box-shadow: 0 4px 0 var(--purple-lip); }
+
+.tips-card { padding: 18px; }
+.tips-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; }
+.tips-card ul { list-style: none; display: grid; gap: 10px; }
+.tips-card li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; line-height: 1.5; }
+.tips-card li span {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--blue-soft);
+  color: var(--blue-lip);
+  font-weight: 800;
+  font-size: .85rem;
+}
+
+/* On phones and tablets the coach card duplicates the hint chip; tips go side by side on tablets */
+@media (max-width: 1023px) {
+  .side-coach { display: none; }
+}
+
+/* ---------- submit overlay ---------- */
+.submit-blur-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  background: rgba(255, 249, 241, 0.96);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+.submit-blur-overlay.hidden { display: none; }
+.submit-blur-mascot { width: min(200px, 52vw); }
+.submit-blur-text { color: var(--text); font-weight: 800; font-size: 1.15rem; }

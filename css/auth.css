@@ -1,0 +1,106 @@
+/* ==========================================================================
+   دلتا — Sign in / sign up
+   Phones: Delta greets on top, form below. 900px+: green panel beside the form.
+   ========================================================================== */
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  align-items: start;
+  justify-items: center;
+  padding: 4px 0 24px;
+}
+@media (min-width: 900px) {
+  .auth-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    gap: 32px; align-items: stretch;
+    min-height: calc(100dvh - 120px);
+    padding: 16px 0 32px;
+  }
+}
+
+/* Delta panel */
+.auth-art {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  width: 100%;
+}
+.auth-mascot { width: clamp(150px, 42vw, 200px); }
+.auth-art-title, .auth-art-sub { display: none; }
+@media (min-width: 900px) {
+  .auth-art {
+    justify-content: center; gap: 8px;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    background: var(--primary);
+    box-shadow: 0 6px 0 var(--secondary);
+    color: #fff;
+  }
+  .auth-mascot { width: min(300px, 70%); }
+  .auth-art-title { display: block; font-size: 2.2rem; font-weight: 800; line-height: 1.2; }
+  .auth-art-sub { display: block; font-size: 1.15rem; opacity: .95; max-width: 30ch; }
+}
+
+/* Form card */
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 22px 18px;
+  text-align: center;
+  margin-top: -6px;
+}
+@media (min-width: 600px) { .auth-card { padding: 30px 28px; } }
+@media (min-width: 900px) { .auth-card { align-self: center; margin-top: 0; } }
+.auth-card h1 { font-size: clamp(1.7rem, 6vw, 2.1rem); font-weight: 800; line-height: 1.2; }
+.auth-card > p { color: var(--muted); margin: 4px 0 18px; font-size: 1.05rem; }
+
+.auth-form { display: flex; flex-direction: column; gap: 14px; text-align: right; }
+.auth-form label { display: flex; flex-direction: column; gap: 6px; font-weight: 700; color: var(--text); font-size: 1rem; }
+.auth-form input { direction: ltr; text-align: right; }
+.auth-form input[type="text"] { direction: rtl; }
+.auth-form .primary-btn { margin-top: 6px; }
+
+.auth-error {
+  color: var(--danger); background: var(--danger-soft);
+  border: 2px solid #F6C9CB; border-radius: var(--radius-sm);
+  padding: 10px 12px; font-weight: 700; text-align: center;
+}
+
+.auth-link { margin-top: 18px; color: var(--muted); font-size: 1.02rem; }
+.auth-link a { color: var(--primary); text-decoration: none; font-weight: 800; }
+.auth-link a:hover { text-decoration: underline; }
+
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: var(--muted); font-weight: 700; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 2px; background: var(--border); }
+
+.google-btn { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.google-btn svg { width: 20px; height: 20px; }
+
+/* Field errors (replace the browser's validation bubble) */
+.field-error {
+  color: var(--danger); font-size: .92rem; font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.field-error::before {
+  content: '!'; display: inline-grid; place-items: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--danger); color: #fff; font-size: .75rem; font-weight: 800; flex-shrink: 0;
+}
+.auth-form input.input-invalid, .custom-select-trigger.input-invalid { border-color: var(--danger); background: var(--danger-soft); }
+
+/* Grade picker */
+.custom-select { position: relative; }
+.custom-select-trigger {
+  width: 100%; min-height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--card); border: 2px solid var(--border); border-radius: 16px;
+  padding: 0 16px; color: var(--text); font-size: 1.05rem; font-weight: 600; cursor: pointer;
+}
+.custom-select-trigger.open { border-color: var(--green); box-shadow: 0 0 0 4px rgba(60, 196, 107, .2); }
+.custom-select-options {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 50;
+  background: var(--card); border: 2px solid var(--border); border-radius: 16px; box-shadow: var(--lip);
+  max-height: 260px; overflow-y: auto;
+}
+.custom-select-option { min-height: 46px; display: flex; align-items: center; padding: 0 16px; cursor: pointer; color: var(--text); font-weight: 600; }
+.custom-select-option:hover { background: var(--card-2); }
+.custom-select-option.selected { background: var(--soft); color: var(--primary); font-weight: 800; }

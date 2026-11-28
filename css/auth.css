@@ -104,3 +104,6 @@
 .custom-select-option { min-height: 46px; display: flex; align-items: center; padding: 0 16px; cursor: pointer; color: var(--text); font-weight: 600; }
 .custom-select-option:hover { background: var(--card-2); }
 .custom-select-option.selected { background: var(--soft); color: var(--primary); font-weight: 800; }
+
+.auth-legal { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; line-height: 1.6; }
+.auth-legal a { color: var(--primary); font-weight: 700; }

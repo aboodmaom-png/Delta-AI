@@ -30,7 +30,7 @@ const MASCOT_DEFAULTS = [
   ['submit-blur-mascot', { mood: 'think', arms: 'rest' }],
   ['coach-mascot', { mood: 'neutral', arms: 'wave' }],
   ['revisit-mascot', { mood: 'happy', arms: 'hold', prop: 'book' }],
-  ['hero-mascot', { mood: 'happy', arms: 'hold', prop: 'ruler' }],
+  ['hero-mascot', { mood: 'happy', arms: 'cheer' }],
 ];
 function renderMascots() {
   document.querySelectorAll('[data-mascot]').forEach((slot) => {
@@ -318,11 +318,45 @@ window.renderDeltaMascots = renderMascots;
     if (window.lucide) window.lucide.createIcons();
   }
 
+  // Site footer for public pages: <footer data-footer></footer>
+  function renderFooter() {
+    const root = document.querySelector('[data-footer]');
+    if (!root) return;
+    root.classList.add('site-footer');
+    root.innerHTML = `
+      <div class="site-footer-inner">
+        <div class="site-footer-brand">
+          ${brandHtml('index.html')}
+          <p>منصة تعليمية بالذكاء الاصطناعي للصفوف من الأول للتاسع.</p>
+        </div>
+        <nav class="site-footer-links" aria-label="روابط الموقع">
+          <a href="about.html">عن دلتا</a>
+          <a href="privacy.html">سياسة الخصوصية</a>
+          <a href="about.html#contact">تواصل معنا</a>
+        </nav>
+      </div>
+      <p class="site-footer-note">© ${new Date().getFullYear()} دلتا. صُنع بحب لطلابنا.</p>
+    `;
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     renderTopbar();
+    renderFooter();
     renderMascots();
     if (window.lucide) window.lucide.createIcons();
   });
+})();
+
+// The AI server sleeps when nobody uses it (free hosting). Every page pings it
+// on open, so by the time a student asks something it is already awake.
+(function warmUpAiServer() {
+  const HEALTH_URL = 'https://delta-ai-backend-aq3d.onrender.com/health';
+  try {
+    const last = Number(sessionStorage.getItem('deltaWarmAt') || 0);
+    if (Date.now() - last < 4 * 60 * 1000) return;
+    sessionStorage.setItem('deltaWarmAt', String(Date.now()));
+  } catch (error) { /* storage blocked: ping anyway */ }
+  fetch(HEALTH_URL, { mode: 'no-cors', cache: 'no-store' }).catch(() => {});
 })();
 
 (function pwaInstallBanner() {

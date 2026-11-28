@@ -1,0 +1,20 @@
+# Keeps the AI server (Render free tier) awake during the day, so the first
+# question a student asks doesn't wait ~1 minute for the server to start.
+# Runs every 10 minutes from 06:00 to 22:00 Gaza time (04:00–19:59 UTC),
+# which stays well inside Render's free monthly hours.
+name: Keep Delta AI awake
+
+on:
+  schedule:
+    - cron: "*/10 4-19 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping the AI server
+        run: |
+          code=$(curl -s -o /dev/null -m 120 -w "%{http_code}" https://delta-ai-backend-aq3d.onrender.com/health || true)
+          echo "Server answered with HTTP $code"

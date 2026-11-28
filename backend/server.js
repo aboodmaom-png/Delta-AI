@@ -125,6 +125,11 @@ function sanitizeStringList(list) {
     .slice(0, 3);
 }
 
+// Lightweight endpoint used to wake the server and check it is up.
+app.get(['/', '/health'], (req, res) => {
+  res.json({ ok: true, service: 'delta-backend' });
+});
+
 app.post('/api/evaluate', async (req, res) => {
   const { question, answer } = req.body || {};
 

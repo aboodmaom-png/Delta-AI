@@ -319,3 +319,7 @@
 .submit-blur-overlay.hidden { display: none; }
 .submit-blur-mascot { width: 180px; }
 .submit-blur-text { color: var(--text); font-weight: 800; font-size: 1.15rem; }
+
+.profile-links { display: flex; justify-content: center; gap: 10px; margin: 4px 0 8px; color: var(--muted); font-weight: 700; }
+.profile-links a { color: var(--muted); text-decoration: none; padding: 6px 2px; }
+.profile-links a:hover { color: var(--primary); }

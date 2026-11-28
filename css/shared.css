@@ -508,3 +508,21 @@ body.page-transition-out { opacity: 0; transition: opacity .2s ease; animation: 
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   .primary-btn, .secondary-btn { transition: none; }
 }
+
+/* ==========================================================================
+   Site footer (public pages) — rendered by components.js into [data-footer]
+   ========================================================================== */
+.site-footer {
+  margin-top: 40px;
+  padding: 24px 4px calc(16px + env(safe-area-inset-bottom, 0px));
+  border-top: 2px solid var(--border);
+  color: var(--muted);
+}
+.site-footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.site-footer-brand { display: grid; gap: 8px; max-width: 34ch; }
+.site-footer-brand p { line-height: 1.7; }
+.site-footer-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.site-footer-links a { color: var(--text); font-weight: 700; text-decoration: none; padding: 6px 0; }
+.site-footer-links a:hover { color: var(--primary); }
+.site-footer-note { margin-top: 16px; font-size: .9rem; }
+.site-footer .brand, .site-footer a.brand-group { text-decoration: none; color: var(--text); }

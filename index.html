@@ -30,42 +30,140 @@
       ></header>
 
       <main class="landing">
-        <section class="landing-hero">
-          <div class="landing-copy">
-            <span class="landing-kicker">للصفوف من الأول للتاسع</span>
-            <h1>تعلّم بذكاء،<br />وتقدّم أسرع</h1>
-            <p>تحديات من حياتك اليومية بالرياضيات والعلوم، ودلتا معك خطوة بخطوة: بيشرح، وبيلمّح، وبيفرح معك لما تنجح.</p>
+        <!-- ============ HERO ============ -->
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="hero-kicker"><i data-lucide="sparkles"></i> للصفوف من الأول للتاسع</span>
+            <h1>الرياضيات والعلوم<br /><span class="hero-accent">من حياتك</span>، مع دلتا</h1>
+            <p class="hero-sub">تحديات من مواقف حقيقية، وتقييم فوري لحلّك، وتلميحات بتوجّهك بدون ما تعطيك الجواب. كل هاد بمساعد ذكي اسمه دلتا.</p>
             <div class="hero-actions">
-              <a href="signup.html" class="primary-btn">ابدأ مجاناً</a>
+              <a href="signup.html" class="primary-btn">ابدأ مجاناً <i data-lucide="arrow-left"></i></a>
               <a href="login.html" class="secondary-btn">عندي حساب</a>
             </div>
+            <ul class="hero-trust">
+              <li><i data-lucide="check"></i> مجاني</li>
+              <li><i data-lucide="check"></i> بدون إعلانات</li>
+              <li><i data-lucide="check"></i> بيشتغل على الجوال</li>
+            </ul>
           </div>
-          <div class="landing-art">
-            <div class="landing-halo" aria-hidden="true"></div>
-            <div class="landing-mascot" data-mascot data-mood="neutral" data-arms="wave" data-label="دلتا بيسلّم عليك"></div>
-            <span class="float-chip chip-xp" aria-hidden="true"><i data-lucide="zap"></i><span dir="ltr">+100 XP</span></span>
-            <span class="float-chip chip-ok" aria-hidden="true"><i data-lucide="check"></i>إجابة صحيحة!</span>
+
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-blob"></div>
+            <span class="hero-doodle d1">+</span><span class="hero-doodle d2">×</span><span class="hero-doodle d3">π</span><span class="hero-doodle d4">÷</span>
+            <div class="landing-mascot-hero" data-mascot data-mood="happy" data-arms="wave"></div>
+
+            <div class="mock-float mock-question">
+              <span class="mock-pill">تحدي اليوم · رياضيات</span>
+              <p>غرفة طولها 5 م وعرضها 4 م، كم بلاطة بتحتاج إذا ضلع البلاطة 50 سم؟</p>
+            </div>
+            <div class="mock-float mock-score">
+              <strong dir="ltr">85%</strong>
+              <span>ممتاز!</span>
+            </div>
+            <div class="mock-float mock-xp"><i data-lucide="zap"></i><span dir="ltr">+70 XP</span></div>
           </div>
         </section>
 
-        <section class="features" aria-label="شو في بدلتا">
-          <article class="glass-card feature-card">
-            <div class="feature-icon fi-green"><i data-lucide="target"></i></div>
-            <h3>تحديات من حياتك</h3>
-            <p>مواقف حقيقية زي التسوق والطبخ والبناء، بتحلها بالرياضيات والعلوم.</p>
+        <!-- ============ STRIP ============ -->
+        <section class="strip" aria-label="دلتا بأرقام">
+          <div><strong>9</strong><span>صفوف دراسية</span></div>
+          <div><strong>2</strong><span>رياضيات وعلوم</span></div>
+          <div><strong>24/7</strong><span>مساعد جاهز دايماً</span></div>
+          <div><strong><i data-lucide="infinity"></i></strong><span>تحديات بتتجدد</span></div>
+        </section>
+
+        <!-- ============ SHOWCASE ============ -->
+        <section class="showcase" aria-labelledby="showTitle">
+          <div class="section-intro">
+            <span class="section-kicker">شو بيعمل دلتا؟</span>
+            <h2 id="showTitle">تعلّم بطريقة بتحسّها</h2>
+          </div>
+
+          <article class="show-row">
+            <div class="show-copy">
+              <span class="show-tag tag-green"><i data-lucide="target"></i> تحديات من حياتك</span>
+              <h3>مسائل عن أشياء بتصير معك فعلاً</h3>
+              <p>تبليط غرفة، توزيع مصروف، ليش المي بتغلي. دلتا بيولّد لكل درس تحدي من الحياة اليومية، مناسب لصفّك ومستواك.</p>
+            </div>
+            <div class="show-visual">
+              <div class="mock-card mock-chat">
+                <div class="mock-chat-head">
+                  <div class="mock-avatar" data-mascot data-mood="happy" data-head-only></div>
+                  <div><strong>دلتا يسألك</strong><span>المستوى: متوسط</span></div>
+                </div>
+                <p class="mock-bubble">بدها عيلة تبلّط غرفة طولها 5 م وعرضها 4 م ببلاط مربع ضلعه 50 سم. كم بلاطة بيحتاجوا؟</p>
+                <div class="mock-input"><span>اكتب طريقة تفكيرك...</span><b>إرسال</b></div>
+              </div>
+            </div>
           </article>
-          <article class="glass-card feature-card">
-            <div class="feature-icon fi-blue"><i data-lucide="map"></i></div>
-            <h3>مسار دروس بمستويات</h3>
-            <p>كل درس بيفتح اللي بعده، وبتجمع نقاط وبتطلع مستوى ورا مستوى.</p>
+
+          <article class="show-row">
+            <div class="show-copy">
+              <span class="show-tag tag-blue"><i data-lucide="check-check"></i> تقييم فوري</span>
+              <h3>بتعرف وين أبدعت ووين بتتحسن</h3>
+              <p>أول ما تبعت حلّك، دلتا بيقرأ خطواتك وبيعطيك درجة وملاحظات واضحة. وإذا علقت، بيعطيك تلميح بيقرّبك من الحل بدون ما يحلّه عنك.</p>
+            </div>
+            <div class="show-visual">
+              <div class="mock-card mock-result">
+                <div class="mock-tiles">
+                  <div class="mt mt-green"><span>الدرجة</span><strong dir="ltr">85%</strong></div>
+                  <div class="mt mt-yellow"><span>XP</span><strong dir="ltr">+70</strong></div>
+                  <div class="mt mt-purple"><span>الصعوبة</span><strong>متوسط</strong></div>
+                </div>
+                <div class="mock-feedback">
+                  <strong>ملاحظات دلتا</strong>
+                  <p>حسبت المساحة صح (20 م²) وحوّلت الوحدات بذكاء. حاول توضّح ليش قسمت على 0.25.</p>
+                </div>
+              </div>
+            </div>
           </article>
-          <article class="glass-card feature-card">
-            <div class="feature-icon fi-purple"><i data-lucide="sparkles"></i></div>
-            <h3>اسأل دلتا</h3>
-            <p>مساعد ذكي بيشرحلك أي درس ببساطة، وبيوجّهك من غير ما يعطيك الحل جاهز.</p>
+
+          <article class="show-row">
+            <div class="show-copy">
+              <span class="show-tag tag-yellow"><i data-lucide="route"></i> مسار ومستويات</span>
+              <h3>كل درس بيفتح اللي بعده</h3>
+              <p>دروس مرتبة بمستويات لكل صف ومادة. بتجمع نقاط، وبتطلع مستوى ورا مستوى، وبتشوف تقدّمك قدامك.</p>
+            </div>
+            <div class="show-visual">
+              <div class="mock-card mock-path">
+                <div class="mock-level"><span class="mock-badge">2</span><div><strong>المستوى 2</strong><div class="mock-track"><i></i></div></div></div>
+                <div class="mock-nodes">
+                  <span class="mn done"><i data-lucide="check"></i></span>
+                  <span class="mn done"><i data-lucide="check"></i></span>
+                  <span class="mn current"><i data-lucide="star"></i></span>
+                  <span class="mn locked"><i data-lucide="lock"></i></span>
+                </div>
+                <div class="mock-path-delta" data-mascot data-mood="happy" data-arms="cheer"></div>
+              </div>
+            </div>
           </article>
         </section>
+
+        <!-- ============ SCHOOLS ============ -->
+        <section class="schools-band" aria-labelledby="schoolsTitle">
+          <div class="schools-copy">
+            <span class="section-kicker on-dark">للمدارس والمعلمين</span>
+            <h2 id="schoolsTitle">المعلّم بيضيف الدرس، ودلتا بيجهّز الباقي</h2>
+            <ul class="schools-list">
+              <li><i data-lucide="check"></i> لوحة تحكم لإضافة الدروس لكل صف ومادة</li>
+              <li><i data-lucide="check"></i> توليد دروس وتحديات بالذكاء الاصطناعي بثواني</li>
+              <li><i data-lucide="check"></i> سياسة خصوصية واضحة، وبدون إعلانات</li>
+            </ul>
+            <a href="about.html" class="secondary-btn">اعرف أكثر عن دلتا</a>
+          </div>
+          <div class="schools-mascot" data-mascot data-mood="happy" data-arms="hold" data-prop="book" aria-hidden="true"></div>
+        </section>
+
+        <!-- ============ FINAL CTA ============ -->
+        <section class="final-cta">
+          <div class="final-mascot" data-mascot data-mood="happy" data-arms="cheer" aria-hidden="true"></div>
+          <h2>جاهز تبلّش مع دلتا؟</h2>
+          <p>سجّل بدقيقة، اختار صفّك، وحلّ أول تحدي إلك اليوم.</p>
+          <a href="signup.html" class="primary-btn">ابدأ مجاناً <i data-lucide="arrow-left"></i></a>
+        </section>
       </main>
+
+      <footer data-footer></footer>
     </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>

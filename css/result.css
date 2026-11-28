@@ -14,10 +14,10 @@
 .xp-particle {
   position: absolute;
   bottom: -40px;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.15rem;
   color: #E3A500;
-  text-shadow: 0 2px 0 #fff;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, .06);
   opacity: 0;
   animation: xpFloatUp 2.2s ease-out forwards;
   white-space: nowrap;
@@ -52,15 +52,15 @@
   padding: 20px 16px 18px;
   border-radius: var(--radius-lg);
   background: var(--hero-bg);
-  border: 2px solid var(--hero-line);
-  box-shadow: 0 5px 0 var(--hero-line);
+  border: 1px solid var(--hero-line);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .06);
 }
 .result-hero.tier-good { --hero-bg: var(--yellow-soft); --hero-line: #F5DC8A; --hero-ink: var(--yellow-ink); }
 .result-hero.tier-try { --hero-bg: var(--orange-soft); --hero-line: #FBD3A8; --hero-ink: var(--orange-lip); }
 
 .result-hero-doodles span {
   position: absolute;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 44px;
   color: var(--hero-line);
   line-height: 1;
@@ -73,14 +73,18 @@
 
 .result-mascot {
   position: relative;
-  width: min(170px, 44vw);
-  margin-bottom: -4px;
+  width: 96px;
+  padding: 10px 8px 4px;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid var(--hero-line);
+  margin-bottom: 4px;
 }
 .result-hero-copy { position: relative; display: grid; gap: 4px; max-width: 46ch; }
-.result-kicker { color: var(--hero-ink); font-weight: 800; font-size: .95rem; }
+.result-kicker { color: var(--hero-ink); font-weight: 700; font-size: .95rem; }
 .result-hero h1 {
   font-size: clamp(1.7rem, 7vw, 2.4rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
   color: var(--text);
 }
@@ -100,10 +104,10 @@
   --t-lip: var(--greenLip, #23A356);
   display: grid;
   border-radius: 18px;
-  border: 2px solid var(--t);
+  border: 1px solid var(--t);
   background: var(--card);
   overflow: hidden;
-  box-shadow: 0 4px 0 var(--t-lip);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .06);
 }
 .stat-tile.tile-xp { --t: var(--yellow); --t-lip: #E0A800; }
 .stat-tile.tile-level { --t: var(--purple); --t-lip: var(--purple-lip); }
@@ -115,7 +119,7 @@
   padding: 5px 4px;
   background: var(--t);
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   font-size: .85rem;
   white-space: nowrap;
 }
@@ -125,7 +129,7 @@
   display: block;
   padding: 10px 4px 12px;
   font-size: clamp(1.15rem, 5vw, 1.5rem);
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -135,7 +139,7 @@
 
 @media (min-width: 900px) {
   .result-hero {
-    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-columns: 170px minmax(0, 1fr);
     grid-template-areas: "art copy" "art stats";
     justify-items: start;
     text-align: start;
@@ -143,7 +147,7 @@
     column-gap: 28px;
     padding: 28px 36px;
   }
-  .result-mascot { grid-area: art; width: 220px; margin: 0; }
+  .result-mascot { grid-area: art; width: 150px; margin: 0; justify-self: center; }
   .result-hero-copy { grid-area: copy; align-self: end; }
   .result-stats { grid-area: stats; align-self: start; margin-top: 8px; }
 }
@@ -165,8 +169,8 @@
   background: var(--purple-soft);
   padding: 6px 4px 2px;
 }
-.feedback-kicker { color: var(--purple-lip); font-weight: 800; font-size: .88rem; }
-.feedback-head h2, .answer-card h2 { font-size: 1.2rem; font-weight: 800; }
+.feedback-kicker { color: var(--purple-lip); font-weight: 700; font-size: .88rem; }
+.feedback-head h2, .answer-card h2 { font-size: 1.2rem; font-weight: 700; }
 .feedback-text {
   line-height: 1.9;
   font-size: 1.02rem;
@@ -184,7 +188,7 @@
   line-height: 1.85;
   color: var(--text);
   background: var(--card-2);
-  border: 2px dashed var(--border);
+  border: 1px dashed var(--border);
   border-radius: 18px;
   padding: 14px 16px;
   white-space: pre-line;
@@ -196,11 +200,11 @@
   justify-content: space-between;
   gap: 12px;
   padding: 10px 2px;
-  border-bottom: 2px solid var(--card-2);
+  border-bottom: 1px solid var(--card-2);
 }
 .summary-list > div:last-child { border-bottom: 0; }
 .summary-list dt { color: var(--muted); font-weight: 600; flex-shrink: 0; }
-.summary-list dd { font-weight: 800; text-align: end; overflow-wrap: anywhere; }
+.summary-list dd { font-weight: 700; text-align: end; overflow-wrap: anywhere; }
 
 /* ---------- actions ---------- */
 .result-actions {
@@ -229,16 +233,16 @@
 }
 .revisit-nudge.hidden { display: none; }
 .revisit-nudge.show { transform: translateY(0); opacity: 1; }
-.revisit-mascot { width: 120px; flex-shrink: 0; order: 2; }
+.revisit-mascot { width: 64px; flex-shrink: 0; order: 2; align-self: flex-end; margin-bottom: 8px; }
 .revisit-bubble {
   position: relative;
   width: 250px;
   margin-bottom: 70px;
   padding: 16px;
   background: var(--card);
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 5px 0 var(--border), 0 18px 40px rgba(27, 42, 58, .12);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 18px 40px rgba(27, 42, 58, .12);
 }
 .revisit-bubble::after {
   content: "";
@@ -248,8 +252,8 @@
   width: 16px;
   height: 16px;
   background: var(--card);
-  border-top: 2px solid var(--border);
-  border-left: 2px solid var(--border);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
   transform: rotate(135deg);
 }
 [dir="rtl"] .revisit-bubble::after { transform: rotate(-45deg); }
@@ -268,7 +272,7 @@
   cursor: pointer;
 }
 .revisit-close:hover { background: var(--card-2); color: var(--text); }
-.revisit-text { font-weight: 800; margin: 0 0 12px; padding-inline-end: 28px; line-height: 1.5; }
+.revisit-text { font-weight: 700; margin: 0 0 12px; padding-inline-end: 28px; line-height: 1.5; }
 .revisit-actions { display: grid; gap: 8px; }
 .revisit-actions .primary-btn,
 .revisit-actions .secondary-btn { min-height: 44px; font-size: .95rem; padding: 0 10px; }
@@ -276,6 +280,6 @@
 @media (max-width: 899px) {
   /* clear the bottom tab bar */
   .revisit-nudge { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); inset-inline: 12px; justify-content: flex-end; }
-  .revisit-mascot { width: 92px; }
+  .revisit-mascot { width: 56px; }
   .revisit-bubble { flex: 1; width: auto; max-width: 300px; margin-bottom: 48px; }
 }

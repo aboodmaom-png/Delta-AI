@@ -104,9 +104,9 @@ function buildPathD(points) {
 
 // Path colours (match css/shared.css tokens)
 const PATH_COLORS = {
-  green: '#3CC46B', greenLip: '#23A356',
-  locked: '#E8E1D3', lockedLip: '#D3C9B6', lockedInk: '#A69C8A',
-  track: '#EDE6D8', done: '#3CC46B'
+  green: '#16A34A', greenLip: '#15803D',
+  locked: '#E2E8F0', lockedLip: '#CBD5E1', lockedInk: '#94A3B8',
+  track: '#E2E8F0', done: '#16A34A'
 };
 
 function nodeMarkup(lesson, index, state, cx, cy) {
@@ -127,10 +127,10 @@ function nodeMarkup(lesson, index, state, cx, cy) {
       <ellipse cx="${cx - 12}" cy="${cy - 17}" rx="10" ry="5.5" fill="#fff" opacity=".28" transform="rotate(-30 ${cx - 12} ${cy - 17})"/>
       <path d="M ${cx} ${cy - 17} l 5.3 10.8 11.9 1.7 -8.6 8.4 2 11.8 -10.6 -5.6 -10.6 5.6 2 -11.8 -8.6 -8.4 11.9 -1.7 z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
       <g class="lesson-start-tag">
-        <rect x="${cx - 32}" y="${cy - 86}" width="64" height="32" rx="11" fill="#ffffff" stroke="#EDE6D8" stroke-width="2.5"/>
-        <path d="M ${cx - 7} ${cy - 55.5} L ${cx} ${cy - 47} L ${cx + 7} ${cy - 55.5} Z" fill="#ffffff" stroke="#EDE6D8" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="${cx - 32}" y="${cy - 86}" width="64" height="32" rx="11" fill="#ffffff" stroke="#E2E8F0" stroke-width="2.5"/>
+        <path d="M ${cx - 7} ${cy - 55.5} L ${cx} ${cy - 47} L ${cx + 7} ${cy - 55.5} Z" fill="#ffffff" stroke="#E2E8F0" stroke-width="2.5" stroke-linejoin="round"/>
         <rect x="${cx - 9}" y="${cy - 58}" width="18" height="4" fill="#ffffff"/>
-        <text x="${cx}" y="${cy - 64}" text-anchor="middle" font-size="16" font-weight="800" fill="#158246">ابدأ</text>
+        <text x="${cx}" y="${cy - 64}" text-anchor="middle" font-size="16" font-weight="800" fill="#15803D">ابدأ</text>
       </g>`;
   } else {
     inner = `<circle cx="${cx}" cy="${cy + 6}" r="31" fill="${C.lockedLip}"/>
@@ -297,7 +297,6 @@ const states = lessons.map((lesson) => {
 
   const svgHeight = 60 + (lessons.length - 1) * NODE_GAP_Y + 70;
   const currentIndex = states.indexOf('current');
-  const mascotPoint = currentIndex >= 0 ? points[currentIndex] : points[points.length - 1];
   const currentLesson = currentIndex >= 0 ? lessons[currentIndex] : null;
 
   const nodesHtml = lessons.map((lesson, i) => nodeMarkup(lesson, i, states[i], points[i].x, points[i].y)).join('');
@@ -310,12 +309,6 @@ const states = lessons.map((lesson) => {
   const doneUntil = currentIndex >= 0 ? currentIndex : points.length - 1;
   const donePathD = buildPathD(points.slice(0, doneUntil + 1));
 
-  // Delta stands on the empty side of the path, level with his lesson.
-  const deltaX = 320 - mascotPoint.x;
-  const deltaMood = everythingComplete ? { mood: 'happy', arms: 'cheer' } : { mood: 'happy', arms: 'wave' };
-  const deltaSvg = window.DeltaChar
-    ? window.DeltaChar.svg({ ...deltaMood, animate: !window.matchMedia('(prefers-reduced-motion: reduce)').matches })
-    : '';
   const levelPercent = lessons.length ? Math.round((completedInLevel / lessons.length) * 100) : 0;
 
 container.innerHTML = `
@@ -337,7 +330,6 @@ container.innerHTML = `
         ${donePathD ? `<path d="${donePathD}" fill="none" stroke="${PATH_COLORS.done}" stroke-width="14" stroke-linecap="round" opacity=".55"/>` : ''}
         ${nodesHtml}
       </svg>
-      ${deltaSvg ? `<div class="path-delta lq-mascot" aria-hidden="true" style="--x:${(deltaX / 320) * 100}%; --yf:${(mascotPoint.y / svgHeight).toFixed(4)};">${deltaSvg}</div>` : ''}
       ${currentLesson ? `
         <div class="lesson-popup hidden" id="lessonPopup">
           <p class="lesson-popup-kicker">الدرس التالي</p>

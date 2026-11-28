@@ -4,8 +4,8 @@
   "description": "تعلّم بذكاء، وتقدّم أسرع — تحديات واقعية في الرياضيات والعلوم مع دلتا",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#FFF9F1",
-  "theme_color": "#FFF9F1",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "orientation": "portrait",
   "icons": [
     {

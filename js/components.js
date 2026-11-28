@@ -26,11 +26,12 @@ function deltaMarkup(opts = {}) {
 // [data-mascot] slots become Delta. A slot can set data-mood, data-arms, data-prop;
 // otherwise its class decides a sensible pose.
 const MASCOT_DEFAULTS = [
-  ['page-load-mascot', { mood: 'think', arms: 'rest' }],
-  ['submit-blur-mascot', { mood: 'think', arms: 'rest' }],
-  ['coach-mascot', { mood: 'neutral', arms: 'wave' }],
-  ['revisit-mascot', { mood: 'happy', arms: 'hold', prop: 'book' }],
-  ['hero-mascot', { mood: 'happy', arms: 'cheer' }],
+  ['page-load-mascot', { mood: 'think', headOnly: true }],
+  ['submit-blur-mascot', { mood: 'think', headOnly: true }],
+  ['coach-mascot', { mood: 'happy', headOnly: true }],
+  ['revisit-mascot', { mood: 'happy', headOnly: true }],
+  ['state-mascot', { mood: 'think', headOnly: true }],
+  ['chat-mascot-slot', { mood: 'happy', headOnly: true }],
 ];
 function renderMascots() {
   document.querySelectorAll('[data-mascot]').forEach((slot) => {
@@ -51,94 +52,41 @@ function renderMascots() {
 window.renderDeltaMascots = renderMascots;
 
 /* ==========================================================================
-   Splash: once per browser session. Delta walks in from the side, hops,
-   waves, and his name pops out from behind him. Tap or "تخطّي" skips it.
+   Splash: once per browser session — the logo and name fade in, then the
+   app appears. Short on purpose; tap skips it.
    ========================================================================== */
 (function showSplash() {
   try {
     if (sessionStorage.getItem('splashShown')) return;
     sessionStorage.setItem('splashShown', '1');
   } catch (e) { /* storage blocked: still show it once on this load */ }
-  if (!window.DeltaChar) return;
 
   const splash = document.createElement('div');
   splash.id = 'appSplash';
   splash.setAttribute('role', 'presentation');
   splash.innerHTML = `
-    <div class="splash-doodles" aria-hidden="true">
-      <span style="left:8%;top:8%;font-size:56px;transform:rotate(-12deg)">+</span>
-      <span style="left:76%;top:7%;font-size:48px;transform:rotate(10deg)">×</span>
-      <span style="left:84%;top:32%;font-size:56px">π</span>
-      <span style="left:6%;top:36%;font-size:50px;transform:rotate(-6deg)">Δ</span>
-      <span style="left:10%;top:86%;font-size:46px;transform:rotate(12deg)">÷</span>
-      <span style="left:80%;top:84%;font-size:44px;transform:rotate(-10deg)">%</span>
+    <div class="splash-center">
+      <span class="splash-logo">${LQ_LOGO_SVG}</span>
+      <span class="splash-name">دلتا</span>
+      <span class="splash-tag">تعلّم من حياتك</span>
     </div>
-    <div class="splash-halo"></div>
-    <div class="splash-name">دلتا</div>
-    <div class="splash-actor">${window.DeltaChar.svg({ rig: true, arms: 'rest', label: 'دلتا' })}</div>
-    <div class="splash-tag">تعلّم بذكاء، وتقدّم أسرع</div>
-    <button type="button" class="splash-skip">تخطّي</button>
   `;
   document.body.appendChild(splash);
-  document.body.style.overflow = 'hidden';
-
-  const q = (s) => splash.querySelector(s);
-  const P = (n) => splash.querySelector(`[data-p="${n}"]`);
-  const actor = q('.splash-actor'), nameEl = q('.splash-name'), tagEl = q('.splash-tag'), halo = q('.splash-halo');
-  const all = P('all'), legL = P('legL'), legR = P('legR'), armL = P('armL'), armR = P('armR'), ant = P('ant');
-  const faceN = P('faceN'), faceH = P('faceH');
-  const set = (el, v) => el && el.setAttribute('transform', v);
-  const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
-  const back = (x) => { x = Math.min(1, Math.max(0, x)); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 
   let loaded = document.readyState === 'complete';
-  window.addEventListener('load', () => { loaded = true; });
+  let minTimePassed = false;
   let done = false;
   const finish = () => {
     if (done) return;
     done = true;
     splash.classList.add('splash-hide');
-    document.body.style.overflow = '';
-    setTimeout(() => splash.remove(), 480);
+    setTimeout(() => splash.remove(), 400);
   };
+  const tryFinish = () => { if (loaded && minTimePassed) finish(); };
+  window.addEventListener('load', () => { loaded = true; tryFinish(); });
+  setTimeout(() => { minTimePassed = true; tryFinish(); }, REDUCED_MOTION_UI ? 300 : 1100);
+  setTimeout(finish, 5000); // never block the app
   splash.addEventListener('click', finish);
-
-  const END = REDUCED_MOTION_UI ? 0.9 : 3.5;
-  const t0 = performance.now();
-  const frame = () => {
-    if (done) return;
-    const t = REDUCED_MOTION_UI ? 9 : (performance.now() - t0) / 1000;
-    const walking = t < 1.6;
-    const x = (1 - ease((t - 0.15) / 1.45)) * Math.min(window.innerWidth * 0.75, 420);
-    actor.style.transform = `translate(calc(-50% + ${x}px), -50%)`;
-    const ph = t * 13;
-    set(legL, `translate(0 ${walking ? -Math.max(0, Math.sin(ph)) * 9 : 0})`);
-    set(legR, `translate(0 ${walking ? -Math.max(0, Math.sin(ph + Math.PI)) * 9 : 0})`);
-    let y = walking ? -Math.abs(Math.sin(ph)) * 4 : 0;
-    if (t >= 1.6 && t < 2.0) y = -Math.sin(((t - 1.6) / 0.4) * Math.PI) * 18;
-    set(all, `translate(0 ${y})`);
-    let aL = 22, aR = -22;
-    if (walking) { aL = 22 + Math.sin(ph) * 16; aR = -22 + Math.sin(ph) * 16; }
-    else if (t < 3.3) { const k = ease((t - 1.8) / 0.25); aR = -22 - 68 * k + Math.sin((t - 1.8) * 13) * 14 * k; }
-    set(armL, `rotate(${aL})`);
-    set(armR, `rotate(${aR})`);
-    set(ant, `rotate(${Math.sin(t * 7) * (walking ? 10 : 5)})`);
-    const happy = t >= 1.75;
-    if (faceN) faceN.style.display = happy ? 'none' : '';
-    if (faceH) faceH.style.display = happy ? '' : 'none';
-    halo.style.transform = `translate(-50%, -50%) scale(${Math.max(0, back((t - 1.55) / 0.5))})`;
-    const nk = (t - 1.95) / 0.7;
-    nameEl.style.opacity = nk <= 0 ? 0 : 1;
-    nameEl.style.transform = `translateY(${(1 - back(nk)) * -190}px) scale(${0.45 + 0.55 * Math.min(1, back(nk))})`;
-    const tk = ease((t - 2.65) / 0.5);
-    tagEl.style.opacity = tk;
-    tagEl.style.transform = `translateY(${(1 - tk) * 12}px)`;
-    const elapsed = (performance.now() - t0) / 1000;
-    if (elapsed >= END && loaded) { finish(); return; }
-    if (elapsed > 8) { finish(); return; } // never block the app
-    requestAnimationFrame(frame);
-  };
-  requestAnimationFrame(frame);
 })();
 
 (function () {

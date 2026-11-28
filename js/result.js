@@ -53,7 +53,7 @@ function updateMascot(score) {
     try: { mood: 'kind', arms: 'wave' }
   }[tier];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  slot.innerHTML = window.DeltaChar.svg({ ...pose, animate: !reduced });
+  slot.innerHTML = window.DeltaChar.svg({ mood: pose.mood, headOnly: true, animate: !reduced });
 }
 
 // Scatters floating "+XP" fragments across the whole screen, split into a

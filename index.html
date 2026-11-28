@@ -6,22 +6,29 @@
     <title>دلتا | تعلم بذكاء</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="css/shared.css" />
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="alternate icon" href="assets/favicon.ico" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-<meta name="theme-color" content="#FFF9F1" />
+<meta name="theme-color" content="#FFFFFF" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="دلتا" />
-    <meta name="msapplication-TileColor" content="#FFF9F1" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
     <meta name="msapplication-TileImage" content="assets/icon-192.png" />
     <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
+    <script>
+      // Opened as the installed app: skip the website intro and go straight
+      // to sign-in (which sends signed-in students on to their dashboard).
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        window.location.replace('login.html');
+      }
+    </script>
     <div class="page-shell">
       <header
         class="topbar"
@@ -30,136 +37,57 @@
       ></header>
 
       <main class="landing">
-        <!-- ============ HERO ============ -->
         <section class="hero">
           <div class="hero-copy">
-            <span class="hero-kicker"><i data-lucide="sparkles"></i> للصفوف من الأول للتاسع</span>
-            <h1>الرياضيات والعلوم<br /><span class="hero-accent">من حياتك</span>، مع دلتا</h1>
-            <p class="hero-sub">تحديات من مواقف حقيقية، وتقييم فوري لحلّك، وتلميحات بتوجّهك بدون ما تعطيك الجواب. كل هاد بمساعد ذكي اسمه دلتا.</p>
+            <span class="hero-kicker">منصة تعليمية بالذكاء الاصطناعي · الصفوف 1–9</span>
+            <h1>الرياضيات والعلوم<br />بطريقة <span class="hero-accent">بيفهمها</span> الطالب</h1>
+            <p class="hero-sub">تحدي من الحياة اليومية لكل درس، وتقييم فوري لحل الطالب، ولوحة للمعلّم لإدارة الدروس.</p>
             <div class="hero-actions">
-              <a href="signup.html" class="primary-btn">ابدأ مجاناً <i data-lucide="arrow-left"></i></a>
-              <a href="login.html" class="secondary-btn">عندي حساب</a>
+              <a href="signup.html" class="primary-btn">ابدأ مجاناً</a>
+              <a href="about.html" class="secondary-btn">للمدارس والمعلمين</a>
             </div>
             <ul class="hero-trust">
               <li><i data-lucide="check"></i> مجاني</li>
               <li><i data-lucide="check"></i> بدون إعلانات</li>
-              <li><i data-lucide="check"></i> بيشتغل على الجوال</li>
+              <li><i data-lucide="check"></i> بيشتغل على أي جهاز</li>
             </ul>
           </div>
 
           <div class="hero-art" aria-hidden="true">
-            <div class="hero-blob"></div>
-            <span class="hero-doodle d1">+</span><span class="hero-doodle d2">×</span><span class="hero-doodle d3">π</span><span class="hero-doodle d4">÷</span>
-            <div class="landing-mascot-hero" data-mascot data-mood="happy" data-arms="wave"></div>
-
-            <div class="mock-float mock-question">
-              <span class="mock-pill">تحدي اليوم · رياضيات</span>
-              <p>غرفة طولها 5 م وعرضها 4 م، كم بلاطة بتحتاج إذا ضلع البلاطة 50 سم؟</p>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="ps-top"><span class="ps-brand"><img src="assets/favicon.svg" alt="" width="24" height="24" />دلتا</span><span class="ps-xp" dir="ltr">340 XP</span></div>
+                <div class="ps-card ps-q"><span class="ps-pill">تحدي اليوم · رياضيات</span><p>غرفة طولها 5 م وعرضها 4 م، كم بلاطة بتحتاج إذا ضلع البلاطة 50 سم؟</p></div>
+                <div class="ps-card"><span class="ps-label">طريقة حلّي:</span><p>المساحة = 5 × 4 = 20 م²<br />البلاطة = 0.5 × 0.5 = 0.25 م²<br />العدد = 20 ÷ 0.25 = 80</p></div>
+                <div class="ps-res"><div><small>الدرجة</small><b dir="ltr">95%</b></div><div><small>XP</small><b dir="ltr">+95</b></div></div>
+                <div class="ps-btn">التحدي التالي</div>
+              </div>
             </div>
-            <div class="mock-float mock-score">
-              <strong dir="ltr">85%</strong>
-              <span>ممتاز!</span>
+            <div class="progress-panel">
+              <strong>تقدّم الصف السابع · رياضيات</strong>
+              <div class="pp-row"><span>المستوى 1</span><span dir="ltr">100%</span></div><div class="pp-bar"><i style="width:100%"></i></div>
+              <div class="pp-row"><span>المستوى 2</span><span dir="ltr">64%</span></div><div class="pp-bar"><i style="width:64%"></i></div>
+              <div class="pp-row"><span>المستوى 3</span><span dir="ltr">18%</span></div><div class="pp-bar"><i style="width:18%"></i></div>
             </div>
-            <div class="mock-float mock-xp"><i data-lucide="zap"></i><span dir="ltr">+70 XP</span></div>
           </div>
         </section>
 
-        <!-- ============ STRIP ============ -->
-        <section class="strip" aria-label="دلتا بأرقام">
-          <div><strong>9</strong><span>صفوف دراسية</span></div>
-          <div><strong>2</strong><span>رياضيات وعلوم</span></div>
-          <div><strong>24/7</strong><span>مساعد جاهز دايماً</span></div>
-          <div><strong><i data-lucide="infinity"></i></strong><span>تحديات بتتجدد</span></div>
-        </section>
-
-        <!-- ============ SHOWCASE ============ -->
-        <section class="showcase" aria-labelledby="showTitle">
-          <div class="section-intro">
-            <span class="section-kicker">شو بيعمل دلتا؟</span>
-            <h2 id="showTitle">تعلّم بطريقة بتحسّها</h2>
-          </div>
-
-          <article class="show-row">
-            <div class="show-copy">
-              <span class="show-tag tag-green"><i data-lucide="target"></i> تحديات من حياتك</span>
-              <h3>مسائل عن أشياء بتصير معك فعلاً</h3>
-              <p>تبليط غرفة، توزيع مصروف، ليش المي بتغلي. دلتا بيولّد لكل درس تحدي من الحياة اليومية، مناسب لصفّك ومستواك.</p>
-            </div>
-            <div class="show-visual">
-              <div class="mock-card mock-chat">
-                <div class="mock-chat-head">
-                  <div class="mock-avatar" data-mascot data-mood="happy" data-head-only></div>
-                  <div><strong>دلتا يسألك</strong><span>المستوى: متوسط</span></div>
-                </div>
-                <p class="mock-bubble">بدها عيلة تبلّط غرفة طولها 5 م وعرضها 4 م ببلاط مربع ضلعه 50 سم. كم بلاطة بيحتاجوا؟</p>
-                <div class="mock-input"><span>اكتب طريقة تفكيرك...</span><b>إرسال</b></div>
-              </div>
-            </div>
+        <section class="features" aria-label="شو بيقدّم دلتا">
+          <article class="feature">
+            <span class="feature-icon"><i data-lucide="target"></i></span>
+            <h3>تحديات من الحياة</h3>
+            <p>كل درس إله تحدي عن موقف حقيقي، مناسب لصف الطالب.</p>
           </article>
-
-          <article class="show-row">
-            <div class="show-copy">
-              <span class="show-tag tag-blue"><i data-lucide="check-check"></i> تقييم فوري</span>
-              <h3>بتعرف وين أبدعت ووين بتتحسن</h3>
-              <p>أول ما تبعت حلّك، دلتا بيقرأ خطواتك وبيعطيك درجة وملاحظات واضحة. وإذا علقت، بيعطيك تلميح بيقرّبك من الحل بدون ما يحلّه عنك.</p>
-            </div>
-            <div class="show-visual">
-              <div class="mock-card mock-result">
-                <div class="mock-tiles">
-                  <div class="mt mt-green"><span>الدرجة</span><strong dir="ltr">85%</strong></div>
-                  <div class="mt mt-yellow"><span>XP</span><strong dir="ltr">+70</strong></div>
-                  <div class="mt mt-purple"><span>الصعوبة</span><strong>متوسط</strong></div>
-                </div>
-                <div class="mock-feedback">
-                  <strong>ملاحظات دلتا</strong>
-                  <p>حسبت المساحة صح (20 م²) وحوّلت الوحدات بذكاء. حاول توضّح ليش قسمت على 0.25.</p>
-                </div>
-              </div>
-            </div>
+          <article class="feature">
+            <span class="feature-icon"><i data-lucide="check-check"></i></span>
+            <h3>تقييم فوري</h3>
+            <p>درجة وملاحظات واضحة، وتلميحات بدون ما يعطي الحل.</p>
           </article>
-
-          <article class="show-row">
-            <div class="show-copy">
-              <span class="show-tag tag-yellow"><i data-lucide="route"></i> مسار ومستويات</span>
-              <h3>كل درس بيفتح اللي بعده</h3>
-              <p>دروس مرتبة بمستويات لكل صف ومادة. بتجمع نقاط، وبتطلع مستوى ورا مستوى، وبتشوف تقدّمك قدامك.</p>
-            </div>
-            <div class="show-visual">
-              <div class="mock-card mock-path">
-                <div class="mock-level"><span class="mock-badge">2</span><div><strong>المستوى 2</strong><div class="mock-track"><i></i></div></div></div>
-                <div class="mock-nodes">
-                  <span class="mn done"><i data-lucide="check"></i></span>
-                  <span class="mn done"><i data-lucide="check"></i></span>
-                  <span class="mn current"><i data-lucide="star"></i></span>
-                  <span class="mn locked"><i data-lucide="lock"></i></span>
-                </div>
-                <div class="mock-path-delta" data-mascot data-mood="happy" data-arms="cheer"></div>
-              </div>
-            </div>
+          <article class="feature">
+            <span class="feature-icon"><i data-lucide="layout-dashboard"></i></span>
+            <h3>لوحة للمعلّم</h3>
+            <p>إضافة الدروس لكل صف ومادة، وتوليدها بالذكاء الاصطناعي.</p>
           </article>
-        </section>
-
-        <!-- ============ SCHOOLS ============ -->
-        <section class="schools-band" aria-labelledby="schoolsTitle">
-          <div class="schools-copy">
-            <span class="section-kicker on-dark">للمدارس والمعلمين</span>
-            <h2 id="schoolsTitle">المعلّم بيضيف الدرس، ودلتا بيجهّز الباقي</h2>
-            <ul class="schools-list">
-              <li><i data-lucide="check"></i> لوحة تحكم لإضافة الدروس لكل صف ومادة</li>
-              <li><i data-lucide="check"></i> توليد دروس وتحديات بالذكاء الاصطناعي بثواني</li>
-              <li><i data-lucide="check"></i> سياسة خصوصية واضحة، وبدون إعلانات</li>
-            </ul>
-            <a href="about.html" class="secondary-btn">اعرف أكثر عن دلتا</a>
-          </div>
-          <div class="schools-mascot" data-mascot data-mood="happy" data-arms="hold" data-prop="book" aria-hidden="true"></div>
-        </section>
-
-        <!-- ============ FINAL CTA ============ -->
-        <section class="final-cta">
-          <div class="final-mascot" data-mascot data-mood="happy" data-arms="cheer" aria-hidden="true"></div>
-          <h2>جاهز تبلّش مع دلتا؟</h2>
-          <p>سجّل بدقيقة، اختار صفّك، وحلّ أول تحدي إلك اليوم.</p>
-          <a href="signup.html" class="primary-btn">ابدأ مجاناً <i data-lucide="arrow-left"></i></a>
         </section>
       </main>
 
